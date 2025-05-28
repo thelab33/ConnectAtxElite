@@ -1,0 +1,101 @@
+<section
+  id="challenge"
+  class="relative overflow-hidden py-16 px-6 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 border-l-4 border-red-400/80"
+  aria-labelledby="challenge-heading"
+  tabindex="-1"
+>
+  <!-- 1. Parallax background image -->
+  <div
+    class="absolute inset-0 -z-10 bg-[url('/static/images/gym-chutes.jpg')] bg-center bg-cover motion-safe:animate-kenburns"
+    style="background-attachment: fixed;"
+    aria-hidden="true"
+  ></div>
+
+  <h2 id="challenge-heading"
+      class="text-2xl md:text-3xl font-bold text-red-400 mb-6 drop-shadow-lg"
+      data-aos="fade-up"
+      data-aos-delay="100"
+  >
+    The Challenge We Face
+  </h2>
+
+  <p
+    class="text-lg text-white/80 max-w-3xl mx-auto mb-8 leading-relaxed"
+    data-aos="fade-up"
+    data-aos-delay="200"
+  >
+    Despite the love and energy behind our program, we struggle with
+    consistent access to gym space and the high cost of tournament travel
+    across states. These financial barriers place a heavy strain on our
+    volunteer coaches and passionate parents — limiting the full potential
+    of our kids to grow, bond, and succeed together.
+  </p>
+
+  <!-- 2. Impact metrics badges -->
+  <div class="flex flex-wrap justify-center gap-6 mb-8" data-aos="fade-up" data-aos-delay="300">
+    <div class="flex flex-col items-center bg-zinc-800/70 px-6 py-4 rounded-xl" tabindex="0">
+      <span class="text-3xl font-extrabold text-red-400">120+</span>
+      <span class="text-white/80 text-sm">Hours of Gym Time Lost</span>
+    </div>
+    <div class="flex flex-col items-center bg-zinc-800/70 px-6 py-4 rounded-xl" tabindex="0">
+      <span class="text-3xl font-extrabold text-red-400">800</span>
+      <span class="text-white/80 text-sm">Tournament Miles Traveled</span>
+    </div>
+  </div>
+
+  <!-- 3. Animated progress bar -->
+  <div class="max-w-2xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="400">
+    <div class="text-sm text-white/70 mb-1 flex justify-between">
+      <span>Gym Rental Funding</span>
+      <span><strong id="gym-funded">45%</strong> funded</span>
+    </div>
+    <div class="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+      <div
+        class="h-full bg-red-400 transition-all duration-1000 ease-out"
+        style="width:45%;"
+        aria-valuenow="45"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        role="progressbar"
+      ></div>
+    </div>
+  </div>
+
+  <!-- 4. Sponsor CTA -->
+  <div class="text-center mb-12" data-aos="fade-up" data-aos-delay="500">
+    <a
+      href="mailto:arodgps@gmail.com?subject=Gym%20Space%20Sponsorship"
+      class="inline-block bg-red-400 hover:bg-red-300 text-black font-bold px-8 py-3 rounded-full shadow-lg transition-transform hover:scale-105 focus-visible:ring-4 focus-visible:ring-red-300"
+    >
+      Sponsor a Practice
+    </a>
+  </div>
+
+  <!-- 5. Parent testimonial pop-over -->
+  <div
+    class="relative max-w-3xl mx-auto"
+    data-aos="fade-up"
+    data-aos-delay="600"
+  >
+    <p class="text-xs text-white/60 italic">
+      “Without enough court time, my son lost valuable training hours this season.”
+    </p>
+    <button
+      type="button"
+      class="absolute top-0 right-0 p-2 text-white/70 hover:text-white transition"
+      aria-label="More from Team Parent"
+      onmouseenter="document.getElementById('testimonial-pop').classList.remove('hidden')"
+      onmouseleave="document.getElementById('testimonial-pop').classList.add('hidden')"
+    >
+      ℹ️
+    </button>
+    <div
+      id="testimonial-pop"
+      class="hidden absolute right-0 mt-10 w-64 p-4 bg-zinc-900/90 text-white text-sm rounded-lg shadow-lg pointer-events-none"
+    >
+      <strong>Team Parent, Class of 2030</strong><br/>
+      “We missed 8 practices this year due to no gym—every donation helps keep us on court!”
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,45 @@
+<!-- templates/partials/header.html -->
+<header class="sticky top-0 z-40 w-full bg-black/95 backdrop-blur border-b border-amber-400/20 shadow-lg transition-all">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:px-8">
+    <!-- Logo / Brand -->
+    <a href="{{ url_for('home') }}" class="flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
+      <img src="{{ url_for('static', filename='logo-atx-elite.png') }}" alt="Connect ATX Elite Logo" class="w-12 h-12 rounded-full shadow-gold ring-2 ring-amber-400">
+      <span class="text-2xl font-extrabold tracking-tight text-amber-400 drop-shadow-lg">Connect ATX Elite</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-8 text-lg font-medium">
+      <a href="#about" class="hover:text-amber-400 transition" tabindex="0">About</a>
+      <a href="#tiers" class="hover:text-amber-400 transition" tabindex="0">Tiers</a>
+      <a href="#testimonials" class="hover:text-amber-400 transition" tabindex="0">Testimonials</a>
+      <a href="#faq" class="hover:text-amber-400 transition" tabindex="0">FAQ</a>
+      <a href="#contact" class="hover:text-amber-400 transition" tabindex="0">Contact</a>
+    </nav>
+
+    <!-- Sponsor Button -->
+    <div class="hidden md:block">
+      <a href="#tiers" class="px-5 py-2 rounded-full bg-amber-400 text-black font-bold shadow-gold hover:bg-amber-300 focus-visible:ring-4 focus-visible:ring-amber-400 transition animate-glow">
+        Become a Sponsor
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button (optional) -->
+    <button class="md:hidden flex items-center text-amber-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400" aria-label="Open navigation menu" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"/>
+      </svg>
+    </button>
+  </div>
+  <!-- Mobile Navigation Menu (toggle with button) -->
+  <nav id="mobile-menu" class="md:hidden hidden px-4 pb-3 bg-black/95 border-t border-amber-400/20">
+    <a href="#about" class="block py-2 text-lg hover:text-amber-400">About</a>
+    <a href="#tiers" class="block py-2 text-lg hover:text-amber-400">Tiers</a>
+    <a href="#testimonials" class="block py-2 text-lg hover:text-amber-400">Testimonials</a>
+    <a href="#faq" class="block py-2 text-lg hover:text-amber-400">FAQ</a>
+    <a href="#contact" class="block py-2 text-lg hover:text-amber-400">Contact</a>
+    <a href="#tiers" class="block mt-3 py-2 rounded-full bg-amber-400 text-black text-center font-bold shadow-gold hover:bg-amber-300 transition">
+      Become a Sponsor
+    </a>
+  </nav>
+</header>
+

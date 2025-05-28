@@ -1,0 +1,2 @@
+templates/partials/sponsor_wall.html:4:  <!-- TODO: Loop real sponsor logos here -->
+10_todos.txt:1:templates/partials/sponsor_wall.html:4:  <!-- TODO: Loop real sponsor logos here -->

@@ -1,0 +1,72 @@
+###########################################################################
+#  Core framework
+###########################################################################
+Flask==3.0.3                  # lightweight web framework
+Werkzeug==3.0.2               # Flask’s HTTP guts (explicit pin to avoid 3.x → 4.x surprises)
+itsdangerous==2.2.0           # secure signed cookies (Flask depends on it)
+MarkupSafe==2.1.5             # Jinja2 safety utils
+Jinja2==3.1.4                 # templates
+
+###########################################################################
+#  Database & migrations
+###########################################################################
+Flask-SQLAlchemy==3.1.1       # SQLAlchemy 2.x wrapper, async‑ready
+SQLAlchemy==2.0.30
+Flask-Migrate==4.0.7          # Alembic migrations
+psycopg[binary]==3.1.18        # Postgres driver (swap for sqlite3 in dev)
+
+###########################################################################
+#  Real‑time & background tasks
+###########################################################################
+Flask-SocketIO==6.0.3         # WS real‑time score updates
+python-socketio==5.11.2
+eventlet==0.36.1              # production async worker (or use gevent)
+Celery==5.4.0                 # background jobs (email receipts, cache warm)
+redis==5.0.4                  # Celery broker / caching layer
+
+###########################################################################
+#  Security & CORS
+###########################################################################
+Flask-Cors==4.0.1
+Flask-Limiter==3.4.1          # rate‑limiting (API abuse protection)
+passlib[bcrypt]==1.7.4        # password hashing if you add auth later
+python-dotenv==1.0.1          # `.env` loader
+
+###########################################################################
+#  Payments, social & email
+###########################################################################
+stripe==9.9.0                 # card/Apple/Google Pay donations
+SendGrid==6.11.0              # transactional email (change provider to taste)
+python-slugify==8.0.4         # pretty sponsor‑tier URLs / filenames
+
+###########################################################################
+#  Images, uploads, optimisation
+###########################################################################
+Pillow==10.3.0                # hero image thumb generation
+Flask-Images==4.0.0           # dynamic resizing / caching
+python-magic==0.4.27          # MIME sniffing
+
+###########################################################################
+#  Observability
+###########################################################################
+Flask-Logging==1.0.0          # nicer log formatters (simple wrapper)
+sentry-sdk[flask]==2.5.0      # error tracking
+
+###########################################################################
+#  CLI & admin helpers
+###########################################################################
+Flask-CLI==0.5.2              # coloured shell commands
+Flask-Admin==1.6.1            # quick CRUD for sponsors / players
+
+###########################################################################
+#  Local development & testing  (install with `pip install -r requirements-dev.txt`)
+###########################################################################
+pytest==8.2.0
+pytest-flask==1.4.0
+coverage==7.5.0
+flake8==7.0.0
+black==24.4.2
+mypy==1.10.0
+bandit==1.7.8                 # security linter
+ipython==8.25.0               # REPL with auto‑reload
+

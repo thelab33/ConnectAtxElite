@@ -1,0 +1,172 @@
+{# templates/partials/cta.html — Elevated Call-to-Action #}
+<section
+  id="cta"
+  role="region"
+  aria-labelledby="cta-heading"
+  class="relative py-28 bg-black text-white text-center px-6"
+  tabindex="-1"
+>
+  <div class="max-w-3xl mx-auto space-y-10">
+
+    <!-- 1. Headline & Sub-Headline -->
+    <h2
+      id="cta-heading"
+      class="text-4xl sm:text-5xl font-extrabold text-amber-400 drop-shadow-lg"
+      data-aos="fade-up"
+    >
+      Ready to Join Our Mission?
+    </h2>
+    <p
+      class="text-white/85 text-lg sm:text-xl leading-relaxed"
+      data-aos="fade-up" data-aos-delay="100"
+    >
+      Help us secure gym time, fund travel, and empower our student-athletes for life beyond the court.
+    </p>
+
+    <!-- 2. Live Progress Bar -->
+    {% set raised = config.RAISED_AMOUNT %}
+    {% set goal   = config.GOAL_AMOUNT %}
+    <div class="w-full bg-zinc-800 rounded-full h-4 overflow-hidden" data-aos="fade-up" data-aos-delay="200" aria-hidden="true">
+      <div
+        class="h-4 bg-amber-400 shadow-gold transition-all duration-1000"
+        style="width: {{ (raised/goal*100)|round(0) }}%">
+      </div>
+    </div>
+    <div
+      class="flex justify-center items-center gap-2 font-mono text-sm text-white/80"
+      aria-live="polite"
+      data-aos="fade-up" data-aos-delay="300"
+    >
+      <span role="img" aria-label="Fundraiser">💰</span>
+      <span>
+        <span class="font-bold text-amber-400">${{ "{:,}".format(raised) }}</span> of
+        <span class="font-bold text-amber-400">${{ "{:,}".format(goal) }}</span> goal
+      </span>
+    </div>
+
+    <!-- 3. Urgency Countdown -->
+    <div
+      id="countdown"
+      class="text-amber-300 font-medium"
+      data-aos="fade-up" data-aos-delay="400"
+      aria-live="polite"
+    >
+      <span id="cd-days">--</span>d
+      <span id="cd-hours">--</span>h
+      <span id="cd-mins">--</span>m left to hit our goal!
+    </div>
+
+    <!-- 4. Preset Gift Buttons + Custom Amount -->
+    <div class="flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="500">
+      {% for amt in [25,50,100,250] %}
+      <button class="preset-amt bg-zinc-700 hover:bg-zinc-600 px-4 py-2 rounded-full transition" data-amt="{{ amt }}">
+        ${{ amt }}
+      </button>
+      {% endfor %}
+      <input
+        id="customAmt"
+        type="number" min="1" max="999"
+        placeholder="Custom"
+        class="w-20 bg-zinc-800 text-white text-center rounded-full px-3 py-2 focus:outline-none"
+      />
+    </div>
+
+    <!-- 5. Donate Button → Modal + Confetti -->
+    <button
+      id="donateBtn"
+      class="mt-4 inline-block bg-amber-400 text-black font-semibold text-lg px-8 py-3 rounded-full shadow-gold hover:scale-105 hover:bg-amber-300 focus-visible:ring-4 focus-visible:ring-amber-300 transition-transform duration-300"
+      data-aos="fade-up" data-aos-delay="600"
+    >
+      Donate Now
+    </button>
+
+    <!-- QR code fallback -->
+    <div class="pt-6 flex flex-col items-center gap-1" data-aos="fade-up" data-aos-delay="700">
+      <img
+        src="{{ url_for('static', filename='qr-website.png') }}"
+        alt="Donate via QR Code"
+        width="128" height="128"
+        class="rounded-lg shadow-lg opacity-75 hover:opacity-100 transition"
+        loading="lazy"
+      >
+      <p class="text-xs text-white/60">Scan: CashApp / PayPal / Venmo</p>
+    </div>
+
+    <p class="pt-6 text-sm text-white/60" data-aos="fade-up" data-aos-delay="800">
+      Or contact <a href="mailto:arodgps@gmail.com" class="underline hover:text-amber-300">arodgps@gmail.com</a>
+      &nbsp;| 📞 (512) 820-0475
+    </p>
+  </div>
+
+  {# ——— Modal (using native <dialog>) ——— #}
+  <dialog id="donateDialog" class="w-full max-w-md p-0 rounded-2xl overflow-hidden">
+    <form id="donateForm" method="dialog" class="bg-zinc-950 text-white p-6 space-y-4">
+      <h3 class="text-2xl font-bold text-amber-400">Enter Donation Amount</h3>
+      <input name="amount" id="formAmt" type="number" min="1" max="999" required
+             class="w-full bg-zinc-800 rounded-full px-4 py-2 text-center focus:outline-none" />
+      <div class="flex justify-end gap-2">
+        <button type="reset" class="px-4 py-2 rounded-full bg-zinc-700 hover:bg-zinc-600">Cancel</button>
+        <button type="submit"
+                class="px-6 py-2 rounded-full bg-amber-400 text-black font-bold hover:bg-amber-300">
+          Donate
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+</section>
+
+<script type="module">
+import confetti from "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/+esm";
+import { loadStripe } from "https://js.stripe.com/v3";
+const stripe = await loadStripe("{{ stripe_publishable }}");
+
+// 1️⃣ Countdown Timer
+(function() {
+  const target = new Date("{{ config.CAMPAIGN_END_ISO }}");
+  const days = document.getElementById("cd-days"),
+        hours = document.getElementById("cd-hours"),
+        mins = document.getElementById("cd-mins");
+
+  function tick() {
+    const diff = target - new Date();
+    if (diff <= 0) { clearInterval(timer); return; }
+    const d = Math.floor(diff/86400000),
+          h = Math.floor((diff%86400000)/3600000),
+          m = Math.floor((diff%3600000)/60000);
+    days.textContent = d; hours.textContent = h; mins.textContent = m;
+  }
+  const timer = setInterval(tick, 1000);
+  tick();
+})();
+
+// 2️⃣ Preset amount buttons
+document.querySelectorAll(".preset-amt").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.getElementById("formAmt").value = btn.dataset.amt;
+  });
+});
+
+// 3️⃣ Open dialog & confetti
+const opener = document.getElementById("donateBtn");
+const dialog = document.getElementById("donateDialog");
+opener.addEventListener("click", () => {
+  dialog.showModal();
+  confetti({ particleCount:100, spread:60, colors:["#facc15","#fef3c7"] });
+});
+
+// 4️⃣ Submit form → Stripe checkout
+document.getElementById("donateForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const amount = parseInt(document.getElementById("formAmt").value,10);
+  if (!amount || amount < 1 || amount > 999) return alert("Enter $1–$999");
+  const res = await fetch("/api/create-checkout", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ amount })
+  });
+  const { session_id } = await res.json();
+  await stripe.redirectToCheckout({ sessionId: session_id });
+});
+</script>
+
