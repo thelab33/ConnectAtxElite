@@ -1,0 +1,141 @@
+<footer
+  id="site-footer"
+  role="contentinfo"
+  class="relative bg-zinc-950 text-white py-12 px-6 border-t border-zinc-800 shadow-inner"
+  data-aos="fade-up"
+  data-aos-delay="200"
+>
+  <div class="max-w-6xl mx-auto grid gap-12 md:grid-cols-3 text-center md:text-left">
+
+    <!-- ── Branding & Year ─────────────────────────── -->
+    <div class="space-y-2">
+      <span class="block text-xs text-amber-400 font-semibold tracking-wide">
+        AAU 12U | Austin, TX
+      </span>
+      <p class="text-sm text-white/60">
+        © {{ now().year }} Connect ATX Elite. All rights reserved.
+      </p>
+      <!-- Newsletter capture -->
+      <form
+        id="newsletter-form"
+        class="mt-4 flex flex-col sm:flex-row gap-2 justify-center md:justify-start"
+        onsubmit="handleNewsletterSignup(event)"
+      >
+        <input
+          type="email"
+          name="newsletter_email"
+          required
+          placeholder="Your email"
+          class="w-full sm:w-auto flex-grow px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-amber-400"
+        />
+        <button
+          type="submit"
+          class="px-4 py-2 bg-amber-400 text-black font-semibold rounded-lg hover:bg-amber-300 transition"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+
+    <!-- ── Fundraising Progress + Quick Links ───────── -->
+    <div class="space-y-4 flex flex-col items-center">
+      {% set raised = config.get('RAISED_AMOUNT', 0) %}
+      {% set goal   = config.get('GOAL_AMOUNT', 10000) %}
+      <div class="w-full max-w-xs">
+        <div class="flex justify-between text-xs font-mono text-amber-200 mb-1">
+          <span>Raised</span>
+          <span>${{ "{:,}".format(raised) }} / ${{ "{:,}".format(goal) }}</span>
+        </div>
+        <div class="relative w-full h-3 rounded-lg bg-zinc-800 overflow-hidden">
+          <div
+            class="absolute inset-y-0 left-0 bg-amber-400 shadow-gold transition-all duration-700"
+            style="width: {{ (raised / goal * 100)|round(0, 'floor') }}%;"
+            aria-valuenow="{{ raised }}"
+            aria-valuemax="{{ goal }}"
+            role="progressbar"
+          ></div>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a
+          href="mailto:arodgps@gmail.com"
+          class="px-3 py-1 rounded bg-amber-400/10 text-amber-300 hover:bg-amber-400 hover:text-black transition focus:ring-2 focus:ring-amber-300"
+          aria-label="Email Connect ATX Elite"
+        >📧 Email</a>
+        <a
+          href="https://www.connectatxelite.com"
+          target="_blank"
+          rel="noopener"
+          class="px-3 py-1 rounded bg-amber-400/10 text-amber-300 hover:bg-amber-400 hover:text-black transition focus:ring-2 focus:ring-amber-300"
+          aria-label="Visit official site"
+        >🌐 Site</a>
+        <a
+          href="https://www.paypal.com/donate/your-link"
+          target="_blank"
+          rel="noopener"
+          class="px-3 py-1 rounded bg-green-400/20 text-green-200 hover:bg-green-300 hover:text-black transition focus:ring-2 focus:ring-green-200"
+          aria-label="Donate via PayPal"
+        >💸 Donate</a>
+      </div>
+    </div>
+
+    <!-- ── Contact, Countdown, and Accessible Back-to-Top ── -->
+    <div class="space-y-4 flex flex-col items-center md:items-end">
+      <span class="text-xs text-white/70">
+        Contact: 
+        <a href="mailto:arodgps@gmail.com" class="underline hover:text-amber-300">
+          arodgps@gmail.com
+        </a>
+      </span>
+      <span class="text-xs text-white/70">
+        Phone: 
+        <a href="tel:+15128200475" class="underline hover:text-amber-300">
+          (512) 820-0475
+        </a>
+      </span>
+
+      <!-- Live countdown placeholder -->
+      <div id="next-game-countdown" class="text-sm text-amber-300 font-mono">
+        Next Tournament in: <span id="countdown-timer">00d 00h 00m 00s</span>
+      </div>
+
+      <!-- Accessible anchor link (not fixed!) -->
+      <a
+        href="#main-content"
+        class="mt-2 text-amber-400 underline hover:text-amber-200"
+        aria-label="Back to Top"
+      >↑ Back to Top</a>
+    </div>
+  </div>
+
+  <!-- Optional social-proof ticker -->
+  <div class="mt-8 text-center text-xs text-white/50 font-mono">
+    Recent Supporters: {{ ['Acme Corp','Jane D.','Smith & Co','Austin Hoops','Elite Donor']|join(' • ') }}
+  </div>
+</footer>
+
+<script>
+  // newsletter stub
+  function handleNewsletterSignup(e) {
+    e.preventDefault();
+    const email = e.target.newsletter_email.value;
+    alert(`🎉 Thanks! We'll keep you updated at ${email}`);
+    e.target.reset();
+  }
+
+  // simple countdown (set your target date)
+  const target = new Date("2025-07-01T10:00:00Z");
+  function updateCountdown() {
+    const diff = target - new Date();
+    if (diff <= 0) return;
+    const d = Math.floor(diff/864e5);
+    const h = Math.floor(diff%864e5/36e5);
+    const m = Math.floor(diff%36e5/6e4);
+    const s = Math.floor(diff%6e4/1e3);
+    document.getElementById('countdown-timer').textContent =
+      `${d}d ${h}h ${m}m ${s}s`;
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>
+

@@ -1,0 +1,43 @@
+[637K]  .
+├── [606K]  static
+│   ├── [4.0K]  css
+│   ├── [4.0K]  cursor
+│   ├── [4.0K]  images
+│   ├── [4.0K]  js
+│   ├── [4.0K]  public
+│   ├── [284K]  connect-atx-team.jpg
+│   ├── [ 491]  eslint.config.mjs
+│   ├── [ 391]  file.svg
+│   ├── [7.7K]  forgemaster-ui-polish.sh
+│   ├── [1.0K]  globe.svg
+│   ├── [ 211]  next-env.d.ts
+│   ├── [1.3K]  next.svg
+│   ├── [249K]  package-lock.json
+│   ├── [ 116]  postcss.config.js
+│   ├── [ 480]  qr-calendar.png
+│   ├── [ 478]  qr-paypal.png
+│   ├── [ 405]  qr-sponsorship-deck.png
+│   ├── [ 342]  qr-venmo.png
+│   ├── [ 350]  qr-website.png
+│   ├── [1.4K]  README.md
+│   ├── [ 22K]  ring-photo.avif
+│   ├── [ 165]  scroll-progress.js
+│   ├── [3.2K]  tailwind.config.js
+│   ├── [2.5K]  tailwind.config.js.bak.1748184067
+│   ├── [5.3K]  tailwind.config.ts
+│   ├── [ 726]  tsconfig.json
+│   ├── [ 128]  vercel.svg
+│   └── [ 385]  window.svg
+├── [ 15K]  templates
+│   ├── [4.0K]  modals
+│   ├── [4.0K]  partials
+│   ├── [2.5K]  base.html
+│   └── [ 723]  index.html
+├── [ 186]  app.py
+├── [   0]  __init__.py
+├── [1.1K]  nextjs_to_flask_detox.sh
+├── [2.0K]  nextjs_to_flask_superdetox.sh
+├── [   7]  requirements.txt
+└── [9.1K]  scaffold_connect_atx.sh
+
+ 637K used in 10 directories, 31 files

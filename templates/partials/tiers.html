@@ -1,0 +1,160 @@
+{# templates/partials/tiers.html — Enhanced Sponsor Tiers #}
+<section id="tiers"
+         class="py-24 bg-zinc-900 text-white px-6"
+         role="region" aria-labelledby="tiers-heading" tabindex="-1"
+         data-aos="fade-up" data-aos-duration="800">
+
+  <div class="max-w-6xl mx-auto space-y-16">
+
+    <!-- ① QR sponsor call-out -->
+    <div class="p-6 rounded-2xl bg-gradient-to-r from-amber-400/70 to-amber-200/60
+                text-black flex flex-col md:flex-row items-center justify-between gap-6 shadow-gold"
+         aria-label="Sponsor now call-out"
+         data-aos="zoom-in" data-aos-delay="200">
+      <div>
+        <p class="font-bold text-2xl sm:text-3xl">Want to make the biggest impact?</p>
+        <p class="text-lg text-amber-800/80">
+          Contact us at
+          <a href="mailto:arodgps@gmail.com" class="underline hover:text-amber-700">arodgps@gmail.com</a>
+          or scan to sponsor instantly.
+        </p>
+      </div>
+      <img src="{{ url_for('static', filename='qr-sponsorship-deck.png') }}"
+           alt="Sponsor via QR code"
+           width="90" height="90"
+           class="rounded-lg shadow-lg border border-amber-400 bg-white" />
+    </div>
+
+    <!-- ② Live progress bar -->
+    {% set goal   = goal_amount    or 10000 %}
+    {% set raised = raised_amount  or 7850  %}
+    <div class="w-full max-w-xl mx-auto text-center space-y-2"
+         aria-label="{{ '$%s raised of $%s goal'|format(raised, goal) }}"
+         data-aos="fade-up" data-aos-delay="400">
+      <div class="w-full bg-zinc-800 h-5 rounded-full border border-amber-400/30 overflow-hidden relative">
+        <div id="tiersProgress"
+             class="bg-amber-400 h-5 rounded-full shadow-gold transition-all duration-1000 ease-out"
+             style="width: {{ (raised/goal*100)|round(1,'ceil') }}%;">
+          <span class="pl-2 text-black font-bold">{{ '$%s'|format('{:,}'.format(raised)) }}</span>
+        </div>
+      </div>
+      <span class="text-sm text-amber-200">Goal: ${{ '{:,}'.format(goal) }}</span>
+    </div>
+
+    <!-- ③ Section heading -->
+    <h2 id="tiers-heading" class="text-4xl font-bold text-amber-400 text-center"
+        data-aos="fade-up" data-aos-delay="600">
+      Sponsorship Tiers
+    </h2>
+
+    <!-- ④ Tier cards with flip effect -->
+    {% set tiers = [
+      ('Platinum','$5,000+','heroicons-solid:crown', ['Logo on jerseys','Shout-outs on social','VIP invites'], 'from-amber-500 to-amber-300', True),
+      ('Gold',    '$2,500',  'heroicons-solid:currency-dollar', ['Warm-ups logo','Social features','Appreciation invites'], 'from-amber-400 to-amber-200', False),
+      ('Silver',  '$1,000',  'heroicons-solid:medal', ['Social shout-outs','Thank-you certificate','Board listing'], 'from-gray-300 to-slate-100', False),
+      ('Bronze',  '$500',    'heroicons-solid:trophy', ['Public thank-you','Board listing'], 'from-orange-400 to-amber-200', False),
+      ('Custom',  'Any Amount','heroicons-solid:star', ['Tailored benefits','Personalized impact'], 'from-purple-500 to-pink-400', False)
+    ] %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for title, amount, icon, benefits, gradient, highlight in tiers %}
+      <div class="flip-card perspective" tabindex="0" data-aos="fade-up" data-aos-delay="{{ 700 + loop.index0*100 }}">
+        <div class="relative w-full h-full transition-transform duration-500 preserve-3d group hover:rotate-y-180 focus-within:rotate-y-180">
+          <!-- Front side -->
+          <div class="card-face card-front p-6 rounded-2xl bg-gradient-to-br {{ gradient }}
+                      shadow-2xl text-black flex flex-col items-center justify-start space-y-4">
+            {% if highlight %}
+              <span class="absolute top-4 right-4 bg-black/80 text-amber-300 text-xs px-3 py-1 rounded-full font-semibold shadow">Top&nbsp;Tier</span>
+            {% endif %}
+            <div class="text-5xl">
+              <i data-feather="{{ icon }}"></i>
+            </div>
+            <h3 class="text-2xl font-bold">{{ title }}</h3>
+            <p class="text-lg font-semibold">{{ amount }}</p>
+            <ul class="list-disc list-inside text-sm space-y-1">
+              {% for item in benefits %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Back side -->
+          <div class="card-face card-back absolute inset-0 p-6 rounded-2xl bg-zinc-800 text-white
+                      flex flex-col items-center justify-center backface-hidden shadow-lg">
+            <p class="mb-4 font-semibold">Secure this tier now:</p>
+            <button class="tier-cta inline-block bg-amber-400 text-black font-bold px-6 py-2 rounded-full
+                           shadow-gold hover:scale-105 focus-visible:ring-4 focus-visible:ring-amber-300 transition"
+                    data-amount="{{ amount | replace('$','') | replace(',','') | default('') }}">
+              Sponsor {{ title }}
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- ⑤ FAQ accordion (in-place) -->
+    <div class="max-w-3xl mx-auto pt-10 border-t border-zinc-800"
+         data-aos="fade-up" data-aos-delay="1100">
+      <button id="faqToggleTiers"
+              class="flex items-center gap-2 text-amber-400 font-bold text-lg hover:underline transition"
+              aria-expanded="false" aria-controls="faqBodyTiers">
+        ▶ Frequently Asked Questions
+      </button>
+      <div id="faqBodyTiers" class="hidden mt-4 bg-zinc-900 border border-amber-400/20 rounded-xl p-6 space-y-4">
+        <div>
+          <b>Can I sponsor anonymously?</b>
+          <p class="text-sm text-white/80">Yes — just let us know in your message or donation form.</p>
+        </div>
+        <div>
+          <b>Where does my sponsorship go?</b>
+          <p class="text-sm text-white/80">100 % supports gym rental, travel, academic programs, and gear.</p>
+        </div>
+        <div>
+          <b>How do I become a sponsor?</b>
+          <p class="text-sm text-white/80">Click any “Sponsor” button or email us—we’ll personalize your impact!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Feather icons replacement
+  document.addEventListener('DOMContentLoaded', () => {
+    feather.replace();
+
+    // FAQ toggle
+    document.getElementById('faqToggleTiers')?.addEventListener('click', e => {
+      const btn = e.currentTarget;
+      const body = document.getElementById('faqBodyTiers');
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      btn.textContent = (open ? '▶' : '▼') + ' Frequently Asked Questions';
+      body.classList.toggle('hidden', open);
+    });
+
+    // Tier CTA buttons → open donation modal & prefill amount
+    document.querySelectorAll('.tier-cta').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const amt = btn.dataset.amount;
+        const dlg = document.getElementById('donateDialog');
+        if (dlg) {
+          dlg.querySelector('input[name="amount"]').value = amt;
+          dlg.showModal();
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  /* flip-card helper */
+  .perspective { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .rotate-y-180 { transform: rotateY(180deg); }
+  .card-face        { backface-visibility: hidden; }
+  .card-front       { position: relative; }
+  .card-back        { transform: rotateY(180deg); }
+  .backface-hidden  { backface-visibility: hidden; }
+</style>
+

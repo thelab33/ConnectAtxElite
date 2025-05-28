@@ -1,0 +1,106 @@
+<section id="mission"
+         class="relative py-24 px-6 text-white overflow-hidden bg-gradient-to-b from-zinc-950 via-black to-zinc-950">
+  <!-- 1. Background video/parallax -->
+  <video autoplay muted loop playsinline
+         class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
+    <source src="{{ url_for('static', filename='connect-atx-team.mp4') }}" type="video/mp4">
+    <!-- fallback image -->
+    <img src="{{ url_for('static', filename='connect-atx-team.jpg') }}"
+         alt="Team huddle background" class="absolute inset-0 w-full h-full object-cover opacity-20">
+  </video>
+
+  <div class="relative z-10 max-w-4xl mx-auto text-center space-y-8">
+    <h2 class="text-4xl md:text-5xl font-extrabold text-amber-400 drop-shadow-lg"
+        data-aos="zoom-in" data-aos-duration="800">
+      Our Mission
+    </h2>
+
+    <div class="prose prose-invert mx-auto space-y-6"
+         data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">
+      <p>
+        Connect ATX Elite is a community-powered, non-profit 12U AAU basketball program based in Austin, TX.
+        We are committed to developing not only skilled athletes, but confident, disciplined, and academically driven young leaders.
+      </p>
+      <p>
+        Our boys — many of whom are honor-roll students — thrive in an environment rooted in teamwork, mentorship, and integrity.
+        Through basketball, we teach life lessons that extend far beyond the court.
+      </p>
+    </div>
+
+    <!-- 3. Watch Our Story button -->
+    <button id="storyBtn"
+            class="inline-flex items-center gap-2 mt-4 bg-amber-400 text-black font-semibold px-6 py-3 rounded-full shadow-lg hover:scale-105 focus-visible:ring-4 focus-visible:ring-amber-300 transition-all"
+            data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M4.21 4.21a1 1 0 011.415 0L12 10.586l6.364-6.364a1 1 0 111.415 1.415L13.414 12l6.365 6.364a1 1 0 01-1.415 1.415L12 13.414l-6.364 6.365a1 1 0 01-1.415-1.415L10.586 12 4.21 5.636a1 1 0 010-1.425z"/>
+      </svg>
+      Watch Our Story
+    </button>
+  </div>
+
+  <!-- 2. Animated stats grid -->
+  <div class="relative z-10 mt-16 grid grid-cols-2 sm:grid-cols-4 gap-8 max-w-5xl mx-auto text-center"
+       data-aos="fade-up" data-aos-delay="600" data-aos-duration="800">
+    <div>
+      <span class="text-4xl font-extrabold text-amber-400 counter" data-target="16">0</span>
+      <p class="mt-1 text-sm uppercase">Players Enrolled</p>
+    </div>
+    <div>
+      <span class="text-4xl font-extrabold text-amber-400 counter" data-target="11">0</span>
+      <p class="mt-1 text-sm uppercase">Honor Roll Scholars</p>
+    </div>
+    <div>
+      <span class="text-4xl font-extrabold text-amber-400 counter" data-target="12">0</span>
+      <p class="mt-1 text-sm uppercase">Tournaments Played</p>
+    </div>
+    <div>
+      <span class="text-4xl font-extrabold text-amber-400 counter" data-target="3">0</span>
+      <p class="mt-1 text-sm uppercase">Years Running</p>
+    </div>
+  </div>
+</section>
+
+<!-- Video Modal -->
+<dialog id="storyModal" class="p-0 rounded-2xl overflow-hidden">
+  <button class="absolute top-3 right-3 text-white text-2xl z-20" onclick="storyModal.close()">×</button>
+  <video controls autoplay class="w-full h-auto">
+    <source src="{{ url_for('static', filename='connect-atx-story.mp4') }}" type="video/mp4">
+    Sorry, your browser doesn’t support embedded videos.
+  </video>
+</dialog>
+
+<script>
+  // 4. Counter animation on scroll
+  document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll(".counter");
+    const animateCounters = () => {
+      counters.forEach(el => {
+        const target = +el.dataset.target;
+        const step = Math.ceil(target / 100);
+        let current = 0;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            el.textContent = target;
+            clearInterval(timer);
+          } else {
+            el.textContent = current;
+          }
+        }, 20);
+      });
+    };
+    // trigger when section visible
+    new IntersectionObserver((entries, obs) => {
+      if (entries[0].isIntersecting) {
+        animateCounters();
+        obs.disconnect();
+      }
+    }, { threshold: 0.5 }).observe(document.getElementById("mission"));
+
+    // 5. Video modal opening
+    document.getElementById("storyBtn").addEventListener("click", () => {
+      document.getElementById("storyModal").showModal();
+    });
+  });
+</script>
+
