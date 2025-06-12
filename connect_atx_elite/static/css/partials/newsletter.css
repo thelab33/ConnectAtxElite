@@ -1,0 +1,64 @@
+/* ── Newsletter Popup Styles ───────────────────────────────────── */
+
+.newsletter-popup {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  max-width: 320px;
+  background-color: var(--background);
+  color: var(--foreground);
+  border-radius: var(--radius);
+  box-shadow: 0 0 20px var(--accent);
+  padding: 1.5rem;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.newsletter-popup.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.newsletter-popup h3 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.newsletter-popup input[type="email"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1.5px solid var(--accent-soft);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  outline-offset: 3px;
+  transition: border-color 0.3s ease;
+}
+
+.newsletter-popup input[type="email"]:focus-visible {
+  border-color: var(--accent);
+  outline-offset: 3px;
+  outline: 3px solid var(--accent-soft);
+}
+
+.newsletter-popup button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--accent);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--foreground);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-popup button:hover,
+.newsletter-popup button:focus-visible {
+  background-color: var(--accent-hover);
+  outline-offset: 3px;
+  outline: 3px solid var(--accent-soft);
+}

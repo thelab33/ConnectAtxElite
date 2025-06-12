@@ -1,0 +1,88 @@
+/* ── About Section ─────────────────────────────────────────────── */
+
+/* Container base */
+.about-section {
+  position: relative;
+  z-index: 1;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Stat card */
+.about-section .stat-card {
+  background: rgba(24, 24, 27, 0.85);
+  border: 1.5px solid rgba(251, 191, 36, 0.15);
+  box-shadow: 0 2px 16px rgba(251, 191, 36, 0.1);
+  border-radius: var(--radius);
+  min-width: 150px;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  color: var(--accent);
+  transition: transform 0.16s cubic-bezier(.22,.61,.36,1), box-shadow 0.24s ease;
+}
+
+.about-section .stat-card:hover,
+.about-section .stat-card:focus-within {
+  transform: scale(1.05);
+  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.16);
+  outline: none;
+}
+
+.about-section .stat-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-shadow: 0 1px 4px rgba(251, 191, 36, 0.14);
+}
+
+.about-section .stat-label {
+  font-size: 1rem;
+  color: var(--foreground);
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+/* Luxe Gradient Divider */
+.about-section .lux-divider {
+  width: 4rem;
+  height: 0.33rem;
+  margin: 1.5rem auto;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #fbbf24a6 0%, #f59e42a6 100%);
+  box-shadow: 0 1px 6px #fbbf2433;
+}
+
+/* Challenge box */
+.about-section .challenge-box {
+  background: linear-gradient(120deg, #18181b 60%, #111 100%);
+  border-left: 5px solid #ef4444cc;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 32px #ef44441a;
+  padding: 2rem 2rem 2rem 2.5rem;
+  color: var(--accent-soft);
+  font-weight: 600;
+}
+
+/* Sparkle animation for stat numbers */
+@keyframes sparkle {
+  0%, 90% { filter: brightness(1); }
+  95% { filter: brightness(2); }
+  100% { filter: brightness(1); }
+}
+.sparkle {
+  animation: sparkle 3.5s infinite cubic-bezier(.8,.21,.19,.99);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .about-section .stat-card {
+    min-width: 120px;
+    padding: 1rem 1.25rem;
+  }
+  .about-section .stat-value {
+    font-size: 1.5rem;
+  }
+}

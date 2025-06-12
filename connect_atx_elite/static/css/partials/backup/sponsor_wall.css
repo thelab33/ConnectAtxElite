@@ -1,0 +1,31 @@
+/* ── Sponsor Wall Styles ──────────────────────────────────────── */
+
+#sponsor-wall {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 1rem 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+  gap: 1.25rem;
+}
+
+#sponsor-wall::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+#sponsor-wall .sponsor-logo {
+  flex: 0 0 auto;
+  max-height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px var(--accent));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+#sponsor-wall .sponsor-logo:hover,
+#sponsor-wall .sponsor-logo:focus-visible {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px var(--accent-hover));
+  outline: none;
+}

@@ -1,0 +1,28 @@
+/* Newsletter Modal */
+#newsletterModal {
+  background: rgba(24, 24, 27, 0.95);
+  border-radius: var(--radius);
+  box-shadow: 0 0 25px var(--accent);
+  padding: 2rem 3rem;
+  width: 90vw;
+  max-width: 440px;
+  color: var(--accent-soft);
+  font-weight: 600;
+  position: relative;
+}
+#newsletterModal header {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+#newsletterModal button.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 1.25rem;
+  cursor: pointer;
+}

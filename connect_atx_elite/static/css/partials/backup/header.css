@@ -1,0 +1,27 @@
+/* Header Navigation */
+header#site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(24, 24, 27, 0.95);
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: saturate(180%) blur(12px);
+}
+header#site-header nav a {
+  color: var(--accent-soft);
+  margin: 0 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.2s ease;
+}
+header#site-header nav a:hover,
+header#site-header nav a:focus-visible {
+  color: var(--accent);
+  outline: none;
+  text-decoration: underline;
+}

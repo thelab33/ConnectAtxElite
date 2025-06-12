@@ -1,0 +1,23 @@
+<section id="story-video" class="relative w-full max-w-7xl mx-auto rounded-xl overflow-hidden shadow-lg" role="region" aria-labelledby="story-video-heading" tabindex="0">
+  <h2 id="story-video-heading" class="sr-only">Connect ATX Elite Team Story Video</h2>
+
+  <video
+    class="w-full h-auto object-cover"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="{{ url_for('static', filename='images/connect-atx-story-poster.jpg') }}"
+    loading="lazy"
+    aria-describedby="story-video-desc"
+  >
+    <source src="https://cdn.videvo.net/videvo_files/video/free/2017-07/small_watermarked/170507_03_Basketball_Game_04_preview.webm" type="video/webm" />
+    <source src="https://cdn.videvo.net/videvo_files/video/free/2017-07/small_watermarked/170507_03_Basketball_Game_04_preview.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <figcaption id="story-video-desc" class="mt-2 text-center text-sm text-amber-400 font-semibold">
+    A heartfelt story showcasing our team's journey, dedication, and spirit on and off the court.
+  </figcaption>
+</section>

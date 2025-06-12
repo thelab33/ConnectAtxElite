@@ -1,0 +1,7 @@
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Basketball court placeholder">
+  <rect width="800" height="450" fill="#0a0a0a"></rect>
+  <circle cx="400" cy="225" r="100" stroke="#facc15" stroke-width="6" fill="none"></circle>
+  <line x1="400" y1="125" x2="400" y2="325" stroke="#facc15" stroke-width="4"></line>
+  <line x1="300" y1="225" x2="500" y2="225" stroke="#facc15" stroke-width="4"></line>
+  <text x="400" y="440" font-family="sans-serif" font-size="32" fill="#facc15" text-anchor="middle" font-weight="bold">Connect ATX Elite</text>
+</svg>
