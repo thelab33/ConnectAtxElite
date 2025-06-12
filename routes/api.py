@@ -7,16 +7,16 @@ plus live-update webhook to broadcast new donations via Socket.IO.
 """
 
 from __future__ import annotations
-
 import os
 import re
 import stripe
-from flask import Blueprint, jsonify, request, Response
+from flask import Blueprint, request, Response
 from twilio.twiml.messaging_response import MessagingResponse
 from werkzeug.exceptions import BadRequest
+from extensions import socketio  # <— Use absolute import!
 
-# ← NEW: import your socketio instance
-from .. import socketio
+# ... rest of your code ...
+
 
 # ─── Configuration ────────────────────────────────────────────────────────
 bp = Blueprint("api", __name__, url_prefix="/api")
@@ -164,3 +164,13 @@ def sms_webhook() -> Response:
     )
     return Response(str(resp), mimetype="application/xml")
 
+
+
+@bp.get("/totals")
+def totals():
+    """Return {'raised':…, 'goal':…} for the frontend."""
+    from flask import current_app, jsonify
+    return jsonify({
+        "raised": current_app.config.get("RAISED_AMOUNT", 0),
+        "goal":   current_app.config.get("GOAL_AMOUNT", 10000)
+    })
