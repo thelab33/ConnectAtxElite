@@ -68,3 +68,13 @@ body {
   display:none;gap:.5rem;align-items:center;
   box-shadow:0 4px 16px rgba(0,0,0,.5);z-index:50}
 #goalHud.visible{display:flex}
+
+/* ░▒▓█  floating fundraising HUD  █▓▒░ */
+#goalHud{
+  position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);
+  padding:.5rem 1rem;border-radius:9999px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  color:#facc15;font:600 .875rem/1 ui-monospace,monospace;
+  display:none;gap:.5rem;align-items:center;
+  box-shadow:0 4px 16px rgba(0,0,0,.5);z-index:50}
+#goalHud.visible{display:flex}
