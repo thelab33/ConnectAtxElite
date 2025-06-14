@@ -78,3 +78,10 @@ body {
   display:none;gap:.5rem;align-items:center;
   box-shadow:0 4px 16px rgba(0,0,0,.5);z-index:50}
 #goalHud.visible{display:flex}
+
+/* —— Sections ———————————— */
+#tiers          { @apply bg-zinc-900 py-16; }
+#ctaSection     { @apply bg-amber-400/5 py-20 text-center; }
+#testimonials   { @apply bg-black py-16 text-zinc-200; }
+
+/* feel free to tweak / extend */
