@@ -1,0 +1,86 @@
+<header
+  class="sticky top-0 z-40 w-full bg-secondary/95 backdrop-blur border-b border-primary/20 shadow-lg transition-all"
+>
+  <div
+    class="max-w-7xl mx-auto flex items-center justify-between px-4 py-4 md:px-8"
+  >
+    <!-- Logo / Brand -->
+    <a
+      href="{{ url_for('home') }}"
+      class="flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+    >
+      <img
+        src="{{ url_for('static', filename='logo-atx-elite.png') }}"
+        alt="Connect ATX Elite Logo"
+        class="w-12 h-12 rounded-full shadow-gold-glow ring-2 ring-primary"
+      />
+      <span
+        class="text-2xl font-extrabold tracking-tight text-primary drop-shadow-lg"
+        >Connect ATX Elite</span
+      >
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav
+      class="hidden md:flex items-center gap-8 text-lg font-medium text-foreground"
+    >
+      {% for link, label in [('about', 'About'), ('tiers', 'Tiers'),
+      ('testimonials', 'Testimonials'), ('faq', 'FAQ'), ('contact', 'Contact')]
+      %}
+      <a href="#{{ link }}" class="hover:text-primary transition" tabindex="0"
+        >{{ label }}</a
+      >
+      {% endfor %}
+    </nav>
+
+    <!-- Sponsor Button -->
+    <div class="hidden md:block">
+      <a
+        href="#tiers"
+        class="px-5 py-2 rounded-full bg-primary text-secondary font-bold shadow-gold-glow hover:bg-primary-hover focus-visible:ring-4 focus-visible:ring-primary transition animate-glow"
+      >
+        Become a Sponsor
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      aria-label="Open navigation menu"
+      class="md:hidden flex items-center text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+    >
+      <svg
+        class="w-8 h-8"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M4 8h16M4 16h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Navigation Menu -->
+  <nav
+    id="mobile-menu"
+    class="md:hidden hidden px-4 pb-3 bg-secondary/95 border-t border-primary/20"
+  >
+    {% for link, label in [('about', 'About'), ('tiers', 'Tiers'),
+    ('testimonials', 'Testimonials'), ('faq', 'FAQ'), ('contact', 'Contact')] %}
+    <a
+      href="#{{ link }}"
+      class="block py-2 text-lg text-foreground hover:text-primary transition"
+      >{{ label }}</a
+    >
+    {% endfor %}
+    <a
+      href="#tiers"
+      class="block mt-3 py-2 rounded-full bg-primary text-secondary text-center font-bold shadow-gold-glow hover:bg-primary-hover transition"
+    >
+      Become a Sponsor
+    </a>
+  </nav>
+</header>

@@ -1,0 +1,32 @@
+{
+  "name": "connect-atx-elite",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:css": "npx tailwindcss -c tailwind.config.js -i ./connect_atx_elite/static/css/globals.css -o ./connect_atx_elite/static/css/tw-build.css --watch",
+    "dev:js": "npx esbuild connect_atx_elite/static/js/main.js --bundle --sourcemap --outfile=static/js/bundle.min.js --watch",
+    "dev": "npm-run-all -p dev:*",
+    "clean": "rimraf ./connect_atx_elite/static/css/tw-build.css ./static/js/bundle.min.js",
+    "build:css": "npx tailwindcss -c tailwind.config.js -i ./connect_atx_elite/static/css/globals.css -o ./connect_atx_elite/static/css/tw-build.css --minify",
+    "build:js": "npx esbuild connect_atx_elite/static/js/main.js --bundle --minify --outfile=static/js/bundle.min.js",
+    "build": "npm run clean && npm run build:css && npm run build:js",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,html,json,md}\"",
+    "check:format": "prettier --check \"**/*.{js,jsx,ts,tsx,css,html,json,md}\""
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.10",
+    "postcss": "^8.4.31",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.5",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.3.0"
+  }
+}
+

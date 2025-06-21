@@ -1,0 +1,150 @@
+<!doctype html>
+<!--  Base layout for Connect ATX Elite  -->
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- Required meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <!-- SEO / Social -->
+  <title>{% block title %}Connect ATX Elite{% endblock %}</title>
+  <meta name="description"
+        content="Empowering youth through basketball, mentorship & academic excellence. Support our 12U AAU program in Austin TX!" />
+  <meta name="theme-color" content="#facc15" />
+
+  <!--  OpenGraph -->
+  <meta property="og:title"        content="Connect ATX Elite" />
+  <meta property="og:description"  content="Sponsor our 12U AAU basketball team—invest in the next generation." />
+  <meta property="og:type"         content="website" />
+  <meta property="og:site_name"    content="Connect ATX Elite" />
+  <meta property="og:image"
+        content="{{ url_for('static', filename='connect-atx-team.jpg') }}" />
+
+  <!--  Twitter -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Connect ATX Elite" />
+  <meta name="twitter:description"
+        content="Sponsor our team. Invest in youth. Join the mission!" />
+  <meta name="twitter:image"
+        content="{{ url_for('static', filename='connect-atx-team.jpg') }}" />
+
+  <!--  Icons -->
+  <link rel="icon" type="image/png" sizes="32x32"
+        href="{{ url_for('static', filename='favicon.ico') }}" />
+  <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ url_for('static', filename='images/apple-touch.png') }}" />
+
+  <!--  Performance hints -->
+  <link rel="preconnect" href="https://js.stripe.com" crossorigin>
+  <link rel="preload" as="image"
+        href="{{ url_for('static', filename='connect-atx-team.jpg') }}" />
+
+  <!--  Styles -->
+  <!-- Tailwind build (single file) -->
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/tw-build.css') }}" />
+
+  {% block extra_styles %}{% endblock %}
+  {% block head %}{% endblock %}
+
+  <!--  Inline helpers (runs before FOUC) -->
+  <style>
+    body.fade-in { opacity:0; transition:opacity .6s ease }
+    body.loaded  { opacity:1 }
+    #progressBar { position:fixed; top:0; left:0; height:3px;
+                   background:#facc15; transform-origin:left;
+                   transform:scaleX(0); z-index:60 }
+  </style>
+</head>
+
+<body id="bodyRoot"
+      class="bg-zinc-950 text-white font-sans antialiased fade-in dark:bg-black">
+
+  <!-- Progress bar -->
+  <div id="progressBar" aria-hidden="true"></div>
+
+  <!-- Skip-to-content link (a11y) -->
+  <a href="#main-content"
+     class="skip-to-content sr-only focus:not-sr-only absolute left-4 top-4 z-50
+            rounded bg-amber-400 px-4 py-2 font-bold text-black shadow-lg transition">
+    Skip to content
+  </a>
+
+  {% block content %}{% endblock %}
+  {% block modals  %}{% endblock %}
+
+  <!-- Chat / Sponsor CTA -->
+  <a href="mailto:arodgps@gmail.com"
+     class="fixed bottom-6 right-6 z-50 bg-amber-400 hover:bg-amber-300
+            text-black font-bold px-5 py-3 rounded-full shadow-lg
+            focus-visible:ring-4 focus-visible:ring-amber-200 transition">
+    💬 Chat / Sponsor
+  </a>
+
+  <!-- Dark-mode toggle -->
+  <button id="themeToggle" type="button" aria-label="Toggle dark mode"
+          class="fixed bottom-6 left-6 z-50 rounded-full p-2 bg-zinc-800/80
+                 backdrop-blur hover:bg-zinc-700 text-amber-400 shadow-lg
+                 focus-visible:ring-4 focus-visible:ring-amber-200 transition">
+    🌙
+  </button>
+
+  <!-- Third-party SDKs -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <!--  Service-worker registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      addEventListener('load', () =>
+        navigator.serviceWorker.register('/sw.js').catch(() => {})
+      );
+    }
+  </script>
+
+  <!--  Runtime helpers -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* fade-in */
+      document.getElementById('bodyRoot')?.classList.add('loaded');
+
+      /* skip-link focus */
+      document
+        .querySelector('.skip-to-content')
+        ?.addEventListener('click', () => {
+          const main = document.getElementById('main-content');
+          if (main) { main.setAttribute('tabindex', '-1'); main.focus(); }
+        });
+
+      /* dark-mode toggle */
+      const root = document.documentElement;
+      const btn  = document.getElementById('themeToggle');
+      if (!btn) return;
+      if (localStorage.getItem('theme') === 'dark') root.classList.add('dark');
+      btn.textContent = root.classList.contains('dark') ? '☀️' : '🌙';
+      btn.addEventListener('click', () => {
+        root.classList.toggle('dark');
+        localStorage.setItem('theme',
+          root.classList.contains('dark') ? 'dark' : 'light');
+        btn.textContent = root.classList.contains('dark') ? '☀️' : '🌙';
+      });
+    });
+
+    /* scroll progress */
+    addEventListener('scroll', () => {
+      const bar = document.getElementById('progressBar');
+      if (!bar) return;
+      const s  = document.documentElement.scrollTop;
+      const h  = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = `scaleX(${h ? (s / h).toFixed(3) : 0})`;
+    }, { passive: true });
+  </script>
+
+  {% block scripts %}
+  <!-- Your JS bundle -->
+  <script src="{{ url_for('static', filename='js/bundle.min.js') }}" defer></script>
+  {% endblock %}
+</body>
+</html>
+

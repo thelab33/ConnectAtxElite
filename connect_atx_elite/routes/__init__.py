@@ -1,12 +1,9 @@
-from flask import Blueprint
-bp = Blueprint('main', __name__)
+from flask import Blueprint, current_app
 
-"""routes package."""
+bp = Blueprint("main", __name__)
 
-# ─── serve /sw.js so the SW controls the whole origin ─────────────
-@bp.get('/sw.js')
+@bp.get("/sw.js")
 def service_worker():
-    """Return the root-scope service-worker JS."""
-    from flask import current_app
-    return current_app.send_static_file('sw.js')
-# ------------------------------------------------------------------
+    """Return the service-worker with root scope."""
+    return current_app.send_static_file("sw.js")
+

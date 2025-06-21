@@ -24,16 +24,17 @@ We build young leaders, academic achievers, and lifelong teammates.
 ## 💸 How You Can Help
 
 **Sponsorship = Impact**
+
 - Gym rentals, tournament travel, and mentorship all run on community support.
 - Every dollar goes to supporting youth & families.
 
-| Tier      | Donation      | Perks                       |
-|-----------|--------------|-----------------------------|
-| 🏆 Platinum | $5,000+      | Logo on jerseys, VIP events |
-| 🥇 Gold     | $2,500       | Warm-ups logo, Social perks |
-| 🥈 Silver   | $1,000       | Thank-you, Board listing    |
-| 🥉 Bronze   | $500         | Public thank-you            |
-| ⭐ Custom   | Any amount   | Personalized impact         |
+| Tier        | Donation   | Perks                       |
+| ----------- | ---------- | --------------------------- |
+| 🏆 Platinum | $5,000+    | Logo on jerseys, VIP events |
+| 🥇 Gold     | $2,500     | Warm-ups logo, Social perks |
+| 🥈 Silver   | $1,000     | Thank-you, Board listing    |
+| 🥉 Bronze   | $500       | Public thank-you            |
+| ⭐ Custom   | Any amount | Personalized impact         |
 
 **Become a Sponsor:**  
 [Scan QR](static/qr-sponsorship-deck.png) or [Email us](mailto:arodgps@gmail.com)
@@ -43,9 +44,9 @@ We build young leaders, academic achievers, and lifelong teammates.
 ## 🏆 Recent Achievements
 
 - ${{RAISED_AMOUNT}} raised of ${{GOAL_AMOUNT}} goal (join us!)
-- [X] 16 Players Enrolled
-- [X] 11 Honor Roll Scholars
-- [X] 12 Tournaments Played
+- [x] 16 Players Enrolled
+- [x] 11 Honor Roll Scholars
+- [x] 12 Tournaments Played
 
 ---
 
@@ -61,7 +62,7 @@ Every logo below represents a family or company that keeps our kids on the court
 
 - **Email:** [arodgps@gmail.com](mailto:arodgps@gmail.com)
 - **Site:** [connectatxelite.com](https://connectatxelite.com)
-- **Phone:** 
+- **Phone:**
 
 ---
 
@@ -79,6 +80,6 @@ Every logo below represents a family or company that keeps our kids on the court
 
 ## 💚 **Support the Mission — Sponsor a Kid, Sponsor a Dream!**
 
-> *Help us take Austin youth further, on and off the court.*
+> _Help us take Austin youth further, on and off the court._
 
 ---

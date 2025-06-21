@@ -1,0 +1,116 @@
+<!-- Donation Modal -->
+<div
+  id="donation-modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4 py-8"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="donation-modal-title"
+>
+  <!-- Modal Panel -->
+  <div
+    class="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden"
+    data-aos="zoom-in"
+    data-aos-delay="100"
+  >
+    <!-- Close Button -->
+    <button
+      type="button"
+      class="absolute top-4 right-4 text-gray-500 hover:text-black focus:outline-none"
+      aria-label="Close donation form"
+      onclick="toggleDonationModal(false)"
+    >
+      &times;
+    </button>
+
+    <!-- Header -->
+    <header class="bg-amber-400 px-6 py-4">
+      <h2
+        id="donation-modal-title"
+        class="text-2xl font-extrabold text-black text-center"
+      >
+        Support Our Team
+      </h2>
+    </header>
+
+    <!-- Form Body -->
+    <form
+      id="donation-form"
+      class="px-6 py-8 space-y-6 text-black"
+      onsubmit="return handleDonation(event)"
+    >
+      <div class="grid grid-cols-1 gap-4">
+        <label class="block">
+          <span class="font-semibold">Your Name</span>
+          <input
+            type="text"
+            name="name"
+            required
+            class="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-300"
+          />
+        </label>
+        <label class="block">
+          <span class="font-semibold">Email Address</span>
+          <input
+            type="email"
+            name="email"
+            required
+            class="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-300"
+          />
+        </label>
+        <label class="block">
+          <span class="font-semibold">Donation Amount (USD)</span>
+          <input
+            type="number"
+            name="amount"
+            min="1"
+            value="25"
+            required
+            class="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-300"
+          />
+        </label>
+      </div>
+
+      <!-- Stripe / PayPal Buttons Placeholder -->
+      <div id="payment-buttons" class="space-y-4">
+        <!-- e.g. <div id="stripe-button" class="w-full"></div> -->
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="w-full bg-amber-400 hover:bg-amber-300 text-black font-bold py-3 rounded-lg shadow-md transition-transform hover:scale-105 focus:ring-4 focus:ring-amber-200"
+      >
+        Donate Now
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Toggle modal visibility
+  function toggleDonationModal(show = true) {
+    document.getElementById('donation-modal').classList.toggle('hidden', !show);
+  }
+
+  // Handle form submit (hook into Stripe/PayPal SDK here)
+  async function handleDonation(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      amount: parseInt(form.amount.value, 10),
+    };
+
+    // TODO: replace with real Stripe Checkout / PayPal integration
+    console.log('Processing donation:', data);
+
+    // Show a thank-you & close
+    alert(`Thank you, ${data.name}! Redirecting to secure payment…`);
+    toggleDonationModal(false);
+    return false;
+  }
+
+  // Example: open modal via JS
+  // document.getElementById('donate-btn').onclick = () => toggleDonationModal(true);
+</script>

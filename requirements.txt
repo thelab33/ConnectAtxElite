@@ -1,206 +1,160 @@
 ###########################################################################
-#  Core framework
+# 🌟 Core Frameworks
 ###########################################################################
-Flask==3.0.3                  # lightweight web framework
-Werkzeug==3.0.2               # Flask’s HTTP guts (explicit pin to avoid 3.x → 4.x surprises)
-itsdangerous==2.2.0           # secure signed cookies (Flask depends on it)
-MarkupSafe==2.1.5             # Jinja2 safety utils
-Jinja2==3.1.4                 # templates
+Flask==3.1.0                   # Lightweight web framework
+Werkzeug==3.1.3                # Flask HTTP engine
+itsdangerous==2.2.0            # Signed cookies / security helpers
+MarkupSafe==2.1.5              # Template safety
+Jinja2==3.1.4                  # Flask template engine
+
+Django==5.2                    # Optional full-stack framework
+FastAPI==0.115.12              # Modern async API framework
+starlette==0.46.1              # ASGI toolkit for FastAPI
+asgiref==3.8.1                 # ASGI reference implementation
 
 ###########################################################################
-#  Database & migrations
+# 🛡 Security / Auth / CORS
 ###########################################################################
-Flask-SQLAlchemy==3.1.1       # SQLAlchemy 2.x wrapper, async‑ready
-SQLAlchemy==2.0.30
-Flask-Migrate==4.0.7          # Alembic migrations
-psycopg[binary]==3.1.18        # Postgres driver (swap for sqlite3 in dev)
-
-###########################################################################
-#  Real‑time & background tasks
-###########################################################################
-Flask-SocketIO==6.0.3         # WS real‑time score updates
-python-socketio==5.11.2
-eventlet==0.36.1              # production async worker (or use gevent)
-Celery==5.4.0                 # background jobs (email receipts, cache warm)
-redis==5.0.4                  # Celery broker / caching layer
-
-###########################################################################
-#  Security & CORS
-###########################################################################
-Flask-Cors==4.0.1
-Flask-Limiter==3.4.1          # rate‑limiting (API abuse protection)
-passlib[bcrypt]==1.7.4        # password hashing if you add auth later
-python-dotenv==1.0.1          # `.env` loader
-
-###########################################################################
-#  Payments, social & email
-###########################################################################
-stripe==9.9.0                 # card/Apple/Google Pay donations
-SendGrid==6.11.0              # transactional email (change provider to taste)
-python-slugify==8.0.4         # pretty sponsor‑tier URLs / filenames
-
-###########################################################################
-#  Images, uploads, optimisation
-###########################################################################
-Pillow==10.3.0                # hero image thumb generation
-Flask-Images==4.0.0           # dynamic resizing / caching
-python-magic==0.4.27          # MIME sniffing
-
-###########################################################################
-#  Observability
-###########################################################################
-Flask-Logging==1.0.0          # nicer log formatters (simple wrapper)
-sentry-sdk[flask]==2.5.0      # error tracking
-
-###########################################################################
-#  CLI & admin helpers
-###########################################################################
-Flask-CLI==0.5.2              # coloured shell commands
-Flask-Admin==1.6.1            # quick CRUD for sponsors / players
-
-###########################################################################
-#  Local development & testing  (install with `pip install -r requirements-dev.txt`)
-###########################################################################
-pytest==8.2.0
-pytest-flask==1.4.0
-coverage==7.5.0
-flake8==7.0.0
-black==24.4.2
-mypy==1.10.0
-bandit==1.7.8                 # security linter
-ipython==8.25.0               # REPL with auto‑reload
-
-# ───── Core Frameworks ─────
-Flask==3.1.0
-Django==5.2
-FastAPI==0.115.12
-starlette==0.46.1
-Werkzeug==3.1.3
-asgiref==3.8.1
-
-# ───── Security / Auth ─────
+Flask-Cors==4.0.1              # CORS support for Flask
+Flask-Limiter==3.4.1           # Rate limiting
+passlib[bcrypt]==1.7.4         # Password hashing
 cryptography==44.0.2
 pyOpenSSL==25.0.0
-itsdangerous==2.2.0
-python-dotenv==1.1.0
-django-environ==0.12.0
+python-dotenv==1.1.0           # .env file loader
+django-environ==0.12.0         # .env loader for Django
 
-# ───── Database / ORM ─────
-psycopg2-binary==2.9.10
-prisma==0.15.0
+###########################################################################
+# 🗄 Database / ORM / Migrations
+###########################################################################
+Flask-SQLAlchemy==3.1.1        # SQLAlchemy wrapper for Flask
+SQLAlchemy==2.0.30
+Flask-Migrate==4.0.7           # Alembic migrations
+psycopg[binary]==3.1.18        # Postgres driver (modern)
+psycopg2-binary==2.9.10        # Legacy Postgres driver (Django)
+dj-database-url==2.3.0         # DB URL parser for Django
 sqlparse==0.5.3
-dj-database-url==2.3.0
+prisma==0.15.0                 # Prisma ORM (if used)
 
-# ───── Caching / Static ─────
-whitenoise==6.9.0
-django-sslserver==0.22
+###########################################################################
+# ⚡ Real-Time / Async / Tasks
+###########################################################################
+Flask-SocketIO==6.0.3
+python-socketio==5.11.2
+eventlet==0.36.1
+Celery==5.4.0
+redis==5.0.4
+greenlet==3.2.1
+sniffio==1.3.1
+anyio==4.9.0
 
-# ───── APIs / Networking ─────
+###########################################################################
+# 💳 Payments / Email / URLs
+###########################################################################
+stripe==9.9.0
+SendGrid==6.11.0
+python-slugify==8.0.4
+inflection==0.5.1
+text-unidecode==1.3
+
+###########################################################################
+# 🖼 Images / Uploads / Optimisation
+###########################################################################
+Pillow==10.3.0
+Flask-Images==4.0.0
+python-magic==0.4.27
+
+###########################################################################
+# 🔭 Observability / Logging / Monitoring
+###########################################################################
+sentry-sdk[flask]==2.25.1
+Flask-Logging==1.0.0
+gunicorn==22.0.0
+uvicorn==0.34.0
+django-heroku==0.3.1
+
+###########################################################################
+# 🛠 CLI / Admin / Dev UX
+###########################################################################
+Flask-CLI==0.5.2
+Flask-Admin==1.6.1
+ipython==9.1.0
+prompt_toolkit==3.0.51
+
+###########################################################################
+# 🌐 APIs / Networking
+###########################################################################
 requests==2.32.3
 httpx==0.28.1
-h11==0.16.0
 feedparser==6.0.11
 uritemplate==4.1.1
 
-# ───── AI / OpenAI / GPT Integration ─────
+###########################################################################
+# 🧠 AI / GPT Integration
+###########################################################################
 openai==1.76.0
 gpt-cli==1.0.11
 pyee==12.1.1
 
-# ───── Frontend Testing / Automation ─────
-playwright==1.51.0
-pytest-playwright==0.4.2
-
-# ───── Markdown Rendering / Rich Content ─────
+###########################################################################
+# 📝 Markdown / Rich Content
+###########################################################################
 markdown-it-py==3.0.0
 mdurl==0.1.2
 rich==14.0.0
-markdown==3.6  # <-- ✨ Official stable release
+markdown==3.6
 
-# ───── Linting / Formatting ─────
+###########################################################################
+# 🧪 Testing / Linting / Formatting
+###########################################################################
+pytest==8.2.0
+pytest-django==4.8.0
+pytest-flask==1.4.0
+pytest-cov==5.0.0
+coverage==7.8.0
 black==25.1.0
 ruff==0.11.7
+flake8==7.0.0
+bandit==1.7.8
 pre_commit==4.2.0
-editorconfig==0.17.0
-jsbeautifier==1.15.4
 
-# ───── Testing / Coverage ─────
-pytest==7.4.4
-pytest-django==4.8.0
-pytest-cov==5.0.0
-pytest-base-url==2.1.0
-coverage==7.8.0
-
-# ───── Parsing / Validation ─────
+###########################################################################
+# 🧰 Utilities / Misc Helpers
+###########################################################################
 pydantic==2.11.3
 pydantic_core==2.33.1
 annotated-types==0.7.0
 jsonschema==4.23.0
 referencing==0.36.2
-jsonschema-specifications==2024.10.1
-typing-inspection==0.4.0
-typing_extensions==4.13.2
-
-# ───── Developer UX / Monitoring ─────
-sentry-sdk==2.25.1
-gunicorn==22.0.0
-uvicorn==0.34.0
-django-heroku==0.3.1
-blinker==1.9.0
-
-# ───── Utilities / Helpers ─────
-inflection==0.5.1
-text-unidecode==1.3
-python-slugify==8.0.4
-packaging==25.0
-filelock==3.18.0
-tld==0.13
-matplotlib-inline==0.1.7
 decorator==5.2.1
 attrs==25.3.0
+packaging==25.0
+filelock==3.18.0
 build==1.2.2.post1
-pipreqs==0.4.13
 pip-tools==7.4.1
+pipreqs==0.4.13
 
-# ───── IPython / CLI Enhancements ─────
-ipython==9.1.0
-prompt_toolkit==3.0.51
-parso==0.8.4
-jedi==0.19.2
-Pygments==2.19.1
-ipython_pygments_lexers==1.1.1
-ptyprocess==0.7.0
-pexpect==4.9.0
-
-# ───── Low-Level Dependencies ─────
+###########################################################################
+# ⚙ Low-Level Dependencies
+###########################################################################
 cffi==1.17.1
 pycparser==2.22
 charset-normalizer==3.4.1
 idna==3.10
 urllib3==2.3.0
 certifi==2025.1.31
-distlib==0.3.9
-distro==1.9.0
-nodeenv==1.9.1
-virtualenv==20.30.0
-setuptools==79.0.1
-wheel==0.45.1
 
-# ───── File Parsing / Build ─────
-pyproject_hooks==1.2.0
-iniconfig==2.1.0
-tomlkit==0.13.2
-yarg==0.1.10
+###########################################################################
+# ⚡ Frontend Testing / Automation
+###########################################################################
+playwright==1.51.0
+pytest-playwright==0.4.2
 
-# ───── Performance / Advanced ─────
-greenlet==3.2.1
-rpds-py==0.24.0
-sniffio==1.3.1
-anyio==4.9.0
-fastapi==0.115.12
-
-# ───── Optional Features (Advanced) ─────
+###########################################################################
+# 🚀 Optional / Advanced Features
+###########################################################################
 djangorestframework==3.16.0
 drf-spectacular==0.28.0
 django-extensions==3.2.3
+whitenoise==6.9.0
+django-sslserver==0.22
 

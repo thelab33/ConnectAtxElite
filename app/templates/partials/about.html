@@ -1,0 +1,110 @@
+{# templates/partials/about.html — consolidated “About / Impact / Challenge”
+section #}
+<section
+  id="about"
+  class="py-24 px-6 bg-zinc-950 text-white space-y-20"
+  role="region"
+  aria-labelledby="about-heading"
+  tabindex="-1"
+>
+  {# 🎯 Our Mission ———————————————————————— #}
+  <div
+    class="max-w-5xl mx-auto space-y-6"
+    data-aos="fade-up"
+    data-aos-delay="100"
+  >
+    <h2
+      id="about-heading"
+      class="text-3xl sm:text-4xl font-bold text-amber-400"
+    >
+      Our Mission
+    </h2>
+    <p class="text-lg sm:text-xl leading-relaxed text-white/90">
+      Connect ATX Elite is a community‑powered, non‑profit
+      <b>12U AAU</b> basketball program based in Austin, TX. We develop not only
+      skilled athletes, but confident, disciplined, and academically driven
+      young leaders.
+    </p>
+    <p class="text-lg sm:text-xl leading-relaxed text-white/70">
+      Many of our boys are honor‑roll students thriving in a positive
+      environment of teamwork, mentorship, and integrity. Through basketball we
+      teach life lessons that extend far beyond the court.
+    </p>
+  </div>
+
+  {# ⭐️ Impact Stats ———————————————————————— #}
+  <div
+    class="max-w-5xl mx-auto"
+    data-aos="fade-up"
+    data-aos-delay="300"
+    aria-label="Program Impact Stats"
+  >
+    <div class="flex flex-wrap justify-center gap-8 md:gap-14 py-8">
+      {% set impact = [ {"label": "Players Enrolled", "value": 16}, {"label":
+      "Honor Roll Scholars", "value": 11}, {"label": "Tournaments Played",
+      "value": 12}, {"label": "Years Running", "value": 3} ] %} {% for stat in
+      impact %}
+      <div
+        class="bg-zinc-900/80 border border-amber-400/20 shadow-gold rounded-xl px-8 py-6 min-w-[150px] text-center"
+        tabindex="0"
+        aria-label="{{ stat.value }} {{ stat.label }}"
+      >
+        <div class="text-3xl font-extrabold text-amber-400">
+          {{ stat.value }}
+        </div>
+        <div class="text-white/80 text-base font-medium">{{ stat.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {# 🟧 Divider ———————————————————————————————— #}
+  <div
+    class="w-16 h-1 mx-auto rounded-full bg-gradient-to-r from-amber-400/60 to-amber-300/60"
+    data-aos="fade-up"
+    data-aos-delay="450"
+    aria-hidden="true"
+  ></div>
+
+  {# ⚠️ Challenge —————————————————————————————— #}
+  <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="550">
+    <div
+      class="rounded-2xl shadow-lg bg-gradient-to-br from-zinc-900 via-black to-zinc-950 border-l-4 border-red-400/80 px-7 py-8 space-y-6"
+    >
+      <h3
+        id="challenge-heading"
+        class="text-2xl sm:text-3xl font-semibold text-red-400"
+      >
+        The Challenge We Face
+      </h3>
+      <p class="text-lg sm:text-xl leading-relaxed text-white/80">
+        We struggle with consistent gym space and the high cost of tournament
+        travel. These barriers strain our volunteer coaches and parents —
+        limiting our kids’ ability to grow, bond, and succeed together.
+      </p>
+    </div>
+  </div>
+
+  {# 💡 Impact supporters can make ———————————— #}
+  <div
+    class="max-w-5xl mx-auto space-y-6"
+    data-aos="fade-up"
+    data-aos-delay="700"
+  >
+    <h3 class="text-2xl sm:text-3xl font-semibold text-green-400">
+      The Impact You Can Make
+    </h3>
+    <ul
+      class="list-disc list-inside space-y-2 text-lg sm:text-xl text-white/85 pl-4 md:pl-8"
+    >
+      <li>Secure a consistent gym space for practices</li>
+      <li>Support travel & lodging costs for tournaments</li>
+      <li>Provide uniforms, gear, meals, and hydration</li>
+      <li>Fund academic support and mentorship programs</li>
+    </ul>
+    <p class="pt-4 text-lg sm:text-xl font-semibold text-white">
+      With your help, we can give these young athletes the foundation to become
+      confident, accomplished leaders.
+    </p>
+  </div>
+</section>

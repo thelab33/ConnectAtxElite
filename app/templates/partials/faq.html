@@ -1,0 +1,105 @@
+<section
+  id="faq"
+  class="bg-black py-12 text-white"
+  aria-labelledby="faq-heading"
+  data-aos="fade-up"
+  data-aos-delay="100"
+>
+  <div class="max-w-2xl mx-auto px-4">
+    <h2
+      id="faq-heading"
+      class="text-2xl font-bold text-amber-400 mb-6 text-center"
+    >
+      Frequently Asked Questions
+    </h2>
+
+    <!-- 1. Search filter -->
+    <div class="mb-6">
+      <label for="faq-search" class="sr-only">Search FAQs</label>
+      <input
+        id="faq-search"
+        type="search"
+        placeholder="Search questions…"
+        class="w-full bg-zinc-800 rounded-full px-4 py-2 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
+      />
+    </div>
+
+    <ul class="divide-y divide-zinc-700" id="faq-list">
+      {% set faqs = [ {"q":"Can I sponsor anonymously?","a":"Absolutely — just
+      let us know in your message or donation form."}, {"q":"How are donations
+      used?","a":"100% supports gym rental, tournament fees, travel costs,
+      academic programs, and gear for our student-athletes."}, {"q":"How do I
+      become a sponsor?","a":"Use the “Become a Sponsor” button or email us —
+      we’ll reach out to personalize your sponsorship!"} ] %} {% for faq in faqs
+      %}
+      <li class="py-4">
+        <button
+          type="button"
+          class="faq-toggle flex w-full justify-between items-center text-left font-medium"
+          aria-expanded="false"
+          data-target="panel-{{ loop.index }}"
+        >
+          <span>{{ faq.q }}</span>
+          <svg
+            class="w-5 h-5 transform transition-transform"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+        <div
+          id="panel-{{ loop.index }}"
+          class="mt-2 pr-8 text-zinc-300 hidden"
+          role="region"
+          aria-labelledby="panel-{{ loop.index }}-label"
+        >
+          <p>{{ faq.a }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <!-- 5. Quick-help chat -->
+    <div class="mt-8 text-center">
+      <a
+        href="https://wa.me/15128200475?text=Hi%20Connect%20ATX%20Elite!"
+        target="_blank"
+        class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-3 rounded-full shadow-md transition"
+        aria-label="Chat with us on WhatsApp"
+      >
+        💬 Live Chat Help
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Accordion behavior
+  document.querySelectorAll('.faq-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      btn.querySelector('svg').classList.toggle('rotate-180', !expanded);
+      const panel = document.getElementById(btn.dataset.target);
+      panel.hidden = expanded;
+      panel.classList.toggle('hidden', expanded);
+    });
+  });
+
+  // Live search filter
+  document.getElementById('faq-search').addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    document.querySelectorAll('#faq-list li').forEach((li) => {
+      const q = li.querySelector('.faq-toggle span').textContent.toLowerCase();
+      li.style.display = q.includes(term) ? '' : 'none';
+    });
+  });
+</script>

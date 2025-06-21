@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{# ─────────────────────────────
+   Home · Connect ATX Elite
+───────────────────────────── #}
+
+{% block title %}Home · Connect ATX Elite{% endblock %}
+
+{% block extra_styles %}
+<style>
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  [data-reveal].in-view {
+    opacity: 1;
+    transform: none;
+  }
+
+  @keyframes sparkle {
+    0%, 90% { filter: brightness(1); }
+    95% { filter: brightness(2); }
+    100% { filter: brightness(1); }
+  }
+  .sparkle {
+    animation: sparkle 3.5s ease-in-out infinite;
+  }
+
+  #goalHud {
+    position: fixed;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.75);
+    color: #facc15;
+    font: 600 0.875rem/1 monospace;
+    display: none;
+    gap: 0.5rem;
+    align-items: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    z-index: 50;
+  }
+  #goalHud.visible {
+    display: flex;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main id="main-content" class="isolate" role="main" tabindex="-1">
+  
+  {% include "partials/back_to_top.html" %}
+
+  <section id="hero" data-reveal data-jump>{% include "partials/hero.html" %}</section>
+  <section id="tiers" data-reveal data-jump>{% include "partials/tiers.html" %}</section>
+  <section id="testimonials" data-reveal data-jump>{% include "partials/testimonials.html" %}</section>
+  <section id="ctaSection" data-reveal data-jump>{% include "partials/cta.html" %}</section>
+  <section id="sponsorWall" data-reveal data-jump>{% include "partials/sponsor_wall.html" %}</section>
+
+  {% include "partials/donation_modal.html" %}
+  {% include "partials/footer.html" %}
+  
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(
+    entries => entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    }),
+    { threshold: 0.35 }
+  );
+  $$('[data-reveal]').forEach(el => io.observe(el));
+
+  // Sparkle effect on testimonial stars
+  $$('#testimonials .flex.items-center').forEach(el => el.classList.add('sparkle'));
+
+  // Keyboard navigation: j / k
+  const sections = $$('[data-jump]');
+  const jump = dir => {
+    const pos = window.scrollY + 10;
+    let i = sections.findIndex(s => s.offsetTop > pos);
+    if (dir < 0) i--;
+    i = Math.max(0, Math.min(sections.length - 1, i));
+    sections[i]?.scrollIntoView({ behavior: 'smooth' });
+  };
+  window.addEventListener('keydown', e => {
+    if (/^(input|textarea)$/i.test(e.target.tagName)) return;
+    if (e.key === 'j') jump(1);
+    if (e.key === 'k') jump(-1);
+  });
+
+  // Floating fundraising HUD
+  document.addEventListener('DOMContentLoaded', () => {
+    const raisedEl = $('#ctaSection .font-bold.text-amber-400');
+    const goalEl = raisedEl?.nextElementSibling?.nextElementSibling;
+    if (!raisedEl || !goalEl) return;
+
+    const raised = +raisedEl.textContent.replace(/\D/g, '');
+    const goal = +goalEl.textContent.replace(/\D/g, '');
+
+    const hud = document.createElement('div');
+    hud.id = 'goalHud';
+    hud.innerHTML = `💰 <span class="font-semibold">${raised.toLocaleString()}</span> / ${goal.toLocaleString()} goal`;
+    document.body.appendChild(hud);
+
+    window.addEventListener('scroll', () => {
+      hud.classList.toggle('visible', window.scrollY > 300);
+    }, { passive: true });
+  });
+})();
+</script>
+{% endblock %}
+

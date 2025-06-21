@@ -1,14 +1,31 @@
+# Node modules
+node_modules/
+
+# Build output
+static/css/tailwind.min.css
+static/js/bundle.min.js
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
-*.pyd
 env/
 venv/
-ENV/
 .venv/
-*.db
-instance/
-.DS_Store
-*.sqlite3
-*.log
-*.bak
