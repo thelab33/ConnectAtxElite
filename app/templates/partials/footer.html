@@ -1,147 +1,234 @@
-<footer
-  id="site-footer"
-  role="contentinfo"
-  class="relative bg-zinc-950 text-white py-12 px-6 border-t border-zinc-800 shadow-inner"
-  data-aos="fade-up"
-  data-aos-delay="200"
->
-  <div class="max-w-6xl mx-auto grid gap-12 md:grid-cols-3 text-center md:text-left">
-    <!-- ── Branding & Year ─────────────────────────── -->
-    <div class="space-y-2">
-      <span class="block text-xs text-amber-400 font-semibold tracking-wide">
-        AAU 12U | Austin, TX
-      </span>
-      <p class="text-sm text-white/60">
-        © {{ year }} Connect ATX Elite. All rights reserved.
-      </p>
-      <!-- Newsletter capture -->
+<footer id="site-footer" class="connect-footer" role="contentinfo">
+  <style>
+    :root {
+      --primary-yellow: #facc15;
+      --zinc-900: #18181b;
+      --zinc-800: #27272a;
+      --text-light: #fff;
+      --border-dark: #27272a;
+    }
+    .connect-footer {
+      background: var(--zinc-900);
+      color: var(--text-light);
+      padding: 2.5rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--border-dark);
+      box-shadow: inset 0 8px 18px -10px #0007;
+      font-size: 1rem;
+      user-select: none;
+    }
+    .footer-grid {
+      display: grid;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: repeat(3, 1fr);
+        text-align: left;
+      }
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-yellow);
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.01em;
+    }
+    .copyright {
+      font-size: 0.92rem;
+      color: #f5e79a99;
+      margin-bottom: 1.1rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .footer-links a {
+      background: rgba(250, 205, 21, 0.09);
+      color: var(--primary-yellow);
+      padding: 0.32rem 0.8rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-size: 0.97rem;
+      transition:
+        background 0.17s,
+        color 0.17s;
+    }
+    .footer-links a:hover,
+    .footer-links a:focus {
+      background: var(--primary-yellow);
+      color: #18181b;
+      outline: none;
+    }
+    .footer-form input[type='email'] {
+      background: var(--zinc-800);
+      border: 1px solid var(--zinc-800);
+      color: #fff;
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.5rem;
+      width: 100%;
+      max-width: 280px;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    .footer-form input[type='email']:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--primary-yellow);
+    }
+    .footer-form button {
+      background: var(--primary-yellow);
+      color: #18181b;
+      font-weight: 600;
+      border: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .footer-form button:hover {
+      background: #e5b818;
+    }
+    .progress-bar-bg {
+      background: var(--zinc-800);
+      border-radius: 0.45rem;
+      height: 0.85rem;
+      margin: 1.1rem 0 0.25rem 0;
+      overflow: hidden;
+      max-width: 320px;
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, var(--primary-yellow), #ffe066 90%);
+      height: 100%;
+      width: 78%;
+      transition: width 0.7s cubic-bezier(0.42, 0, 0.58, 1);
+    }
+    .progress-text {
+      font-size: 0.99rem;
+      color: var(--primary-yellow);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.3rem;
+    }
+    .contact-block a {
+      color: var(--primary-yellow);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.14s;
+    }
+    .contact-block a:hover,
+    .contact-block a:focus {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .countdown {
+      font-family: monospace;
+      font-size: 0.92rem;
+      color: var(--primary-yellow);
+      margin-top: 0.6rem;
+    }
+    .supporters {
+      margin-top: 2.2rem;
+      font-size: 0.93rem;
+      color: #fff7;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+  </style>
+
+  <div class="footer-grid">
+    <!-- Column 1: Brand + Newsletter -->
+    <div>
+      <div class="brand">AAU 12U | Austin, TX</div>
+      <div class="copyright">© 2025 Connect ATX Elite</div>
       <form
+        class="footer-form"
         id="newsletter-form"
-        class="mt-4 flex flex-col sm:flex-row gap-2 justify-center md:justify-start"
         onsubmit="handleNewsletterSignup(event)"
       >
         <input
           type="email"
           name="newsletter_email"
-          required
           placeholder="Your email"
-          class="w-full sm:w-auto flex-grow px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-amber-400"
+          required
+          aria-label="Email address"
         />
-        <button
-          type="submit"
-          class="px-4 py-2 bg-amber-400 text-black font-semibold rounded-lg hover:bg-amber-300 transition"
-        >
-          Subscribe
-        </button>
+        <button type="submit">Subscribe</button>
       </form>
     </div>
-
-    <!-- ── Fundraising Progress + Quick Links ───────── -->
-    <div class="space-y-4 flex flex-col items-center">
-      {% set raised = config.get('RAISED_AMOUNT', 0) %}
-      {% set goal = config.get('GOAL_AMOUNT', 10000) %}
-      <div class="w-full max-w-xs">
-        <div class="flex justify-between text-xs font-mono text-amber-200 mb-1">
-          <span>Raised</span>
-          <span>${{ "{:,}".format(raised) }} / ${{ "{:,}".format(goal) }}</span>
-        </div>
-        <div class="relative w-full h-3 rounded-lg bg-zinc-800 overflow-hidden">
-          <div
-            class="absolute inset-y-0 left-0 bg-amber-400 shadow-gold transition-all duration-700"
-            style="width: {{ (raised / goal * 100)|round(0, 'floor') }}%;"
-            aria-valuenow="{{ raised }}"
-            aria-valuemax="{{ goal }}"
-            role="progressbar"
-          ></div>
-        </div>
+    <!-- Column 2: Progress + Links -->
+    <div>
+      <div
+        class="progress-bar-bg"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="10000"
+        aria-valuenow="7850"
+        aria-label="Fundraising progress: $7,850 of $10,000"
+      >
+        <div class="progress-bar"></div>
       </div>
-      <div class="flex flex-wrap justify-center gap-3">
-        <a
-          href="mailto:arodgps@gmail.com"
-          class="px-3 py-1 rounded bg-amber-400/10 text-amber-300 hover:bg-amber-400 hover:text-black transition focus:ring-2 focus:ring-amber-300"
-          aria-label="Email Connect ATX Elite"
-          >📧 Email</a
-        >
-        <a
-          href="https://www.connectatxelite.com"
-          target="_blank"
-          rel="noopener"
-          class="px-3 py-1 rounded bg-amber-400/10 text-amber-300 hover:bg-amber-400 hover:text-black transition focus:ring-2 focus:ring-amber-300"
-          aria-label="Visit official site"
-          >🌐 Site</a
+      <div class="progress-text">$7,850 of $10,000 raised</div>
+      <div class="footer-links">
+        <a href="mailto:arodgps@gmail.com">📧 Email</a>
+        <a href="https://www.connectatxelite.com" target="_blank" rel="noopener"
+          >🌐 Website</a
         >
         <a
           href="https://www.paypal.com/donate/your-link"
           target="_blank"
           rel="noopener"
-          class="px-3 py-1 rounded bg-green-400/20 text-green-200 hover:bg-green-300 hover:text-black transition focus:ring-2 focus:ring-green-200"
-          aria-label="Donate via PayPal"
           >💸 Donate</a
         >
       </div>
     </div>
-
-    <!-- ── Contact, Countdown, and Accessible Back-to-Top ── -->
-    <div class="space-y-4 flex flex-col items-center md:items-end">
-      <span class="text-xs text-white/70">
-        Contact:
-        <a
-          href="mailto:arodgps@gmail.com"
-          class="underline hover:text-amber-300"
-        >
-          arodgps@gmail.com
-        </a>
-      </span>
-      <span class="text-xs text-white/70">
-        Phone:
-        <a href="tel:+15128200475" class="underline hover:text-amber-300">
-          (512) 820-0475
-        </a>
-      </span>
-
-      <!-- Live countdown placeholder -->
-      <div id="next-game-countdown" class="text-sm text-amber-300 font-mono">
-        Next Tournament in: <span id="countdown-timer">00d 00h 00m 00s</span>
+    <!-- Column 3: Contact + Countdown -->
+    <div class="contact-block">
+      <div>
+        <strong>Contact:</strong>
+        <a href="mailto:arodgps@gmail.com">(512) 820-0475</a>
       </div>
-
-      <!-- Accessible anchor link (not fixed!) -->
-      <a
-        href="#main-content"
-        class="mt-2 text-amber-400 underline hover:text-amber-200"
-        aria-label="Back to Top"
-        >↑ Back to Top</a
-      >
+      <div>
+        <strong>Phone:</strong> <a href="tel:+15128200475">(512) 820-0475</a>
+      </div>
+      <div id="next-game-countdown" class="countdown" aria-live="polite">
+        Next Tournament: <span id="countdown-timer">Loading...</span>
+      </div>
     </div>
   </div>
-
-  <!-- Optional social-proof ticker -->
-  <div class="mt-8 text-center text-xs text-white/50 font-mono">
-    Recent Supporters: {{ ['Acme Corp','Jane D.','Smith & Co','Austin Hoops','Elite Donor']|join(' • ') }}
+  <div class="supporters">
+    <b>Recent Supporters:</b> Acme Corp • Jane D. • Smith & Co • Austin Hoops
   </div>
+  <script>
+    function handleNewsletterSignup(e) {
+      e.preventDefault();
+      const email = e.target.newsletter_email.value;
+      alert(`Thanks for subscribing: ${email}`);
+      e.target.reset();
+    }
+    (function () {
+      const target = new Date('2025-07-01T10:00:00Z');
+      const el = document.getElementById('countdown-timer');
+      function update() {
+        const now = new Date();
+        const diff = target - now;
+        if (diff <= 0) {
+          el.textContent = 'Tournament is live!';
+          return;
+        }
+        const d = Math.floor(diff / 86400000),
+          h = Math.floor((diff % 86400000) / 3600000),
+          m = Math.floor((diff % 3600000) / 60000),
+          s = Math.floor((diff % 60000) / 1000);
+        el.textContent = `${d}d ${h}h ${m}m ${s}s`;
+      }
+      update();
+      setInterval(update, 1000);
+    })();
+  </script>
 </footer>
-
-<script>
-  // newsletter stub
-  function handleNewsletterSignup(e) {
-    e.preventDefault();
-    const email = e.target.newsletter_email.value;
-    alert(`🎉 Thanks! We'll keep you updated at ${email}`);
-    e.target.reset();
-  }
-
-  // simple countdown (set your target date)
-  const target = new Date('2025-07-01T10:00:00Z');
-  function updateCountdown() {
-    const diff = target - new Date();
-    if (diff <= 0) return;
-    const d = Math.floor(diff / 864e5);
-    const h = Math.floor((diff % 864e5) / 36e5);
-    const m = Math.floor((diff % 36e5) / 6e4);
-    const s = Math.floor((diff % 6e4) / 1e3);
-    document.getElementById('countdown-timer').textContent =
-      `${d}d ${h}h ${m}m ${s}s`;
-  }
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
-</script>
-

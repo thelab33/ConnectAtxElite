@@ -1,0 +1,24 @@
+@tailwind base layer(utilities);
+@tailwind components layer(utilities);
+@tailwind utilities layer(utilities);
+
+@layer base {
+  h1 {
+ @apply layer(utilities) font-bold text-4xl tracking-tight text-primary layer(utilities) layer(utilities);
+  }
+  h2 {
+ @apply layer(utilities) font-bold text-3xl tracking-tight text-primary layer(utilities) layer(utilities);
+  }
+  h3 {
+ @apply layer(utilities) font-bold text-2xl tracking-tight text-primary layer(utilities) layer(utilities);
+  }
+}
+
+@layer components {
+  .btn {
+ @apply layer(utilities) bg-yellow-400 text-black font-semibold py-2 px-4 rounded-full shadow transition layer(utilities) layer(utilities);
+  }
+  .btn:hover {
+ @apply layer(utilities) bg-yellow-500 layer(utilities) layer(utilities);
+  }
+}

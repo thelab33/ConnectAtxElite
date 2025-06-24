@@ -1,165 +1,286 @@
 <section
   id="cta"
+  class="connect-cta"
   role="region"
   aria-labelledby="cta-heading"
-  class="relative py-28 bg-secondary text-foreground text-center px-6"
   tabindex="-1"
+  aria-live="polite"
 >
-  <div class="max-w-3xl mx-auto space-y-10">
-    <!-- Headline & Sub-Headline -->
-    <h2
-      id="cta-heading"
-      class="text-4xl sm:text-5xl font-extrabold text-primary drop-shadow-lg"
-      data-aos="fade-up"
+  <style>
+    :root {
+      --primary-color: #facc15;
+      --secondary-bg: #0a1f44;
+      --foreground-color: #f0f0f0;
+      --progress-bg: #27272a;
+      --progress-bar-shadow: rgba(250, 205, 21, 0.5);
+    }
+    .connect-cta {
+      background: linear-gradient(
+        100deg,
+        var(--secondary-bg) 65%,
+        #18181b 100%
+      );
+      color: var(--foreground-color);
+      text-align: center;
+      padding: 6rem 1.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 3;
+    }
+    .connect-cta h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+      letter-spacing: -0.01em;
+    }
+    .connect-cta p {
+      font-size: 1.15rem;
+      margin-bottom: 1.4rem;
+      color: #ffecc7;
+    }
+    .progress-bg {
+      background-color: var(--progress-bg);
+      border-radius: 9999px;
+      height: 1rem;
+      overflow: hidden;
+      margin: 0 auto 0.5rem;
+      max-width: 480px;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.09);
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, #facc15 60%, #fde68a 100%);
+      box-shadow: 0 0 10px var(--progress-bar-shadow);
+      height: 1rem;
+      width: 0;
+      border-radius: 9999px;
+      transition: width 1.4s cubic-bezier(0.44, 1.23, 0.74, 1.01);
+    }
+    #donateBtn {
+      margin-top: 1.8rem;
+      padding: 0.85rem 2.4rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      background: linear-gradient(92deg, #facc15, #ffe066 95%);
+      color: #0a1f44;
+      border: none;
+      border-radius: 9999px;
+      box-shadow: 0 0 18px var(--progress-bar-shadow);
+      cursor: pointer;
+      transition:
+        transform 0.23s,
+        background 0.22s;
+      outline: none;
+    }
+    #donateBtn:hover,
+    #donateBtn:focus {
+      transform: scale(1.07);
+      background: linear-gradient(92deg, #ffe066, #facc15 95%);
+    }
+    .sponsor-marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      margin-top: 2.5rem;
+      width: 100%;
+    }
+    .sponsor-marquee span {
+      display: inline-block;
+      padding-right: 4rem;
+      animation: sponsor-marquee 20s linear infinite;
+      font-size: 1.07rem;
+      opacity: 0.93;
+      vertical-align: middle;
+    }
+    @keyframes sponsor-marquee {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+    .qr-code img {
+      width: 7rem;
+      height: 7rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.27);
+      opacity: 0.9;
+      cursor: pointer;
+      background: #fff;
+      border: 2px solid #fde68a;
+      transition:
+        opacity 0.2s,
+        box-shadow 0.2s;
+    }
+    .qr-code img:hover {
+      opacity: 1;
+      box-shadow: 0 6px 24px #facc158c;
+    }
+    .qr-code p {
+      font-size: 0.93rem;
+      color: #ffecc7;
+      margin-top: 0.2rem;
+    }
+    @media (max-width: 640px) {
+      .connect-cta {
+        padding: 3.7rem 0.7rem 2.5rem;
+      }
+      .sponsor-marquee span {
+        padding-right: 2.5rem;
+      }
+      .qr-code img {
+        width: 5rem;
+        height: 5rem;
+      }
+    }
+  </style>
+
+  <div class="max-w-3xl mx-auto space-y-8">
+    <h2 id="cta-heading">Join Our Mission</h2>
+    <p>Help us empower student-athletes through your generous support.</p>
+
+    <div
+      class="progress-bg"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="65"
+      aria-label="Fundraising progress"
     >
-      Ready to Join Our Mission?
-    </h2>
-    <p
-      class="text-foreground/85 text-lg sm:text-xl leading-relaxed"
-      data-aos="fade-up"
-      data-aos-delay="100"
-    >
-      Help us secure gym time, fund travel, and empower our student-athletes for
-      life beyond the court.
+      <div class="progress-bar" style="width: 65%"></div>
+    </div>
+    <p>
+      <strong style="color: #fff; font-size: 1.2em">$6,500</strong>
+      raised of
+      <strong style="color: #fff; font-size: 1.2em">$10,000</strong>
+      goal
     </p>
 
-    <!-- Live Progress Bar -->
-    <div
-      class="w-full bg-zinc-800 rounded-full h-4 overflow-hidden"
-      data-aos="fade-up"
-      data-aos-delay="200"
-      aria-hidden="true"
-    >
-      <div
-        class="h-4 bg-primary shadow-gold-glow transition-all duration-1000"
-        style="width: {{ (raised/goal*100) | round(0) }}%"
-      ></div>
-    </div>
-    <div
-      class="flex justify-center items-center gap-2 font-mono text-sm text-foreground/80"
-      aria-live="polite"
-      data-aos="fade-up"
-      data-aos-delay="300"
-    >
-      <span role="img" aria-label="Fundraiser">💰</span>
-      <span>
-        <span class="font-bold text-primary">${{ "{:,}".format(raised) }}</span>
-        of
-        <span class="font-bold text-primary">${{ "{:,}".format(goal) }}</span>
-        goal
-      </span>
-    </div>
-
-    <!-- Urgency Countdown -->
     <div
       id="countdown"
-      class="text-primary/80 font-medium"
-      data-aos="fade-up"
-      data-aos-delay="400"
+      role="timer"
       aria-live="polite"
+      style="color: #ffe066; font-weight: 600"
     >
       <span id="cd-days">--</span>d <span id="cd-hours">--</span>h
-      <span id="cd-mins">--</span>m left to hit our goal!
+      <span id="cd-mins">--</span>m remaining
     </div>
 
-    <!-- Preset Gift Buttons + Custom Amount -->
-    <div
-      class="flex flex-wrap justify-center gap-3"
-      data-aos="fade-up"
-      data-aos-delay="500"
-    >
-      {% for amt in [25,50,100,250] %}
-      <button
-        class="preset-amt bg-zinc-700 hover:bg-zinc-600 px-4 py-2 rounded-full transition"
-        data-amt="{{ amt }}"
-      >
-        ${{ amt }}
-      </button>
-      {% endfor %}
-      <input
-        id="customAmt"
-        type="number"
-        min="1"
-        max="999"
-        placeholder="Custom"
-        class="w-20 bg-zinc-800 text-foreground text-center rounded-full px-3 py-2 focus:outline-none"
-      />
-    </div>
-
-    <!-- Donate Button (Modal + Confetti) -->
-    <button
-      id="donateBtn"
-      class="mt-4 inline-block bg-primary text-secondary font-semibold text-lg px-8 py-3 rounded-full shadow-gold-glow hover:scale-105 hover:bg-primary-hover focus-visible:ring-4 focus-visible:ring-primary transition-transform duration-300"
-      data-aos="fade-up"
-      data-aos-delay="600"
-    >
+    <button id="donateBtn" aria-label="Donate now and help us reach our goal">
       Donate Now
     </button>
 
-    <!-- QR Code fallback -->
-    <div
-      class="pt-6 flex flex-col items-center gap-1"
-      data-aos="fade-up"
-      data-aos-delay="700"
-    >
-      <img
-        src="{{ url_for('static', filename='qr-website.png') }}"
-        alt="Donate via QR Code"
-        width="128"
-        height="128"
-        class="rounded-lg shadow-lg opacity-75 hover:opacity-100 transition"
-        loading="lazy"
-      />
-      <p class="text-xs text-foreground/60">Scan: CashApp / PayPal / Venmo</p>
+    <div class="sponsor-marquee" aria-label="Our Sponsors">
+      <span>
+        <img
+          src="https://via.placeholder.com/100x40?text=Sponsor1"
+          alt="Sponsor 1"
+          height="40"
+          style="vertical-align: middle; margin-right: 1rem"
+        />
+        <img
+          src="https://via.placeholder.com/100x40?text=Sponsor2"
+          alt="Sponsor 2"
+          height="40"
+          style="vertical-align: middle; margin-right: 1rem"
+        />
+        <img
+          src="https://via.placeholder.com/100x40?text=Sponsor3"
+          alt="Sponsor 3"
+          height="40"
+          style="vertical-align: middle"
+        />
+      </span>
     </div>
 
-    <p
-      class="pt-6 text-sm text-foreground/60"
-      data-aos="fade-up"
-      data-aos-delay="800"
-    >
-      Or contact
-      <a href="mailto:arodgps@gmail.com" class="underline hover:text-primary"
-        >arodgps@gmail.com</a
-      >
-      &nbsp;| 📞 (512) 820-0475
-    </p>
+    <div class="qr-code" aria-label="Scan to donate">
+      <img
+        src="https://via.placeholder.com/128?text=QR+Code"
+        alt="Scan to donate QR code"
+        onclick="navigator.clipboard.writeText(window.location.href).then(()=>{showToast('Donation link copied!')})"
+      />
+      <p>Tap QR to copy donation link</p>
+    </div>
   </div>
 
-  <!-- Donation Modal -->
-  <dialog
-    id="donateDialog"
-    class="w-full max-w-md p-0 rounded-2xl overflow-hidden"
+  <!-- Toast notification for QR copy -->
+  <div
+    id="toast-cta"
+    style="
+      position: fixed;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      min-width: 160px;
+      background: #18181b;
+      border-radius: 1rem;
+      padding: 1rem 2.3rem;
+      color: #facc15;
+      font-weight: 700;
+      font-size: 1.05rem;
+      box-shadow: 0 6px 24px #fde68a44;
+      display: none;
+    "
   >
-    <form
-      id="donateForm"
-      method="dialog"
-      class="bg-secondary text-foreground p-6 space-y-4"
-    >
-      <h3 class="text-2xl font-bold text-primary">Enter Donation Amount</h3>
-      <input
-        name="amount"
-        id="formAmt"
-        type="number"
-        min="1"
-        max="999"
-        required
-        class="w-full bg-zinc-800 rounded-full px-4 py-2 text-center focus:outline-none"
-      />
-      <div class="flex justify-end gap-2">
-        <button
-          type="reset"
-          class="px-4 py-2 rounded-full bg-zinc-700 hover:bg-zinc-600"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          class="px-6 py-2 rounded-full bg-primary text-secondary font-bold hover:bg-primary-hover"
-        >
-          Donate
-        </button>
-      </div>
-    </form>
-  </dialog>
+    Donation link copied!
+  </div>
+
+  <script>
+    function showToast(msg) {
+      const toast = document.getElementById('toast-cta');
+      toast.textContent = msg || 'Copied!';
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 1650);
+    }
+
+    window.addEventListener('load', () => {
+      const bar = document.querySelector('.progress-bar');
+      requestAnimationFrame(() => {
+        bar.style.width = '65%';
+      });
+    });
+
+    (() => {
+      const deadline = new Date('2024-12-31T23:59:59Z'); // Update as needed!
+      const dEl = document.getElementById('cd-days');
+      const hEl = document.getElementById('cd-hours');
+      const mEl = document.getElementById('cd-mins');
+      function update() {
+        const now = new Date();
+        const diff = deadline - now;
+        if (diff <= 0) {
+          dEl.textContent = '0';
+          hEl.textContent = '0';
+          mEl.textContent = '0';
+          return;
+        }
+        dEl.textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
+        hEl.textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        mEl.textContent = Math.floor((diff / (1000 * 60)) % 60);
+      }
+      update();
+      setInterval(update, 60000);
+    })();
+
+    document.getElementById('donateBtn').addEventListener('click', () => {
+      import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/+esm').then(
+        ({ default: confetti }) => {
+          confetti({ particleCount: 100, spread: 70 });
+        }
+      );
+      showToast('Thank you for supporting our mission!');
+      // You can also trigger your donation modal here if desired.
+    });
+
+    const marquee = document.querySelector('.sponsor-marquee span');
+    marquee.addEventListener('mouseover', () => {
+      marquee.style.animationPlayState = 'paused';
+    });
+    marquee.addEventListener('mouseleave', () => {
+      marquee.style.animationPlayState = 'running';
+    });
+  </script>
 </section>

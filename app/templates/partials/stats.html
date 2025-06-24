@@ -1,22 +1,157 @@
-<section id="stats" class="py-12 bg-black text-white">
-  <div
-    class="flex flex-wrap justify-center gap-8 md:gap-16 max-w-4xl mx-auto text-center"
-  >
-    <div class="stat-card">
-      <div class="text-3xl font-extrabold text-amber-400">16</div>
-      <div class="text-base text-white/80 font-medium">Players Enrolled</div>
+<section
+  id="stats"
+  class="connect-stats"
+  role="region"
+  aria-labelledby="stats-heading"
+  tabindex="-1"
+>
+  <style>
+    :root {
+      --primary-yellow: #facc15;
+      --bg-dark: #000;
+      --text-light: #fff;
+      --stat-bg: rgba(36, 36, 36, 0.8);
+      --stat-border: rgba(250, 205, 21, 0.22);
+      --header-height: 4rem;
+      --scroll-offset: calc(var(--header-height) + 1rem);
+    }
+
+    section[id] {
+      scroll-margin-top: var(--scroll-offset);
+    }
+    .connect-stats {
+      padding: 4rem 1.5rem 3.5rem;
+      background: linear-gradient(99deg, var(--bg-dark) 72%, #18181b 100%);
+      color: var(--text-light);
+      text-align: center;
+      user-select: none;
+      position: relative;
+      z-index: 1;
+    }
+    .connect-stats .stats-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.2rem;
+      max-width: 64rem;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .connect-stats .stat-card {
+      background: var(--stat-bg);
+      border: 1.5px solid var(--stat-border);
+      border-radius: 1.2rem;
+      padding: 2rem 1.3rem;
+      width: 10rem;
+      min-width: 8.3rem;
+      transition:
+        transform 0.22s,
+        box-shadow 0.22s;
+      box-shadow: 0 4px 18px #18181b25;
+      cursor: default;
+      outline: none;
+      position: relative;
+    }
+    .connect-stats .stat-card:focus-within,
+    .connect-stats .stat-card:hover {
+      transform: scale(1.055);
+      box-shadow:
+        0 0 0 3px var(--primary-yellow),
+        0 8px 25px #facc1522;
+      z-index: 10;
+    }
+    .connect-stats .counter {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--primary-yellow);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 1.5px 7px #facc1530;
+      letter-spacing: -0.01em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .connect-stats .label {
+      font-size: 1.02rem;
+      color: rgba(255, 255, 255, 0.86);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    @media (max-width: 900px) {
+      .connect-stats .stats-grid {
+        gap: 1.2rem;
+      }
+      .connect-stats .stat-card {
+        width: 8rem;
+        padding: 1.3rem 0.8rem;
+      }
+      .connect-stats .counter {
+        font-size: 2rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .connect-stats {
+        padding: 2.4rem 0.4rem 2rem;
+      }
+      .connect-stats .stats-grid {
+        gap: 0.8rem;
+      }
+      .connect-stats .stat-card {
+        min-width: 6rem;
+      }
+    }
+  </style>
+
+  <h2 id="stats-heading" class="sr-only">Program Stats</h2>
+  <div class="stats-grid">
+    <div class="stat-card" tabindex="0" aria-label="16 Players Enrolled">
+      <div class="counter" data-target="16">0</div>
+      <div class="label">Players Enrolled</div>
     </div>
-    <div class="stat-card">
-      <div class="text-3xl font-extrabold text-amber-400">11</div>
-      <div class="text-base text-white/80 font-medium">Honor Roll Scholars</div>
+    <div class="stat-card" tabindex="0" aria-label="11 Honor Roll Scholars">
+      <div class="counter" data-target="11">0</div>
+      <div class="label">Honor Roll Scholars</div>
     </div>
-    <div class="stat-card">
-      <div class="text-3xl font-extrabold text-amber-400">12</div>
-      <div class="text-base text-white/80 font-medium">Tournaments Played</div>
+    <div class="stat-card" tabindex="0" aria-label="12 Tournaments Played">
+      <div class="counter" data-target="12">0</div>
+      <div class="label">Tournaments Played</div>
     </div>
-    <div class="stat-card">
-      <div class="text-3xl font-extrabold text-amber-400">3</div>
-      <div class="text-base text-white/80 font-medium">Years Running</div>
+    <div class="stat-card" tabindex="0" aria-label="3 Years Running">
+      <div class="counter" data-target="3">0</div>
+      <div class="label">Years Running</div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const section = document.getElementById('stats');
+      const counters = section.querySelectorAll('.counter');
+      function animateCounters() {
+        counters.forEach((el) => {
+          const target = +el.dataset.target;
+          let count = 0;
+          const increment = Math.max(1, Math.ceil(target / 64));
+          function step() {
+            count += increment;
+            if (count >= target) {
+              el.textContent = target;
+            } else {
+              el.textContent = count;
+              requestAnimationFrame(step);
+            }
+          }
+          requestAnimationFrame(step);
+        });
+      }
+      new IntersectionObserver(
+        (entries, obs) => {
+          if (entries[0].isIntersecting) {
+            animateCounters();
+            obs.disconnect();
+          }
+        },
+        { threshold: 0.3 }
+      ).observe(section);
+    });
+  </script>
 </section>

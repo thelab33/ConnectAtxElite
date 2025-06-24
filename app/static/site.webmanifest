@@ -1,0 +1,16 @@
+# app/static/site.webmanifest
+{
+  "name": "Connect ATX Elite",
+  "short_name": "ATX Elite",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#facc15",
+  "icons": [
+    {
+      "src": "/static/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

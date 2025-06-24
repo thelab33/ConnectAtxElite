@@ -103,7 +103,8 @@ function launchConfetti() {
       ctx.restore();
       p.y += p.s * 0.43 + Math.sin(t / 16) * 0.6;
       p.x += Math.sin(p.a + t / 8) * 1.2;
-      if (p.y > H + 24) (p.y = Math.random() * -64), (p.x = Math.random() * W);
+      if (p.y > H + 24)
+        ((p.y = Math.random() * -64), (p.x = Math.random() * W));
     });
     t++;
     frame = requestAnimationFrame(draw);

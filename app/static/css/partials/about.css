@@ -13,9 +13,9 @@
 
 /* Stat card */
 .about-section .stat-card {
-  background: rgba(24, 24, 27, 0.85);
-  border: 1.5px solid rgba(251, 191, 36, 0.15);
-  box-shadow: 0 2px 16px rgba(251, 191, 36, 0.1);
+  background: rgb(24 24 27 / 85%);
+  border: 1.5px solid rgb(251 191 36 / 15%);
+  box-shadow: 0 2px 16px rgb(251 191 36 / 10%);
   border-radius: var(--radius);
   min-width: 150px;
   padding: 1.5rem 2rem;
@@ -29,7 +29,7 @@
 .about-section .stat-card:hover,
 .about-section .stat-card:focus-within {
   transform: scale(1.05);
-  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.16);
+  box-shadow: 0 8px 32px rgb(251 191 36 / 16%);
   outline: none;
 }
 
@@ -37,7 +37,7 @@
   font-size: 2.25rem;
   font-weight: 800;
   color: var(--accent);
-  text-shadow: 0 1px 4px rgba(251, 191, 36, 0.14);
+  text-shadow: 0 1px 4px rgb(251 191 36 / 14%);
 }
 
 .about-section .stat-label {
@@ -74,23 +74,27 @@
   90% {
     filter: brightness(1);
   }
+
   95% {
     filter: brightness(2);
   }
+
   100% {
     filter: brightness(1);
   }
 }
+
 .sparkle {
   animation: sparkle 3.5s infinite cubic-bezier(0.8, 0.21, 0.19, 0.99);
 }
 
 /* Responsive */
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .about-section .stat-card {
     min-width: 120px;
     padding: 1rem 1.25rem;
   }
+
   .about-section .stat-value {
     font-size: 1.5rem;
   }

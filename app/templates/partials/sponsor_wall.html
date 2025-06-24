@@ -1,128 +1,259 @@
-{# templates/partials/sponsor_wall.html #}
-<section
-  id="sponsor-wall"
-  role="region"
-  aria-labelledby="sponsor-heading"
-  class="bg-zinc-950/95 py-12 border-t border-zinc-800 text-center text-white"
-  data-aos="fade-up"
-  data-aos-delay="300"
->
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-6">
-    <header class="space-y-2">
-      <h2
-        id="sponsor-heading"
-        class="text-2xl sm:text-3xl font-extrabold text-amber-400 tracking-tight"
-      >
-        Our Generous Sponsors
-      </h2>
-      <p class="text-sm sm:text-base text-amber-200">
-        Every logo below represents a family or company that keeps our kids on
-        the court—thank you!
-      </p>
-      {# Live count (aria-live for screen-readers) #}
-      <p
-        id="sponsor-count"
-        class="text-xs text-white/70 italic"
-        aria-live="polite"
-      >
-        {{ sponsors|length }} Sponsor{{ sponsors|length != 1 and 's' or '' }}
-        and counting!
-      </p>
-    </header>
-
-    {% if sponsors %}
-    <div class="relative overflow-x-auto vendor-marquee">
-      <ul
-        class="inline-flex items-center gap-8 whitespace-nowrap py-4"
-        aria-label="Sponsor logos"
-      >
-        {% for sponsor in sponsors %}
-        <li class="relative shrink-0">
-          <a
-            href="{{ sponsor.website or '#' }}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group inline-block"
-            aria-label="Visit {{ sponsor.name }}"
-          >
-            <img
-              src="{{ sponsor.logo_url }}"
-              alt="{{ sponsor.name }} logo"
-              class="h-16 sm:h-20 grayscale group-hover:grayscale-0 transition duration-300"
-              loading="lazy"
-              width="160"
-              height="80"
-            />
-            {# Tier badge #} {% if sponsor.tier == 'Platinum' %}
-            <span
-              class="absolute top-0 right-0 bg-amber-400 text-black text-xs font-bold px-1 rounded-bl"
-              >PLATINUM</span
-            >
-            {% endif %}
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    {# Fallback “pause” on hover, auto-scroll via CSS @keyframes #} {% else %}
-    <ul class="grid grid-cols-3 sm:grid-cols-5 gap-6">
-      {# 5 skeleton placeholders #} {% for _ in range(5) %}
-      <li class="h-16 sm:h-20 bg-zinc-800 animate-pulse rounded-lg"></li>
-      {% endfor %}
-    </ul>
-    <p class="text-sm text-gray-400 mb-4">
-      Your logo could be here—become a founding sponsor today!
-    </p>
-    {% endif %} {# Primary CTA #}
-    <div>
-      <a
-        href="#donateModal"
-        hx-get="/modal/sponsor"
-        class="inline-flex items-center gap-2 rounded-lg bg-amber-400/90 px-6 py-2 text-sm font-semibold text-zinc-900 shadow-md hover:bg-amber-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 transition"
-        aria-label="Become a Sponsor"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-4 w-4"
-          fill="currentColor"
-          viewBox="0 0 16 16"
-          aria-hidden="true"
-        >
-          <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4 7.5h8v1H4v-1z" />
-        </svg>
-        Become a Sponsor
-      </a>
-    </div>
-  </div>
-</section>
-
 <style>
-  /* marquee scroll if overflow */
+  :root {
+    --primary-yellow: #facc15;
+    --zinc-dark: rgba(24, 24, 27, 0.95);
+    --text-light: #fff;
+    --header-height: 4rem;
+    --scroll-offset: calc(var(--header-height) + 1rem);
+  }
+  [data-theme='dark'] {
+    --zinc-dark: rgba(10, 10, 15, 0.98);
+    --text-light: #eee;
+  }
+
+  /* prevent header overlap */
+  body {
+    padding-top: var(--header-height);
+  }
+  section[id] {
+    scroll-margin-top: var(--scroll-offset);
+  }
+
+  .connect-sponsor-wall {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background: var(--zinc-dark);
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--text-light);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border-top: 1px solid #27272a;
+    margin: 3rem auto;
+    max-width: 800px;
+    z-index: 5;
+  }
+  .connect-sponsor-wall::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('{{ url_for('static', filename='sponsor-bg-pattern.svg') }}')
+      center/cover;
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .connect-sponsor-wall h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--primary-yellow);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 10;
+  }
+  .connect-sponsor-wall p {
+    margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  #sponsor-count {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .vendor-marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 2rem 0;
+    position: relative;
+    user-select: none;
+    z-index: 1;
+  }
+  .vendor-marquee ul {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+  }
+  .vendor-marquee ul li {
+    flex: 0 0 auto;
+  }
+  .vendor-marquee ul li img {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(250, 205, 21, 0.3);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    height: 5rem;
+    object-fit: contain;
+    filter: grayscale(1);
+    transition:
+      transform 0.3s,
+      filter 0.3s;
+    cursor: pointer;
+  }
+  .vendor-marquee ul li a:hover img,
+  .vendor-marquee ul li a:focus-visible img {
+    transform: scale(1.05);
+    filter: grayscale(0);
+    outline: 2px solid var(--primary-yellow);
+    outline-offset: 2px;
+  }
   @keyframes marquee {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(calc(-1 * (100% - 100vw)));
+      transform: translateX(calc(-50%));
     }
-  }
-  .vendor-marquee ul {
-    animation: marquee 30s linear infinite;
   }
   .vendor-marquee:hover ul {
     animation-play-state: paused;
   }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-yellow);
+    color: #1f2937;
+    font-weight: 700;
+    border-radius: 9999px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+    cursor: pointer;
+    user-select: none;
+  }
+  .cta-btn:hover,
+  .cta-btn:focus-visible {
+    background: #fdd54f;
+    transform: scale(1.02);
+    outline: 3px solid var(--primary-yellow);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .connect-sponsor-wall {
+      padding: 2rem 0.75rem;
+    }
+    .connect-sponsor-wall h2 {
+      font-size: 1.75rem;
+    }
+    .vendor-marquee ul li img {
+      height: 4rem;
+    }
+  }
 </style>
 
+<section
+  id="sponsor-wall"
+  class="connect-sponsor-wall"
+  role="region"
+  aria-labelledby="sponsor-heading"
+  data-aos="fade-up"
+  data-aos-delay="300"
+>
+  <div class="space-y-6 relative z-10">
+    <h2 id="sponsor-heading">Our Generous Sponsors</h2>
+    <p>
+      Every logo below represents a family or company that keeps our kids on the
+      court—thank you!
+    </p>
+    <p id="sponsor-count" aria-live="polite">
+      {{ sponsors|length }} Sponsor{{ sponsors|length!=1 and 's' or '' }} and
+      counting!
+    </p>
+
+    {% if sponsors %}
+    <div class="vendor-marquee" aria-label="Sponsor logos marquee" tabindex="0">
+      <ul>
+        {% for sponsor in sponsors %}
+        <li>
+          <a
+            href="{{ sponsor.website or '#' }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit {{ sponsor.name }}"
+          >
+            <img
+              src="{{ sponsor.logo_url }}"
+              alt="{{ sponsor.name }} logo"
+              loading="lazy"
+              width="160"
+              height="80"
+            />
+          </a>
+        </li>
+        {% endfor %} {% for sponsor in sponsors %} {# duplicate for seamless
+        loop #}
+        <li aria-hidden="true">
+          <img
+            src="{{ sponsor.logo_url }}"
+            alt=""
+            loading="lazy"
+            width="160"
+            height="80"
+          />
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% else %}
+    <div class="grid grid-cols-3 sm:grid-cols-5 gap-6">
+      {% for _ in range(5) %}
+      <div class="h-20 bg-zinc-800 animate-pulse rounded-lg"></div>
+      {% endfor %}
+    </div>
+    <p class="text-sm text-gray-400 mt-2">
+      Your logo here—become a founding sponsor today!
+    </p>
+    {% endif %}
+
+    <button class="cta-btn" aria-label="Become a Sponsor" id="sponsor-cta">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4"
+        fill="currentColor"
+        viewBox="0 0 16 16"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4 7.5h8v1H4v-1z" />
+      </svg>
+      Become a Sponsor
+    </button>
+  </div>
+</section>
+
 <script>
-  // adjust marquee duration by content width
   document.addEventListener('DOMContentLoaded', () => {
-    const marquee = document.querySelector('.vendor-marquee ul');
-    if (!marquee) return;
-    const totalW = marquee.scrollWidth;
-    const viewport = document.documentElement.clientWidth;
-    const duration = Math.max(20, (totalW / viewport) * 30);
-    marquee.style.animationDuration = duration + 's';
+    const marquees = document.querySelectorAll('.vendor-marquee ul');
+    marquees.forEach((marquee) => {
+      const totalWidth = marquee.scrollWidth;
+      const viewport = document.documentElement.clientWidth;
+      marquee.style.animationDuration =
+        Math.max(20, (totalWidth / viewport) * 30) + 's';
+    });
+
+    document.getElementById('sponsor-cta').addEventListener('click', () => {
+      import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/+esm').then(
+        ({ default: confetti }) => {
+          confetti({
+            particleCount: 60,
+            spread: 50,
+            origin: { y: 0.6 },
+            colors: ['#facc15', '#4ade80'],
+          });
+        }
+      );
+      document.querySelector('#donateModal')?.classList.add('open');
+    });
   });
 </script>

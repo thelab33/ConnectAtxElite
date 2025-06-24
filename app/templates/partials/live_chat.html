@@ -1,0 +1,248 @@
+<!-- Live Chat Widget (Floating, Minimal, Accessible) -->
+<style>
+  .live-chat-fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1050;
+    background: linear-gradient(92deg, #facc15 70%, #fef08a 100%);
+    color: #222;
+    font-weight: bold;
+    font-size: 1.35rem;
+    border-radius: 50%;
+    box-shadow: 0 4px 24px #0a0a0a44;
+    width: 3.8rem;
+    height: 3.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition:
+      box-shadow 0.22s,
+      transform 0.19s;
+  }
+  .live-chat-fab:hover,
+  .live-chat-fab:focus-visible {
+    box-shadow: 0 8px 32px #facc1555;
+    transform: scale(1.07);
+  }
+  .live-chat-panel {
+    position: fixed;
+    bottom: 5.4rem;
+    right: 2rem;
+    z-index: 1060;
+    width: 360px;
+    max-width: 96vw;
+    background: rgba(28, 32, 42, 0.99);
+    color: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 6px 36px #000c2a50;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: chatIn 0.33s cubic-bezier(0.77, 0, 0.18, 1) both;
+  }
+  @keyframes chatIn {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .live-chat-panel.open {
+    display: flex;
+  }
+  .live-chat-header {
+    background: linear-gradient(92deg, #facc15 70%, #fef08a 100%);
+    color: #1a1a1a;
+    padding: 1rem 1.5rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .live-chat-header .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: #222;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0;
+    margin-left: 1.2rem;
+  }
+  .live-chat-messages {
+    padding: 1.3rem 1rem 0.75rem;
+    flex: 1;
+    overflow-y: auto;
+    background: transparent;
+    min-height: 140px;
+    font-size: 1rem;
+  }
+  .live-chat-input-bar {
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 1rem;
+    background: #25272d;
+    border-top: 1px solid #2c2e36;
+  }
+  .live-chat-input-bar input {
+    flex: 1;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background: #2c2e36;
+    color: #facc15;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    margin-right: 0.7rem;
+    transition: box-shadow 0.17s;
+  }
+  .live-chat-input-bar button {
+    background: linear-gradient(92deg, #facc15 70%, #fef08a 100%);
+    color: #18181b;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+  .live-chat-input-bar button:hover,
+  .live-chat-input-bar button:focus {
+    background: #fde68a;
+  }
+</style>
+
+<button
+  class="live-chat-fab"
+  id="live-chat-fab"
+  aria-label="Open live chat"
+  title="Chat with us"
+>
+  <span aria-hidden="true">💬</span>
+</button>
+
+<div
+  class="live-chat-panel"
+  id="live-chat-panel"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="live-chat-header"
+  tabindex="-1"
+>
+  <div class="live-chat-header" id="live-chat-header">
+    <span>Live Chat</span>
+    <button
+      class="close-btn"
+      id="live-chat-close"
+      aria-label="Close chat"
+      title="Close"
+    >
+      &times;
+    </button>
+  </div>
+  <div class="live-chat-messages" id="live-chat-messages" aria-live="polite">
+    <div style="opacity: 0.5; font-size: 0.98rem">
+      👋 Hi there! How can we help?
+    </div>
+  </div>
+  <form class="live-chat-input-bar" id="live-chat-form" autocomplete="off">
+    <input
+      type="text"
+      id="live-chat-input"
+      placeholder="Type your message…"
+      autocomplete="off"
+      required
+    />
+    <button type="submit" id="live-chat-send" aria-label="Send message">
+      Send
+    </button>
+  </form>
+</div>
+
+<script>
+  (function () {
+    // Get elements
+    const fab = document.getElementById('live-chat-fab');
+    const panel = document.getElementById('live-chat-panel');
+    const closeBtn = document.getElementById('live-chat-close');
+    const form = document.getElementById('live-chat-form');
+    const input = document.getElementById('live-chat-input');
+    const messages = document.getElementById('live-chat-messages');
+
+    // Open/close
+    fab.addEventListener('click', () => {
+      panel.classList.add('open');
+      setTimeout(() => input.focus(), 180);
+    });
+    closeBtn.addEventListener('click', () => {
+      panel.classList.remove('open');
+      fab.focus();
+    });
+    // Esc to close
+    panel.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        panel.classList.remove('open');
+        fab.focus();
+      }
+    });
+
+    // Basic messaging (local only)
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = input.value.trim();
+      if (!msg) return;
+      const userMsg = document.createElement('div');
+      userMsg.textContent = 'You: ' + msg;
+      userMsg.style.cssText = 'margin-bottom:0.5em;color:#facc15;';
+      messages.appendChild(userMsg);
+      messages.scrollTop = messages.scrollHeight;
+
+      // Fake bot reply
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.textContent =
+          "CoachBot: Thanks for reaching out! We'll respond soon.";
+        botMsg.style.opacity = 0.76;
+        messages.appendChild(botMsg);
+        messages.scrollTop = messages.scrollHeight;
+      }, 900);
+
+      input.value = '';
+    });
+
+    // Click outside to close
+    document.addEventListener('mousedown', (e) => {
+      if (
+        panel.classList.contains('open') &&
+        !panel.contains(e.target) &&
+        !fab.contains(e.target)
+      ) {
+        panel.classList.remove('open');
+      }
+    });
+
+    // Accessibility: Trap focus inside panel
+    panel.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        const focusable = [closeBtn, input];
+        const idx = focusable.indexOf(document.activeElement);
+        if (e.shiftKey && idx === 0) {
+          e.preventDefault();
+          focusable[focusable.length - 1].focus();
+        } else if (!e.shiftKey && idx === focusable.length - 1) {
+          e.preventDefault();
+          focusable[0].focus();
+        }
+      }
+    });
+  })();
+</script>

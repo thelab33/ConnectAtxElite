@@ -1,0 +1,4 @@
+app/templates/base.html:{% include "partials/
+app/templates/index.html:{% include "partials/
+app/templates/offline.html:{% include "partials/
+hero.html:{% include 

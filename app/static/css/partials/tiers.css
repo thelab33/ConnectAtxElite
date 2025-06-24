@@ -10,9 +10,9 @@
 }
 
 .tier-card {
-  background: rgba(24, 24, 27, 0.85);
+  background: rgb(24 24 27 / 85%);
   border-radius: var(--radius);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 80%);
   padding: 2rem 1.5rem;
   min-width: 260px;
   max-width: 320px;

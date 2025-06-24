@@ -1,17 +1,80 @@
-<!-- Back to Top with Bouncing Basketball -->
 <button
   id="back-to-top"
   aria-label="Back to Top"
-  class="back-to-top fixed bottom-[8.5rem] right-6 z-60 flex items-center justify-center w-12 h-12 rounded-full bg-amber-400 text-black shadow-lg border-2 border-amber-200 opacity-0 pointer-events-none focus:outline-none focus-visible:ring-4 focus-visible:ring-amber-300 transition-opacity duration-300"
+  class="back-to-top"
   tabindex="0"
 >
-  <!-- Basketball SVG -->
-  <svg
-    class="ball w-7 h-7 drop-shadow"
-    viewBox="0 0 64 64"
-    aria-hidden="true"
-    fill="currentColor"
-  >
+  <style>
+    :root {
+      --header-height: 4rem;
+      --scroll-offset: calc(var(--header-height) + 1rem);
+    }
+    body {
+      padding-top: var(--header-height);
+    }
+    section[id] {
+      scroll-margin-top: var(--scroll-offset);
+    }
+    #back-to-top {
+      position: fixed;
+      bottom: 8.5rem;
+      right: 1.5rem;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 9999px;
+      background-color: #facc15;
+      color: #000;
+      border: 2px solid #fde68a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #back-to-top.show {
+      opacity: 1;
+      pointer-events: auto;
+      animation: bounce 1s infinite;
+    }
+    @keyframes bounce {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+    #back-to-top svg {
+      width: 1.75rem;
+      height: 1.75rem;
+      drop-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    }
+    #back-to-top span {
+      position: absolute;
+      top: -2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.25rem 0.5rem;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      font-size: 0.75rem;
+      border-radius: 0.25rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    #back-to-top:hover span,
+    #back-to-top:focus span {
+      opacity: 1;
+    }
+  </style>
+
+  <svg viewBox="0 0 64 64" aria-hidden="true" fill="currentColor">
     <circle
       cx="32"
       cy="32"
@@ -34,37 +97,36 @@
     />
     <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.12" />
   </svg>
-</button>
+  <span id="back-to-top-tooltip">Back to Top</span>
 
-<script>
-  (function () {
-    const btn = document.getElementById('back-to-top');
-    let ticking = false;
+  <script>
+    (() => {
+      const btn = document.getElementById('back-to-top');
+      let ticking = false;
 
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            btn.classList.toggle('show', window.scrollY > 300);
-            ticking = false;
-          });
-          ticking = true;
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              btn.classList.toggle('show', window.scrollY > 300);
+              ticking = false;
+            });
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+
+      const scrollUp = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      btn.addEventListener('click', scrollUp);
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          scrollUp();
         }
-      },
-      { passive: true }
-    );
-
-    btn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Optional: Keyboard accessibility (Enter/Space triggers scroll)
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    });
-  })();
-</script>
+      });
+    })();
+  </script>
+</button>

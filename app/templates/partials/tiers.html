@@ -1,238 +1,266 @@
-{# templates/partials/tiers.html — Enhanced Sponsor Tiers #}
-<section
-  id="tiers"
-  class="py-24 bg-zinc-900 text-white px-6"
-  role="region"
-  aria-labelledby="tiers-heading"
-  tabindex="-1"
-  data-aos="fade-up"
-  data-aos-duration="800"
->
-  <div class="max-w-6xl mx-auto space-y-16">
-    <!-- ① QR sponsor call-out -->
-    <div
-      class="p-6 rounded-2xl bg-gradient-to-r from-amber-400/70 to-amber-200/60 text-black flex flex-col md:flex-row items-center justify-between gap-6 shadow-gold"
-      aria-label="Sponsor now call-out"
-      data-aos="zoom-in"
-      data-aos-delay="200"
-    >
-      <div>
-        <p class="font-bold text-2xl sm:text-3xl">
-          Want to make the biggest impact?
-        </p>
-        <p class="text-lg text-amber-800/80">
-          Contact us at
-          <a
-            href="mailto:arodgps@gmail.com"
-            class="underline hover:text-amber-700"
-            >arodgps@gmail.com</a
-          >
-          or scan to sponsor instantly.
-        </p>
-      </div>
-      <img
-        src="{{ url_for('static', filename='qr-sponsorship-deck.png') }}"
-        alt="Sponsor via QR code"
-        width="90"
-        height="90"
-        class="rounded-lg shadow-lg border border-amber-400 bg-white"
-      />
-    </div>
-
-    <!-- ② Live progress bar -->
-    {% set goal = goal_amount or 10000 %} {% set raised = raised_amount or 7850
-    %}
-    <div
-      class="w-full max-w-xl mx-auto text-center space-y-2"
-      aria-label="{{ '$%s raised of $%s goal'|format(raised, goal) }}"
-      data-aos="fade-up"
-      data-aos-delay="400"
-    >
-      <div
-        class="w-full bg-zinc-800 h-5 rounded-full border border-amber-400/30 overflow-hidden relative"
-      >
-        <div
-          id="tiersProgress"
-          class="bg-amber-400 h-5 rounded-full shadow-gold transition-all duration-1000 ease-out"
-          style="width: {{ (raised/goal*100)|round(1,'ceil') }}%;"
-        >
-          <span class="pl-2 text-black font-bold"
-            >{{ '$%s'|format('{:,}'.format(raised)) }}</span
-          >
-        </div>
-      </div>
-      <span class="text-sm text-amber-200"
-        >Goal: ${{ '{:,}'.format(goal) }}</span
-      >
-    </div>
-
-    <!-- ③ Section heading -->
-    <h2
-      id="tiers-heading"
-      class="text-4xl font-bold text-amber-400 text-center"
-      data-aos="fade-up"
-      data-aos-delay="600"
-    >
-      Sponsorship Tiers
-    </h2>
-
-    <!-- ④ Tier cards with flip effect -->
-    {% set tiers = [ ('Platinum','$5,000+','heroicons-solid:crown', ['Logo on
-    jerseys','Shout-outs on social','VIP invites'], 'from-amber-500
-    to-amber-300', True), ('Gold', '$2,500', 'heroicons-solid:currency-dollar',
-    ['Warm-ups logo','Social features','Appreciation invites'], 'from-amber-400
-    to-amber-200', False), ('Silver', '$1,000', 'heroicons-solid:medal',
-    ['Social shout-outs','Thank-you certificate','Board listing'],
-    'from-gray-300 to-slate-100', False), ('Bronze', '$500',
-    'heroicons-solid:trophy', ['Public thank-you','Board listing'],
-    'from-orange-400 to-amber-200', False), ('Custom', 'Any
-    Amount','heroicons-solid:star', ['Tailored benefits','Personalized impact'],
-    'from-purple-500 to-pink-400', False) ] %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-      {% for title, amount, icon, benefits, gradient, highlight in tiers %}
-      <div
-        class="flip-card perspective"
-        tabindex="0"
-        data-aos="fade-up"
-        data-aos-delay="{{ 700 + loop.index0*100 }}"
-      >
-        <div
-          class="relative w-full h-full transition-transform duration-500 preserve-3d group hover:rotate-y-180 focus-within:rotate-y-180"
-        >
-          <!-- Front side -->
-          <div
-            class="card-face card-front p-6 rounded-2xl bg-gradient-to-br {{ gradient }}
-                      shadow-2xl text-black flex flex-col items-center justify-start space-y-4"
-          >
-            {% if highlight %}
-            <span
-              class="absolute top-4 right-4 bg-black/80 text-amber-300 text-xs px-3 py-1 rounded-full font-semibold shadow"
-              >Top&nbsp;Tier</span
-            >
-            {% endif %}
-            <div class="text-5xl">
-              <i data-feather="{{ icon }}"></i>
-            </div>
-            <h3 class="text-2xl font-bold">{{ title }}</h3>
-            <p class="text-lg font-semibold">{{ amount }}</p>
-            <ul class="list-disc list-inside text-sm space-y-1">
-              {% for item in benefits %}
-              <li>{{ item }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-
-          <!-- Back side -->
-          <div
-            class="card-face card-back absolute inset-0 p-6 rounded-2xl bg-zinc-800 text-white flex flex-col items-center justify-center backface-hidden shadow-lg"
-          >
-            <p class="mb-4 font-semibold">Secure this tier now:</p>
-            <button
-              class="tier-cta inline-block bg-amber-400 text-black font-bold px-6 py-2 rounded-full shadow-gold hover:scale-105 focus-visible:ring-4 focus-visible:ring-amber-300 transition"
-              data-amount="{{ amount | replace('$','') | replace(',','') | default('') }}"
-            >
-              Sponsor {{ title }}
-            </button>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-
-    <!-- ⑤ FAQ accordion (in-place) -->
-    <div
-      class="max-w-3xl mx-auto pt-10 border-t border-zinc-800"
-      data-aos="fade-up"
-      data-aos-delay="1100"
-    >
-      <button
-        id="faqToggleTiers"
-        class="flex items-center gap-2 text-amber-400 font-bold text-lg hover:underline transition"
-        aria-expanded="false"
-        aria-controls="faqBodyTiers"
-      >
-        ▶ Frequently Asked Questions
-      </button>
-      <div
-        id="faqBodyTiers"
-        class="hidden mt-4 bg-zinc-900 border border-amber-400/20 rounded-xl p-6 space-y-4"
-      >
-        <div>
-          <b>Can I sponsor anonymously?</b>
-          <p class="text-sm text-white/80">
-            Yes — just let us know in your message or donation form.
-          </p>
-        </div>
-        <div>
-          <b>Where does my sponsorship go?</b>
-          <p class="text-sm text-white/80">
-            100 % supports gym rental, travel, academic programs, and gear.
-          </p>
-        </div>
-        <div>
-          <b>How do I become a sponsor?</b>
-          <p class="text-sm text-white/80">
-            Click any “Sponsor” button or email us—we’ll personalize your
-            impact!
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-  // Feather icons replacement
-  document.addEventListener('DOMContentLoaded', () => {
-    feather.replace();
-
-    // FAQ toggle
-    document
-      .getElementById('faqToggleTiers')
-      ?.addEventListener('click', (e) => {
-        const btn = e.currentTarget;
-        const body = document.getElementById('faqBodyTiers');
-        const open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        btn.textContent = (open ? '▶' : '▼') + ' Frequently Asked Questions';
-        body.classList.toggle('hidden', open);
-      });
-
-    // Tier CTA buttons → open donation modal & prefill amount
-    document.querySelectorAll('.tier-cta').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const amt = btn.dataset.amount;
-        const dlg = document.getElementById('donateDialog');
-        if (dlg) {
-          dlg.querySelector('input[name="amount"]').value = amt;
-          dlg.showModal();
-        }
-      });
-    });
-  });
-</script>
-
 <style>
-  /* flip-card helper */
+  :root {
+    --amber-400: #facc15;
+    --amber-500: #eab308;
+    --amber-300: #fde68a;
+    --zinc-900: #111827;
+    --zinc-800: #27272a;
+    --black: #000;
+    --text-light: #fff;
+    --text-dark: #000;
+    --border-color: rgba(250, 205, 21, 0.3);
+    --header-height: 4rem;
+    --scroll-offset: calc(var(--header-height) + 1rem);
+  }
+
+  /* prevent header overlap */
+  body {
+    padding-top: var(--header-height);
+  }
+  section[id] {
+    scroll-margin-top: var(--scroll-offset);
+  }
+
+  .connect-tiers {
+    padding: 6rem 1.5rem;
+    background-color: var(--zinc-900);
+    color: var(--text-light);
+    user-select: none;
+    text-align: center;
+    z-index: 1;
+  }
+  .connect-tiers h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--amber-400);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .progress {
+    max-width: 40rem;
+    margin: 2rem auto;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+  }
+  .progress-bar-bg {
+    background: var(--zinc-800);
+    border: 1px solid var(--border-color);
+    border-radius: 9999px;
+    height: 1.25rem;
+    overflow: hidden;
+  }
+  .progress-bar {
+    background: var(--amber-400);
+    height: 100%;
+    color: var(--text-dark);
+    font-weight: 700;
+    padding-left: 0.5rem;
+    box-shadow: 0 0 15px rgba(250, 205, 21, 0.5);
+    transition: width 1s ease-out;
+  }
+  .progress-text {
+    font-size: 0.875rem;
+    color: var(--amber-300);
+    margin-top: 0.5rem;
+  }
+
+  .grid {
+    display: grid;
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
   .perspective {
     perspective: 1000px;
   }
   .preserve-3d {
     transform-style: preserve-3d;
+    transition: transform 0.6s;
+    position: relative;
+    height: 14rem;
   }
-  .rotate-y-180 {
+  .perspective:hover .preserve-3d,
+  .perspective:focus-within .preserve-3d {
     transform: rotateY(180deg);
   }
+
   .card-face {
     backface-visibility: hidden;
+    position: absolute;
+    inset: 0;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   }
   .card-front {
-    position: relative;
+    background: var(--zinc-800);
+    z-index: 2;
   }
   .card-back {
+    background: var(--zinc-800);
     transform: rotateY(180deg);
   }
-  .backface-hidden {
-    backface-visibility: hidden;
+  .tier-cta {
+    background: var(--amber-400);
+    color: var(--text-dark);
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .tier-cta:hover,
+  .tier-cta:focus-visible {
+    background: var(--amber-300);
+    outline: 2px solid var(--amber-400);
+    outline-offset: 3px;
+  }
+
+  .faq-toggle {
+    display: inline-block;
+    color: var(--amber-400);
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: color 0.2s;
+  }
+  .faq-toggle:hover,
+  .faq-toggle:focus-visible {
+    color: var(--amber-300);
+    outline: 2px solid var(--amber-400);
+    outline-offset: 3px;
+  }
+  .faq-body {
+    margin-top: 1rem;
+    background: var(--zinc-800);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: none;
+    text-align: left;
+  }
+
+  @media (max-width: 640px) {
+    .connect-tiers {
+      padding: 4rem 1rem;
+    }
+    .connect-tiers h2 {
+      font-size: 2rem;
+    }
+    .perspective {
+      height: 12rem;
+    }
   }
 </style>
+
+<section
+  id="tiers"
+  class="connect-tiers"
+  aria-labelledby="tiers-heading"
+  tabindex="-1"
+>
+  <h2 id="tiers-heading">Sponsorship Tiers</h2>
+
+  <!-- Progress -->
+  {% set goal = goal or 10000 %} {% set raised = raised or 7850 %}
+  <div class="progress" aria-label="Progress toward goal">
+    <div class="progress-bar-bg">
+      <div
+        class="progress-bar"
+        style="width: {{ (raised/goal*100)|round(1, 'ceil') }}%;"
+      >
+        ${{ '{:,}'.format(raised) }}
+      </div>
+    </div>
+    <div class="progress-text">Goal: ${{ '{:,}'.format(goal) }}</div>
+  </div>
+
+  <!-- Tiers Grid -->
+  {% set tiers = [ {'title':'Platinum','amount':'5000+','benefits':['Logo on
+  jerseys','Shout-outs on social','VIP invites']},
+  {'title':'Gold','amount':'2500','benefits':['Warm-ups logo','Social
+  features','Appreciation invites']},
+  {'title':'Silver','amount':'1000','benefits':['Social shout-outs','Thank-you
+  certificate','Board listing']},
+  {'title':'Bronze','amount':'500','benefits':['Public thank-you','Board
+  listing']}, {'title':'Custom','amount':'Custom','benefits':['Tailored
+  benefits','Personalized impact']} ] %}
+  <div class="grid">
+    {% for tier in tiers %}
+    <div class="perspective" tabindex="0">
+      <div class="preserve-3d">
+        <div class="card-face card-front">
+          <h3 class="text-xl font-bold">{{ tier.title }}</h3>
+          <p class="font-semibold">${{ tier.amount }}</p>
+          <ul class="text-sm mt-2 space-y-1">
+            {% for benefit in tier.benefits %}
+            <li>• {{ benefit }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="card-face card-back">
+          <button class="tier-cta" data-amount="{{ tier.amount }}">
+            Sponsor {{ tier.title }}
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- FAQ -->
+  <button class="faq-toggle" aria-expanded="false">
+    ▶ Frequently Asked Questions
+  </button>
+  <div class="faq-body" role="region" aria-label="Tier FAQs">
+    <p><strong>Can I sponsor anonymously?</strong> Yes—just let us know.</p>
+    <p>
+      <strong>Where does my sponsorship go?</strong> 100% supports gym rental,
+      travel, academics & gear.
+    </p>
+    <p>
+      <strong>How do I sponsor?</strong> Click a “Sponsor” button or email us.
+    </p>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Tier buttons
+    document.querySelectorAll('.tier-cta').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        alert(`Opening sponsorship form for $${btn.dataset.amount}`);
+      });
+    });
+    // FAQ toggle
+    const faqBtn = document.querySelector('.faq-toggle');
+    const faqBody = document.querySelector('.faq-body');
+    faqBtn.addEventListener('click', () => {
+      const expanded = faqBtn.getAttribute('aria-expanded') === 'true';
+      faqBtn.setAttribute('aria-expanded', String(!expanded));
+      faqBtn.textContent =
+        (expanded ? '▶' : '▼') + ' Frequently Asked Questions';
+      faqBody.style.display = expanded ? 'none' : 'block';
+    });
+    // Initialize AOS if used
+    if (window.AOS) AOS.init({ once: true, duration: 600 });
+  });
+</script>

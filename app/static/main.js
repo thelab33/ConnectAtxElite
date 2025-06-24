@@ -76,21 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     { threshold: 0.3 }
   );
-  document.querySelectorAll('[data-reveal]').forEach((el) => revealObserver.observe(el));
+  document
+    .querySelectorAll('[data-reveal]')
+    .forEach((el) => revealObserver.observe(el));
 
   // Keyboard jump (j / k)
   const jumpSections = Array.from(document.querySelectorAll('[data-jump]'));
   window.addEventListener('keydown', (e) => {
     if (/^(input|textarea)$/i.test(e.target.tagName)) return;
-    let index = jumpSections.findIndex((sec) => sec.offsetTop > window.scrollY + 10);
+    let index = jumpSections.findIndex(
+      (sec) => sec.offsetTop > window.scrollY + 10
+    );
     if (e.key === 'j') {
       // jump forward
       index = Math.min(index, jumpSections.length - 1);
-      jumpSections[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      jumpSections[index]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     } else if (e.key === 'k') {
       // jump backward
       index = Math.max(0, index - 1);
-      jumpSections[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      jumpSections[index]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
   });
 

@@ -20,7 +20,7 @@
 .cta-section p {
   font-size: 1.125rem;
   max-width: 600px;
-  margin: 0 auto 2rem auto;
+  margin: 0 auto 2rem;
   color: var(--accent-soft);
 }
 
@@ -52,11 +52,11 @@
 .cta-section button:focus-visible,
 .cta-section .preset-amt:hover,
 .cta-section .preset-amt:focus-visible {
-  background-color: #ffdd33;
+  background-color: #fd3;
   color: #111;
   outline-offset: 4px;
   outline: 3px solid var(--accent-soft);
-  box-shadow: 0 0 15px #ffdd33;
+  box-shadow: 0 0 15px #fd3;
 }
 
 #progressTooltip {
@@ -64,6 +64,7 @@
   opacity: 0;
   transition: opacity 0.18s cubic-bezier(0.6, 0.3, 0.4, 1);
 }
+
 .group:hover #progressTooltip,
 .group:focus #progressTooltip {
   opacity: 1;
@@ -82,7 +83,7 @@
 }
 
 /* Responsive QR Code */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .cta-section img[alt*='QR Code'] {
     width: 96px;
     height: 96px;
@@ -100,6 +101,7 @@
     opacity: 0.6;
     transform: scale(0.95);
   }
+
   50% {
     opacity: 0.15;
     transform: scale(1.7);

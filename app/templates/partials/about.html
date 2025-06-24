@@ -1,110 +1,488 @@
-{# templates/partials/about.html — consolidated “About / Impact / Challenge”
-section #}
+<style>
+  :root {
+    --primary-yellow: #facc15;
+    --bg-gradient-start: #18181b;
+    --bg-gradient-end: #262626;
+    --text-light: #fff;
+    --text-muted: rgba(255, 255, 255, 0.74);
+    --text-strong: rgba(255, 255, 255, 0.93);
+    --danger-red: #ef4444;
+    --impact-bg: rgba(40, 40, 44, 0.85);
+    --impact-shadow: rgba(250, 205, 21, 0.22);
+    --header-height: 4rem;
+    --scroll-offset: calc(var(--header-height) + 1rem);
+  }
+  [data-theme='dark'] {
+    --bg-gradient-start: #0e0e10;
+    --bg-gradient-end: #1c1c1f;
+    --text-light: #eee;
+    --text-muted: rgba(238, 238, 238, 0.6);
+    --impact-bg: rgba(25, 25, 29, 0.9);
+    --impact-shadow: rgba(250, 205, 21, 0.3);
+  }
+
+  body {
+    padding-top: var(--header-height);
+  }
+  section[id] {
+    scroll-margin-top: var(--scroll-offset);
+  }
+
+  .connect-about {
+    position: relative;
+    padding: 6rem 1.5rem 4rem;
+    background: linear-gradient(
+      135deg,
+      var(--bg-gradient-start) 90%,
+      var(--bg-gradient-end) 100%
+    );
+    color: var(--text-light);
+    overflow: hidden;
+    user-select: none;
+    z-index: 1;
+  }
+
+  /* Subtle animated background particles */
+  .connect-about::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('{{ url_for('static', filename='particles.svg') }}')
+      center/cover;
+    opacity: 0.06;
+    z-index: 0;
+    pointer-events: none;
+    animation: float 20s linear infinite;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  .connect-about h2,
+  .connect-about h3 {
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 2;
+  }
+  .connect-about h2 {
+    font-size: 2.5rem;
+    color: var(--primary-yellow);
+  }
+  @media (min-width: 640px) {
+    .connect-about h2 {
+      font-size: 3rem;
+    }
+  }
+
+  .connect-about .text-block p {
+    line-height: 1.75;
+    color: var(--text-strong);
+    position: relative;
+    z-index: 2;
+  }
+  .connect-about .text-block p.text-muted {
+    color: var(--text-muted);
+  }
+
+  .impact-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    justify-content: center;
+    margin: 2.5rem 0 1.8rem;
+    position: relative;
+    z-index: 2;
+  }
+  .impact-fact {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--impact-bg);
+    border-radius: 2rem;
+    padding: 0.55rem 1.4rem;
+    box-shadow: 0 2px 9px var(--impact-shadow);
+    font-weight: 700;
+    font-size: 1.04rem;
+    transition: transform 0.3s;
+  }
+  .impact-fact:hover {
+    transform: translateY(-3px);
+    cursor: default;
+  }
+  .impact-fact i {
+    font-size: 1.5rem;
+    color: var(--primary-yellow);
+  }
+
+  .stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 2;
+  }
+  .stat-card {
+    background: rgba(36, 36, 36, 0.86);
+    border: 1.5px solid var(--impact-shadow);
+    border-radius: 1.1rem;
+    padding: 2rem 1.2rem;
+    width: 165px;
+    text-align: center;
+    box-shadow: 0 4px 12px #18181b22;
+    transition:
+      transform 0.23s ease,
+      box-shadow 0.23s ease;
+    cursor: default;
+  }
+  .stat-card:hover,
+  .stat-card:focus {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 25px var(--primary-yellow);
+    outline: none;
+  }
+  .stat-value {
+    font-size: 2.55rem;
+    font-weight: 900;
+    color: var(--primary-yellow);
+  }
+  .stat-label {
+    margin-top: 0.5rem;
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  .divider {
+    width: 6rem;
+    height: 0.22rem;
+    margin: 2rem auto 2.2rem;
+    border-radius: 9999px;
+    background: var(--primary-yellow);
+    opacity: 0.8;
+    position: relative;
+    z-index: 2;
+  }
+
+  .challenge {
+    margin: 2.1rem auto;
+    max-width: 40rem;
+    background: linear-gradient(
+      135deg,
+      var(--bg-gradient-start) 80%,
+      #111111 100%
+    );
+    border-left: 0.49rem solid var(--danger-red);
+    border-radius: 1.55rem;
+    padding: 2.1rem;
+    position: relative;
+    z-index: 2;
+  }
+  .challenge h3 {
+    color: var(--danger-red);
+    margin-bottom: 0.6rem;
+  }
+
+  .impact-list-title {
+    color: #22c55e;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+  }
+  .impact-list {
+    list-style: disc inside;
+    max-width: 40rem;
+    margin: 2rem auto;
+    line-height: 1.76;
+    position: relative;
+    z-index: 2;
+  }
+  .impact-list li {
+    margin-bottom: 0.7rem;
+  }
+
+  .coach-carousel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin: 3rem auto 1rem;
+    position: relative;
+    z-index: 2;
+  }
+  .coach-card {
+    background: rgba(24, 28, 38, 0.96);
+    border-radius: 1.1rem;
+    padding: 1.2rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 170px;
+    transition:
+      transform 0.18s,
+      box-shadow 0.18s;
+    cursor: default;
+  }
+  .coach-card:hover,
+  .coach-card:focus {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 25px var(--primary-yellow);
+    outline: none;
+  }
+  .coach-card img {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    box-shadow: 0 2px 7px rgba(250, 205, 21, 0.26);
+    object-fit: cover;
+  }
+  .coach-name {
+    font-weight: 800;
+    margin-top: 0.6rem;
+    font-size: 1.12rem;
+    color: var(--primary-yellow);
+  }
+  .coach-role {
+    font-size: 0.97rem;
+    color: var(--text-muted);
+  }
+
+  .bg-ball {
+    position: absolute;
+    opacity: 0.14;
+    z-index: 1;
+  }
+  .bg-ball1 {
+    top: 3rem;
+    left: 3vw;
+    width: 110px;
+    height: 110px;
+    filter: blur(2.7px);
+  }
+  .bg-ball2 {
+    bottom: 2rem;
+    right: 4vw;
+    width: 160px;
+    height: 160px;
+    filter: blur(4px);
+  }
+
+  @media (max-width: 640px) {
+    .connect-about {
+      padding: 4rem 1rem 2rem;
+    }
+    .impact-strip {
+      gap: 1rem;
+    }
+    .stats-grid {
+      gap: 1rem;
+    }
+    .stat-card {
+      width: 140px;
+      padding: 1.5rem 1rem;
+    }
+    .coach-card {
+      width: 140px;
+    }
+  }
+</style>
+
+<!-- Background Accents -->
+<img
+  src="{{ url_for('static', filename='basketball-accent.svg') }}"
+  class="bg-ball bg-ball1"
+  aria-hidden="true"
+/>
+<img
+  src="{{ url_for('static', filename='basketball-accent.svg') }}"
+  class="bg-ball bg-ball2"
+  aria-hidden="true"
+/>
+
 <section
   id="about"
-  class="py-24 px-6 bg-zinc-950 text-white space-y-20"
+  class="connect-about"
   role="region"
   aria-labelledby="about-heading"
   tabindex="-1"
 >
-  {# 🎯 Our Mission ———————————————————————— #}
   <div
-    class="max-w-5xl mx-auto space-y-6"
+    class="player-mosaic"
     data-aos="fade-up"
-    data-aos-delay="100"
+    data-aos-delay="60"
+    aria-label="Our Players"
   >
-    <h2
-      id="about-heading"
-      class="text-3xl sm:text-4xl font-bold text-amber-400"
-    >
-      Our Mission
-    </h2>
-    <p class="text-lg sm:text-xl leading-relaxed text-white/90">
-      Connect ATX Elite is a community‑powered, non‑profit
-      <b>12U AAU</b> basketball program based in Austin, TX. We develop not only
-      skilled athletes, but confident, disciplined, and academically driven
-      young leaders.
-    </p>
-    <p class="text-lg sm:text-xl leading-relaxed text-white/70">
-      Many of our boys are honor‑roll students thriving in a positive
-      environment of teamwork, mentorship, and integrity. Through basketball we
-      teach life lessons that extend far beyond the court.
-    </p>
+    {% for i in range(1,6) %}
+    <img
+      src="{{ url_for('static', filename='player' ~ i ~ '.jpg') }}"
+      alt="Player {{ i }}"
+      loading="lazy"
+      decoding="async"
+    />
+    {% endfor %}
   </div>
 
-  {# ⭐️ Impact Stats ———————————————————————— #}
-  <div
-    class="max-w-5xl mx-auto"
-    data-aos="fade-up"
-    data-aos-delay="300"
-    aria-label="Program Impact Stats"
-  >
-    <div class="flex flex-wrap justify-center gap-8 md:gap-14 py-8">
-      {% set impact = [ {"label": "Players Enrolled", "value": 16}, {"label":
-      "Honor Roll Scholars", "value": 11}, {"label": "Tournaments Played",
-      "value": 12}, {"label": "Years Running", "value": 3} ] %} {% for stat in
-      impact %}
-      <div
-        class="bg-zinc-900/80 border border-amber-400/20 shadow-gold rounded-xl px-8 py-6 min-w-[150px] text-center"
-        tabindex="0"
-        aria-label="{{ stat.value }} {{ stat.label }}"
-      >
-        <div class="text-3xl font-extrabold text-amber-400">
-          {{ stat.value }}
-        </div>
-        <div class="text-white/80 text-base font-medium">{{ stat.label }}</div>
-      </div>
-      {% endfor %}
+  <div class="impact-strip" data-aos="fade-up" data-aos-delay="80">
+    <div class="impact-fact" aria-label="Average GPA: 3.5">🏆 <b>3.5</b></div>
+    <div class="impact-fact" aria-label="Volunteer Hours: 1200+">
+      ⏳ <b>1200+</b>
+    </div>
+    <div class="impact-fact" aria-label="Honor Roll: 68%">🧑‍🎓 <b>68%</b></div>
+    <div class="impact-fact" aria-label="Community Events: 22+">
+      🤝 <b>22+</b>
     </div>
   </div>
 
-  {# 🟧 Divider ———————————————————————————————— #}
   <div
-    class="w-16 h-1 mx-auto rounded-full bg-gradient-to-r from-amber-400/60 to-amber-300/60"
+    class="text-block max-w-5xl mx-auto"
     data-aos="fade-up"
-    data-aos-delay="450"
-    aria-hidden="true"
-  ></div>
-
-  {# ⚠️ Challenge —————————————————————————————— #}
-  <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="550">
-    <div
-      class="rounded-2xl shadow-lg bg-gradient-to-br from-zinc-900 via-black to-zinc-950 border-l-4 border-red-400/80 px-7 py-8 space-y-6"
-    >
-      <h3
-        id="challenge-heading"
-        class="text-2xl sm:text-3xl font-semibold text-red-400"
-      >
-        The Challenge We Face
-      </h3>
-      <p class="text-lg sm:text-xl leading-relaxed text-white/80">
-        We struggle with consistent gym space and the high cost of tournament
-        travel. These barriers strain our volunteer coaches and parents —
-        limiting our kids’ ability to grow, bond, and succeed together.
+    data-aos-delay="110"
+  >
+    <h2 id="about-heading">Our Mission</h2>
+    <div class="space-y-4 text-lg sm:text-xl">
+      <p>
+        Connect ATX Elite is a community-powered, non-profit
+        <b>12U AAU</b> basketball program based in Austin, TX. We develop not
+        only skilled athletes, but confident, disciplined, and academically
+        driven young leaders.
+      </p>
+      <p class="text-muted">
+        Many of our boys are honor-roll students thriving in a positive
+        environment of teamwork, mentorship, and integrity. Through basketball
+        we teach life lessons that extend far beyond the court.
       </p>
     </div>
   </div>
 
-  {# 💡 Impact supporters can make ———————————— #}
   <div
-    class="max-w-5xl mx-auto space-y-6"
+    class="stats-grid max-w-5xl mx-auto"
     data-aos="fade-up"
-    data-aos-delay="700"
+    data-aos-delay="250"
+    aria-label="Program stats"
   >
-    <h3 class="text-2xl sm:text-3xl font-semibold text-green-400">
-      The Impact You Can Make
-    </h3>
-    <ul
-      class="list-disc list-inside space-y-2 text-lg sm:text-xl text-white/85 pl-4 md:pl-8"
+    {% set impact = [ {'label':'Players','value':16}, {'label':'Honor
+    Roll','value':11}, {'label':'Tournaments','value':12},
+    {'label':'Years','value':3} ] %} {% for stat in impact %}
+    <div
+      class="stat-card"
+      tabindex="0"
+      aria-label="{{ stat.value }} {{ stat.label }}"
+      data-aos="fade-up"
+      data-aos-delay="{{300+loop.index0*90}}"
     >
-      <li>Secure a consistent gym space for practices</li>
-      <li>Support travel & lodging costs for tournaments</li>
-      <li>Provide uniforms, gear, meals, and hydration</li>
-      <li>Fund academic support and mentorship programs</li>
-    </ul>
-    <p class="pt-4 text-lg sm:text-xl font-semibold text-white">
-      With your help, we can give these young athletes the foundation to become
-      confident, accomplished leaders.
+      <div class="stat-value" data-target="{{ stat.value }}">0</div>
+      <div class="stat-label">{{ stat.label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div
+    class="divider"
+    data-aos="fade-up"
+    data-aos-delay="520"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="challenge max-w-5xl mx-auto"
+    data-aos="fade-up"
+    data-aos-delay="570"
+  >
+    <h3>The Challenge We Face</h3>
+    <p>
+      We struggle with consistent gym space and the high cost of tournament
+      travel. These barriers strain our volunteer coaches and parents — limiting
+      our kids’ growth and success together.
     </p>
   </div>
+
+  <div class="max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="700">
+    <h3 class="impact-list-title">The Impact You Can Make</h3>
+    <ul class="impact-list">
+      <li>Secure consistent gym space</li>
+      <li>Support tournament travel</li>
+      <li>Provide gear & meals</li>
+      <li>Fund academic programs</li>
+    </ul>
+    <p class="text-lg sm:text-xl font-semibold pt-4">
+      With your help, we can give these young athletes the foundation to become
+      confident leaders.
+    </p>
+  </div>
+
+  <div
+    class="coach-carousel max-w-5xl mx-auto"
+    data-aos="fade-up"
+    data-aos-delay="820"
+    aria-label="Coaches"
+  >
+    {% for coach in ['Rodriguez','Smith','Taylor'] %}
+    <div class="coach-card" tabindex="0">
+      <img
+        src="{{ url_for('static', filename=coach|lower ~ '.jpg') }}"
+        alt="Coach {{ coach }}"
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="coach-name">Coach {{ coach }}</span>
+      <span class="coach-role">Assistant Coach</span>
+    </div>
+    {% endfor %}
+  </div>
 </section>
+
+<script>
+  // Count-up + confetti on key milestone
+  function animateCount(el, end, dur = 1100) {
+    let start = 0,
+      st = null;
+    function step(ts) {
+      if (!st) st = ts;
+      const prog = Math.min((ts - st) / dur, 1),
+        val = Math.floor(start + prog * (end - start));
+      el.textContent = val;
+      if (prog < 1) requestAnimationFrame(step);
+      else el.textContent = end;
+    }
+    requestAnimationFrame(step);
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.stat-value[data-target]').forEach((el, i) => {
+      let played = false;
+      const target = +el.dataset.target;
+      new IntersectionObserver(
+        (ents, obs) => {
+          ents.forEach((e) => {
+            if (e.isIntersecting && !played) {
+              animateCount(el, target);
+              if (target >= 10) {
+                import(
+                  'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/+esm'
+                ).then(({ default: c }) =>
+                  c({
+                    particleCount: 40,
+                    spread: 60,
+                    origin: { y: 0.6 },
+                    colors: ['#facc15'],
+                  })
+                );
+              }
+              played = true;
+              obs.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      ).observe(el);
+    });
+    if (window.AOS) AOS.init({ once: true, duration: 600 });
+  });
+</script>

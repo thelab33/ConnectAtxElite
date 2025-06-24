@@ -1,87 +1,33 @@
-:root {
-  /* Core Colors */
-  --color-primary: #f5c518; /* Gold Accent */
-  --color-primary-hover: #e0b511;
-  --color-secondary: #0a1f44; /* Deep Navy */
-  --color-background: #121212; /* Dark Background */
-  --color-foreground: #f0f0f0; /* Light Text */
-  --color-muted: #a1a1a1; /* Muted Text */
-  --color-error: #b83227; /* Deep Red */
-  --color-success: #22c55e; /* Green Success */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  /* Font & Radius */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --border-radius: 0.5rem;
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-bold tracking-tight text-primary;
 
-  /* Shadows */
-  --shadow-light: 0 2px 8px rgba(21, 21, 21, 0.3);
-  --shadow-gold-glow: 0 0 15px rgba(245, 197, 24, 0.6);
-}
-
-/* Dark mode fallback */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #09090b;
-    --color-foreground: #f9f9f9;
-    --color-muted: #777777;
+    font-family: theme('fontFamily.heading');
   }
 }
 
-/* Base Reset & Foundation */
-html {
-  scroll-behavior: smooth;
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+@layer components {
+  .btn {
+    @apply bg-primary text-black font-semibold py-2 px-6 rounded-full shadow-gold-glow transition;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    @apply bg-primary-hover;
+
+    animation: gold-glow 2.8s infinite alternate;
+  }
 }
 
-body {
-  margin: 0;
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+@layer utilities {
+  .gold-glow {
+    box-shadow: 0 0 36px 0 #facc15cc;
+  }
 }
-
-/* Text selection */
-::selection {
-  background-color: var(--color-primary);
-  color: var(--color-secondary);
-}
-
-/* Utility Text Shadows */
-.text-glow {
-  text-shadow: 0 0 8px var(--color-primary);
-}
-
-/* ░▒▓█  floating fundraising HUD  █▓▒░ */
-#goalHud{
-  position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);
-  padding:.5rem 1rem;border-radius:9999px;
-  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
-  color:#facc15;font:600 .875rem/1 ui-monospace,monospace;
-  display:none;gap:.5rem;align-items:center;
-  box-shadow:0 4px 16px rgba(0,0,0,.5);z-index:50}
-#goalHud.visible{display:flex}
-
-/* ░▒▓█  floating fundraising HUD  █▓▒░ */
-#goalHud{
-  position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);
-  padding:.5rem 1rem;border-radius:9999px;
-  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
-  color:#facc15;font:600 .875rem/1 ui-monospace,monospace;
-  display:none;gap:.5rem;align-items:center;
-  box-shadow:0 4px 16px rgba(0,0,0,.5);z-index:50}
-#goalHud.visible{display:flex}
-
-/* —— Sections ———————————— */
-#tiers          { @apply bg-zinc-900 py-16; }
-#ctaSection     { @apply bg-amber-400/5 py-20 text-center; }
-#testimonials   { @apply bg-black py-16 text-zinc-200; }
-
-/* feel free to tweak / extend */

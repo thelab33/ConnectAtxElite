@@ -1,0 +1,172 @@
+From e0f1d2b3c4a5b6d7e8f9a0b1c2d3e4f5g6h7i8j9 Mon Sep 17 00:00:00 2001
+From: ChatGPT <chatgpt@example.com>
+Date: Mon, 24 Jun 2025 13:20:00 -0000
+Subject: [PATCH] Blueprint & config/factory/run.py cleanup
+
+---
+ app/routes/__init__.py               |  5 +++--
+ config.py                            | 49 ++++++++++++++++++++++++++++++++++++++++++
+ app/__init__.py                      | 33 ++++++++++++++++++++++++++--------
+ run.py                               | 10 +++++-----
+ 4 files changed, 85 insertions(+), 12 deletions(-)
+
+diff --git a/app/routes/__init__.py b/app/routes/__init__.py
+index 1234567..abcdef0 100644
+--- a/app/routes/__init__.py
++++ b/app/routes/__init__.py
+@@ -1,8 +1,11 @@
+-from .api import api_bp
+-from .main import main_bp
+-from .sms import sms_bp
++from app.routes.api import api_bp
++from app.routes.main import main_bp
++from app.routes.sms import sms_bp
+ 
+ __all__ = ["main_bp", "api_bp", "sms_bp"]
++
++# make sure each of api.py, main.py, sms.py defines exactly one top-level `*_bp = Blueprint(...)`
+diff --git a/config.py b/config.py
+index fedcba9..0123456 100644
+--- a/config.py
++++ b/config.py
+@@ -1,12 +1,49 @@
+-import os
+-from pathlib import Path
+-
+-# Base directory (so SQLite file lives alongside config.py)
+-BASEDIR = Path(__file__).parent.resolve()
+-
+-# Pull secrets from env where possible, fall back to sane defaults for dev
+-SECRET_KEY = os.getenv("SECRET_KEY", "super-secret")
+-SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", f"sqlite:///{BASEDIR / 'app.db'}")
+-SQLALCHEMY_TRACK_MODIFICATIONS = False
++import os
++from pathlib import Path
++
++# Base directory so SQLite file lives alongside this file
++BASEDIR = Path(__file__).parent.resolve()
++
++
++class BaseConfig:
++    SECRET_KEY = os.getenv("SECRET_KEY", "super-secret")
++    SQLALCHEMY_DATABASE_URI = os.getenv(
++        "DATABASE_URL", f"sqlite:///{BASEDIR / 'app.db'}"
++    )
++    SQLALCHEMY_TRACK_MODIFICATIONS = False
++    # Add any other common settings here:
++    # JSON_SORT_KEYS = False
++    # SESSION_COOKIE_SECURE = True
++
++
++class DevelopmentConfig(BaseConfig):
++    DEBUG = True
++
++
++class ProductionConfig(BaseConfig):
++    DEBUG = False
++    # You might want to override:
++    # SESSION_COOKIE_SECURE = True
++
++
++class TestingConfig(BaseConfig):
++    TESTING = True
++    # Use an in-memory database for tests
++    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
++
++
++# Provide a lookup mapping if you ever need it externally
++CONFIG_MAP = {
++    "development": DevelopmentConfig,
++    "production": ProductionConfig,
++    "testing": TestingConfig,
++}
+diff --git a/app/__init__.py b/app/__init__.py
+index abcdef0..fedcba9 100644
+--- a/app/__init__.py
++++ b/app/__init__.py
+@@ -1,7 +1,7 @@
+-import os
++import os
+ from flask import Flask, jsonify, render_template
+ from flask_migrate import Migrate
+ from flask_socketio import SocketIO
+@@ -8,13 +8,36 @@ from flask_sqlalchemy import SQLAlchemy
+ 
+-from config import DevelopmentConfig, ProductionConfig, TestingConfig
++# import the module-based config
++import config
+ 
+ # Application extensions
+ db = SQLAlchemy()
+ socketio = SocketIO(cors_allowed_origins="*")
+ migrate = Migrate()
+ 
+ 
+ def create_app(config_name: str | None = None, config_path: str | None = None) -> Flask:
+@@ -28,22 +51,41 @@ def create_app(config_name: str | None = None, config_path: str | None = None) ->
+
+-    # 1) Choose config class
+-    if not config_name:
+-        # FLASK_ENV typically set to 'development'/'production'/'testing'
+-        env = os.getenv("FLASK_ENV", "development").lower()
+-        config_name = {
+-            "development":  DevelopmentConfig,
+-            "production":   ProductionConfig,
+-            "testing":      TestingConfig
+-        }.get(env, DevelopmentConfig)
+-    else:
+-        # if user passes in a string, map to class
+-        config_name = getattr(config, config_name, DevelopmentConfig)
+-
+-    app.config.from_object(config_name)
++    # 1) Pick class from config module
++    env = os.getenv("FLASK_ENV", "development").lower()
++    if not config_name:
++        cfg = config.CONFIG_MAP.get(env, config.DevelopmentConfig)
++    else:
++        # e.g. config_name="ProductionConfig"
++        cfg = getattr(config, config_name, config.DevelopmentConfig)
++    app.config.from_object(cfg)
+ 
+     # 2) Override with an additional config file if provided
+     if config_path:
+         app.config.from_pyfile(config_path, silent=True)
+ 
+@@ -46,7 +88,7 @@ def create_app(config_name: str | None = None, config_path: str | None = None)
+     # Register blueprints
+-    from app.routes import api_bp, main_bp, sms_bp
++    from app.routes import api_bp, main_bp, sms_bp
+ 
+     app.register_blueprint(main_bp)
+     app.register_blueprint(api_bp, url_prefix="/api")
+diff --git a/run.py b/run.py
+index 0123456..6543210 100644
+--- a/run.py
++++ b/run.py
+@@ -1,6 +1,6 @@
+ import os
+-from app import create_app, socketio
++from app import create_app, socketio
+ 
+ def main() -> None:
+     host  = os.getenv("FLASK_RUN_HOST", "0.0.0.0")
+@@ -12,13 +12,15 @@ def main() -> None:
+     env = os.getenv("FLASK_ENV", "development").lower()
+-
+-    # Pass through both config class selection and optional external file
+-    app = create_app(
+-        config_name=f"{env.title()}Config",
+-        config_path=os.path.join(os.getcwd(), "config.py")
+-    )
++    # only need to pass external config file;
++    # factory picks up FLASK_ENV internally
++    config_py = os.path.join(os.getcwd(), "config.py")
++    app = create_app(config_path=config_py)
+ 
+     socketio.run(app, host=host, port=port, debug=debug)
+ 
+ 
+ if __name__ == "__main__":
+     main()
+-- 
+2.30.2

@@ -7,6 +7,7 @@
   },
   "extends": [
     "eslint:recommended",
+    "plugin:prettier/recommended",
     "plugin:prettier/recommended"
   ],
   "parserOptions": {
@@ -26,5 +27,8 @@
         "tabWidth": 2
       }
     ]
-  }
+  },
+  "plugins": [
+    "prettier"
+  ]
 }

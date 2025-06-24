@@ -4,29 +4,69 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:css": "npx tailwindcss -c tailwind.config.js -i ./connect_atx_elite/static/css/globals.css -o ./connect_atx_elite/static/css/tw-build.css --watch",
-    "dev:js": "npx esbuild connect_atx_elite/static/js/main.js --bundle --sourcemap --outfile=connect_atx_elite/static/js/bundle.min.js --watch",
-    "dev": "npm-run-all -p dev:*",
-    "clean": "rimraf ./connect_atx_elite/static/css/tw-build.css ./connect_atx_elite/static/js/bundle.min.js",
-    "build:css": "npx tailwindcss -c tailwind.config.js -i ./connect_atx_elite/static/css/globals.css -o ./connect_atx_elite/static/css/tw-build.css --minify",
-    "build:js": "npx esbuild connect_atx_elite/static/js/main.js --bundle --minify --outfile=connect_atx_elite/static/js/bundle.min.js",
-    "build": "npm run clean && npm run build:css && npm run build:js",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "dev:css": "tailwindcss -c tailwind.config.js -i ./app/static/globals.css -o ./app/static/tailwind.min.css --watch",
+    "build:css": "postcss ./app/static/globals.css -o ./app/static/tailwind.min.css --env production",
+    "dev:js": "esbuild ./app/static/js/main.js --bundle --sourcemap --outfile=./app/static/js/bundle.min.js --watch",
+    "build:js": "esbuild ./app/static/js/main.js --bundle --minify --outfile=./app/static/js/bundle.min.js",
+    "dev": "npm-run-all -p dev:css dev:js",
+    "build": "npm-run-all clean build:css build:js",
+    "clean": "rimraf app/static/tailwind.min.css app/static/js/bundle.min.js",
+    "lint:js": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings 0",
+    "lint:css": "stylelint \"app/static/**/*.css\"",
+    "lint": "npm-run-all lint:js lint:css",
+    "lint:fix": "npm-run-all --parallel lint:js:fix lint:css:fix",
+    "lint:js:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "lint:css:fix": "stylelint \"app/static/**/*.css\" --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,html,json,md}\"",
-    "check:format": "prettier --check \"**/*.{js,jsx,ts,tsx,css,html,json,md}\""
+    "check:format": "prettier --check \"**/*.{js,jsx,ts,tsx,css,html,json,md}\"",
+    "test": "echo \"No tests configured yet\" && exit 0",
+    "start": "npm run build && cross-env FLASK_ENV=production flask --app run.py run",
+    "audit": "npm-run-all css_static_audit:lint html_static_audit:full",
+    "css_static_audit:lint": "./css_static_audit.sh lint",
+    "html_static_audit:full": "./html_static_audit.sh full"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,html,md,json}": [
+      "stylelint --fix",
+      "prettier --write"
+    ]
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.21",
+    "@fullhuman/postcss-purgecss": "^7.0.2",
+    "core-js": "^3.32.2",
+    "cssnano-cli": "^1.0.5",
+    "cssstats-cli": "^4.0.5",
     "esbuild": "^0.25.5",
     "eslint": "^8.57.1",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-prettier": "^5.5.0",
+    "glob": "^9.3.5",
+    "htmlhint": "^1.1.4",
+    "linkinator": "^6.1.2",
+    "lodash": "^4.17.21",
     "npm-run-all": "^4.1.5",
-    "postcss": "^8.5.5",
-    "prettier": "^3.3.0",
-    "rimraf": "^5.0.1",
-    "rollup-plugin-visualizer": "^6.0.3",
-    "tailwindcss": "^4.1.10"
+    "pa11y-ci": "^2.4.2",
+    "postcss": "^8.4.30",
+    "prettier": "^3.6.0",
+    "rimraf": "^5.0.0",
+    "stylelint": "^16.21.0",
+    "stylelint-config-standard": "^35.0.0",
+    "stylelint-config-tailwindcss": "^1.0.0",
+    "stylelint-order": "^7.0.0",
+    "tailwindcss": "^3.3.3",
+    "xargs": "^1.1.3"
+  },
+  "dependencies": {
+    "focus-visible": "^5.2.1"
   }
 }

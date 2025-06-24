@@ -1,70 +1,89 @@
-const CACHE_NAME = 'connect-atx-elite-v1';
+// app/static/sw.js
+const CACHE_VERSION = 'v3';
+const CACHE_NAME = `connect-atx-elite-${CACHE_VERSION}`;
+
+// Statically precache the shell and key assets
 const PRECACHE_URLS = [
-  '/', // Cache the root page
-  '/static/css/globals.css',
-  '/static/css/header.css',
-  '/static/js/main.js',
-  '/static/images/logo-atx-elite.png',
-  '/static/images/connect-atx-team.jpg',
-  // Add other key assets here...
+  '/', // HTML shell
+  '/static/tailwind.min.css', // CSS bundle
+  '/static/js/bundle.min.js', // JS bundle
+  '/static/logo.png',
+  '/static/connect-atx-team.jpg',
+  '/static/favicon.ico',
+  '/offline.html', // Fallback page
 ];
 
+// Install → precache
 self.addEventListener('install', (event) => {
-  // Precache key assets
+  self.skipWaiting();
   event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then((cache) => cache.addAll(PRECACHE_URLS))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
   );
 });
 
+// Activate → cleanup old caches
 self.addEventListener('activate', (event) => {
-  // Clean up old caches
   event.waitUntil(
     caches
       .keys()
-      .then((cacheNames) =>
+      .then((keys) =>
         Promise.all(
-          cacheNames
-            .filter((name) => name !== CACHE_NAME)
-            .map((name) => caches.delete(name))
+          keys
+            .filter((key) => key !== CACHE_NAME)
+            .map((old) => caches.delete(old))
         )
       )
       .then(() => self.clients.claim())
   );
 });
 
+// Fetch → Cache-first for static, network-first for navigation, fallback to offline.html
 self.addEventListener('fetch', (event) => {
-  // Try cache first, fallback to network
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request)
-        .then((response) => {
-          // Cache the new response for future requests (optional)
-          if (
-            response.status === 200 &&
-            event.request.method === 'GET' &&
-            event.request.url.startsWith(self.location.origin)
-          ) {
-            const responseClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseClone);
-            });
-          }
-          return response;
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Always let analytics or external requests go to network
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  // HTML pages: network-first, fallback to cache → offline
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          return res;
         })
-        .catch(() => {
-          // Offline fallback: You can return a fallback page or image here
-          if (event.request.destination === 'document') {
-            return caches.match('/offline.html'); // Make sure to precache offline.html
-          }
-        });
-    })
+        .catch(() =>
+          caches
+            .match(request)
+            .then((cached) => cached || caches.match('/offline.html'))
+        )
+    );
+    return;
+  }
+
+  // Static assets (CSS/JS/Images): cache-first
+  if (/\.(?:js|css|png|jpg|jpeg|svg|webp|ico|woff2?)$/.test(url.pathname)) {
+    event.respondWith(
+      caches.match(request).then(
+        (cached) =>
+          cached ||
+          fetch(request).then((networkRes) => {
+            // Cache new static assets
+            const copy = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+            return networkRes;
+          })
+      )
+    );
+    return;
+  }
+
+  // Fallback for other GET requests
+  event.respondWith(
+    caches.match(request).then((cached) => cached || fetch(request))
   );
 });
-
-console.log('⚡ Connect ATX Elite Service Worker registered and enhanced.');

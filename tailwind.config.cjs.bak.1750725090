@@ -1,0 +1,84 @@
+/**
+ * Tailwind v4 configuration  ✨
+ * – Works with `"type": "module"` (ESM export)          *
+ * – All custom colours live in theme.colors             *
+ * – Adds a tiny safelist for classes you construct      *
+ *   dynamically in Jinja/JS (so they survive the purge) *
+ */
+
+import forms      from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+import aspect     from '@tailwindcss/aspect-ratio';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: 'class',                      // manual toggle: <html class="dark">
+  content: [
+    './app/templates/**/*.html',
+    './app/static/**/*.css',
+    './app/static/js/**/*.js',
+    './app/**/*.py',                      // Flask/Jinja inline classes
+  ],
+
+  // 🔐 classes Tailwind should *never* purge – adjust as you need
+  safelist: [
+    'font-bold', 'tracking-tight',        // generated in templates
+    'text-primary', 'bg-primary',
+  ],
+
+  theme: {
+    extend: {
+      /* ----------  Design tokens  ---------- */
+      colors: {
+        /* brand */
+        primary:         '#facc15',
+        'primary-hover': '#e0b511',
+
+        /* neutrals */
+        'bg-dark':    '#18181b',
+        'text-light': '#fffbe7',
+        'text-muted': 'rgba(255,255,255,0.7)',
+      },
+
+      boxShadow: {
+        /* use with @apply shadow-gold-glow */
+        'gold-glow': '0 0 36px 0 rgb(250 204 21 / 0.8)',
+      },
+
+      borderRadius: {
+        xl: '1rem',
+      },
+
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+
+      /* ----------  Animations  ---------- */
+      keyframes: {
+        glow: {
+          '0%':   { boxShadow: '0 4px 16px rgba(245,197,24,0.8), 0 0 8px rgba(245,197,24,0.5)' },
+          '100%': { boxShadow: '0 6px 32px rgba(245,197,24,1), 0 0 24px rgba(245,197,24,0.8)' },
+        },
+      },
+      animation: {
+        glow: 'glow 2.8s ease-in-out infinite alternate',
+      },
+
+      /* ----------  Transitions  ---------- */
+      transitionProperty: {
+        colors:   'background-color, border-color, color, fill, stroke',
+        shadow:   'box-shadow',
+        transform:'transform',
+      },
+      transitionDuration: {
+        DEFAULT: '300ms',
+      },
+      transitionTimingFunction: {
+        DEFAULT: 'ease-in-out',
+      },
+    },
+  },
+
+  plugins: [forms, typography, aspect],
+};
+

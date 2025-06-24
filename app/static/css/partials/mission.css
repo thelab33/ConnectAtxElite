@@ -1,6 +1,6 @@
 /* Mission Section */
 .mission-section {
-  background: rgba(24, 24, 27, 0.85);
+  background: rgb(24 24 27 / 85%);
   padding: 3rem 2rem;
   border-radius: var(--radius);
   box-shadow: 0 8px 40px var(--accent);

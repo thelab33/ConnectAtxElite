@@ -1,0 +1,15 @@
+about.html
+back_to_top.html
+challenge.html
+cta.html
+donation_modal.html
+faq.html
+footer.html
+funding_goal_hud.html
+header.html
+hero.html
+mission.html
+sponsor_wall.html
+stats.html
+testimonials.html
+tiers.html

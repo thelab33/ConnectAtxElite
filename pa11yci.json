@@ -1,0 +1,1 @@
+{ "defaults": { "standard": "WCAG2AA", "ignore": ["notice"] }, "urls": [] }

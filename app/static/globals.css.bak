@@ -1,0 +1,42 @@
+/* ------------------------------------------------------------------
+   Tailwind CSS core – must be *outside* any @layer block
+------------------------------------------------------------------ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Base layer – element-level defaults (resets, typography, etc.)
+------------------------------------------------------------------ */
+@layer base {
+  h1 { @apply font-bold text-4xl tracking-tight text-primary; }
+  h2 { @apply font-bold text-3xl tracking-tight text-primary; }
+  h3 { @apply font-bold text-2xl tracking-tight text-primary; }
+}
+
+/* ------------------------------------------------------------------
+   Components layer – re-usable “molecules” (buttons, cards, …)
+------------------------------------------------------------------ */
+@layer components {
+  .btn {
+    @apply bg-yellow-400 text-black font-semibold py-2 px-4 rounded-full shadow transition;
+  }
+
+  /* state styles go right beside the component */
+  .btn:hover,
+  .btn:focus-visible {
+    @apply bg-yellow-500;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Utilities layer – one-off helpers that don’t fit the above
+------------------------------------------------------------------ */
+@layer utilities {
+  /* soft gold halo for logos, icons, etc. */
+  .gold-glow {
+    box-shadow: 0 0 36px 0 theme('colors.primary')80;
+  }
+}
+/* ------------------------------------------------------------------ */
+
