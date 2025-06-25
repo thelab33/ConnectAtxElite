@@ -1,0 +1,8 @@
+/* Connect-ATX – Basic tier
+   -------------------------------------------------------------- */
+:root {
+  --tier-basic-bg: theme('colors.blue.50' / 45%);
+  --tier-basic-accent: theme('colors.blue.500');
+}
+
+/* add rules here later… */

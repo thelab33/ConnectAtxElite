@@ -38,7 +38,7 @@ if (elSupporters) {
 
 // ---- Progress Tooltip always syncs with bar ----
 const pb = document.getElementById('progressBar');
-const tooltip = document.getElementById('progressTooltip');
+const tooltip = document.getElementById('progress-tooltip');
 if (pb && tooltip) {
   pb.addEventListener('mouseenter', () => (tooltip.style.opacity = 1));
   pb.addEventListener('mouseleave', () => (tooltip.style.opacity = 0));
@@ -77,7 +77,7 @@ if (donateBtn && donateDialog) {
 
 // ---- Confetti when goal is hit ----
 function launchConfetti() {
-  const canvas = document.getElementById('confettiCanvas');
+  const canvas = document.getElementById('confetti-canvas');
   if (!canvas) return;
   canvas.style.display = 'block';
   const ctx = canvas.getContext('2d');

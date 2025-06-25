@@ -1,4 +1,4 @@
-/* ── Call To Action Section ────────────────────────────────────── */
+/* ── Call To Action Section ─────────────────────────────────────────────── */
 
 .cta-section {
   position: relative;
@@ -59,19 +59,20 @@
   box-shadow: 0 0 15px #fd3;
 }
 
-#progressTooltip {
+/* in-flow tooltip (was #progressTooltip) */
+.progress-tooltip {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.18s cubic-bezier(0.6, 0.3, 0.4, 1);
 }
 
-.group:hover #progressTooltip,
-.group:focus #progressTooltip {
+.group:hover .progress-tooltip,
+.group:focus .progress-tooltip {
   opacity: 1;
 }
 
-/* Confetti canvas overlays */
-#confettiCanvas {
+/* Confetti canvas overlay (was #confettiCanvas) */
+.confetti-canvas {
   position: absolute;
   top: 0;
   left: 0;
@@ -79,15 +80,7 @@
   height: 100%;
   pointer-events: none;
   z-index: 30;
-  display: none;
-}
-
-/* Responsive QR Code */
-@media (width <= 600px) {
-  .cta-section img[alt*='QR Code'] {
-    width: 96px;
-    height: 96px;
-  }
+  display: none; /* toggled on success */
 }
 
 /* Pulse badge */
@@ -105,5 +98,13 @@
   50% {
     opacity: 0.15;
     transform: scale(1.7);
+  }
+}
+
+/* ── Small-screen tweaks ────────────────────────────────────────────────── */
+@media (width <= 600px) {
+  .cta-section img[alt*='QR Code'] {
+    width: 96px;
+    height: 96px;
   }
 }

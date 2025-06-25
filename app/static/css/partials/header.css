@@ -1,29 +1,98 @@
-/* Header Navigation */
-header.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgb(24 24 27 / 95%);
-  padding: 1rem 2rem;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 60%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  backdrop-filter: saturate(180%) blur(12px);
+/* ──────────────── Sticky Glass Header ──────────────── */
+header.sticky,
+.sticky-header {
+  background: rgba(28, 25, 23, 0.97);
+  border-bottom: 1.5px solid #facc1555;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 6px 24px #18181b33,
+    0 0.5px 0 0 #facc1530;
+  transition:
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-header.site-header nav a {
-  color: var(--accent-soft);
-  margin: 0 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  transition: color 0.2s ease;
+/* ──────────────── Logo / Button Glow ──────────────── */
+.shadow-gold-glow {
+  box-shadow:
+    0 0 0 3px #facc1577,
+    0 2px 12px #0008,
+    0 0 24px 4px #facc1522;
 }
 
-header.site-header nav a:hover,
-header.site-header nav a:focus-visible {
-  color: var(--accent);
-  outline: none;
-  text-decoration: underline;
+/* ──────────────── Mobile Slide-Over ──────────────── */
+#mobile-menu {
+  transform: translateX(-100%);
+  transition: transform 0.33s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
+#mobile-menu.open {
+  transform: translateX(0);
+}
+
+/* ──────────────── Hamburger Glow on Open ──────────────── */
+#hamburger[aria-expanded='true'] svg {
+  filter: drop-shadow(0 0 6px #facc15aa);
+  transition: filter 0.2s;
+}
+
+/* ──────────────── Focus-visible Fix ──────────────── */
+.focus\:not-sr-only:focus:not(:focus-visible) {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+}
+
+/* ──────────────── Glassmorphism Panels ──────────────── */
+.glass,
+.hero-glass {
+  background: rgba(24, 24, 27, 0.64);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 32px 0 #18181b90,
+    0 0 16px #facc1510;
+}
+
+/* ──────────────── Animated Nav Underline ──────────────── */
+.nav-underline {
+  position: relative;
+  transition: color 0.18s ease;
+}
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2.5px;
+  background: #facc15;
+  border-radius: 2px;
+  opacity: 0.75;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+.nav-underline:hover::after,
+.nav-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ──────────────── Screen Reader Only ──────────────── */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+}
+

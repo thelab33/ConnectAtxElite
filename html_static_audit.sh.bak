@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# html_static_audit.sh — Deep HTML + inline-assets audit (Starforge 2.1)
+# Single bundled npm install; avoids ENOTEMPTY and missing package issues.
+set -euo pipefail
+
+PROJECT_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+MODE="${1:-full}"
+REPORT_DIR="$PROJECT_ROOT/reports/html/$TIMESTAMP"
+mkdir -p "$REPORT_DIR"
+
+header() { printf "\n\033[1;35m▶ %s\033[0m\n" "$*"; }
+
+deps_need=()
+needs() {
+  local pkg=$1
+  if ! npx --yes --no --package "$pkg" -c "echo ok" >/dev/null 2>&1; then
+    deps_need+=("$pkg")
+  fi
+}
+
+# ── Deps list ──────────────────────────────────────────────────────────────
+header "Checking required tools"
+needs htmlhint@^1.1.4              # CLI for structural lint
+needs prettier                     # formatter
+needs pa11y-ci                     # accessibility crawl
+# # needs xargs -I{} xargs -I{} xargs -I{} linkinator --format=summary "file://{}"
+# # # needs eslint@~8.57.0                   
+needs eslint-plugin-html
+
+if (( ${#deps_need[@]} )); then
+  header "Bootstrapping deps: ${deps_need[*]}"
+  npm i -D "${deps_need[@]}" --legacy-peer-deps
+else
+  header "All deps already present"
+fi
+
+# ── Configs (write if absent) ─────────────────────────────────────────────
+[ -f "$PROJECT_ROOT/.htmlhintrc" ] || cat >"$PROJECT_ROOT/.htmlhintrc" <<'JSON'
+{ "tag-pair": true, "attr-no-duplication": true, "id-unique": true }
+JSON
+
+[ -f "$PROJECT_ROOT/.eslintrc.json" ] || cat >"$PROJECT_ROOT/.eslintrc.json" <<'JSON'
+{ "env": { "browser": true, "es6": true }, "extends": "eslint:recommended", "plugins": ["html"] }
+JSON
+
+[ -f "$PROJECT_ROOT/pa11yci.json" ] || cat >"$PROJECT_ROOT/pa11yci.json" <<'JSON'
+{ "defaults": { "standard": "WCAG2AA", "ignore": ["notice"] }, "urls": [] }
+JSON
+
+# ── Targets ───────────────────────────────────────────────────────────────
+TEMPLATE_DIR="$PROJECT_ROOT/app/templates"
+HTML_FILES=$(find "$TEMPLATE_DIR" -type f \( -name "*.html" -o -name "*.jinja" \))
+
+run_lint() {
+  header "HTMLHint"
+  npx htmlhint $HTML_FILES || true
+  header "Prettier (HTML)"
+  npx prettier --write $HTML_FILES || true
+  header "ESLint inline <script>"
+  npx eslint $HTML_FILES || true
+}
+
+run_a11y() {
+  header "Pa11y CI"
+  printf "%s\n" $HTML_FILES | \
+    xargs -I{} pa11y-ci "file://$(realpath {})" \
+       --config "$PROJECT_ROOT/pa11yci.json" --json \
+       >"$REPORT_DIR/pa11y-report.json" || true
+# #   npx xargs -I{} xargs -I{} xargs -I{} linkinator --format=summary "file://{}"
+}
+
+
+run_full() { run_lint; run_a11y; run_links; }
+run_ci()   { run_lint; git diff --quiet || { echo '❌ HTML issues'; exit 1; }; }
+
+case "$MODE" in
+  lint)  run_lint ;;
+  audit) run_full ;;
+  ci)    run_ci ;;
+  full)  run_full ;;
+  *) echo "usage: $0 [lint|audit|ci|full]"; exit 1 ;;
+esac
+
+header "HTML reports ➜ $REPORT_DIR"

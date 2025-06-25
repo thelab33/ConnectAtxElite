@@ -7,7 +7,13 @@ api_bp = Blueprint("api", __name__, url_prefix="/api")
 
 # ─── Helpers ────────────────────────────────────────────────
 
-def _validate_amount(value, *, default=None, min_amt=None, max_amt=None) -> int:
+def _validate_amount(
+    value,
+    *,
+    default: int = None,
+    min_amt: int = None,
+    max_amt: int = None
+) -> int:
     """
     Coerce value to int and clamp between min/max.
     If invalid, uses default, and always returns int.
@@ -121,8 +127,7 @@ def stripe_webhook():
         paid = event["data"]["object"]
         amount = int(paid.get("amount_total", 0)) // 100
         current_app.logger.info(f"New donation received: ${amount}")
-        # You should update your DB or memory cache here in real prod
-        # Example: increment running total and emit to clients
+        # TODO: Update fundraising total in database in production!
         from app import socketio
         new_total = current_app.config.get("RAISED_AMOUNT", 0) + amount
         socketio.emit(

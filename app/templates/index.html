@@ -1,129 +1,81 @@
-{% extends "base.html" %} {% block title %}Home · Connect ATX Elite{% endblock
-%} {% block content %}
-<!-- HERO SECTION -->
-<section
-  id="hero"
-  role="banner"
-  class="relative overflow-hidden"
-  data-aos="fade-down"
-  data-aos-duration="800"
->
-  <div class="container mx-auto px-4 lg:px-8">
+{# app/templates/index.html #}
+{% extends "base.html" %}
+{% import "partials/macros.html" as macros %}
+
+{% block title %}Home · Connect ATX Elite{% endblock %}
+
+{% block content %}
+
+  {# ────────────────────── HERO ────────────────────── #}
+  {% call macros.section('hero', 'relative overflow-hidden', 0) %}
     {% include "partials/hero.html" %}
-  </div>
-</section>
+  {% endcall %}
 
-<!-- QUICK STATS -->
-<section
-  id="quick-stats"
-  class="bg-gradient-to-r from-primary-yellow to-amber-300 py-10 text-black shadow-inner"
-  data-aos="fade-up"
-  data-aos-delay="150"
->
-  <div
-    class="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
-  >
-    {% for stat in [ {'value': stats.players, 'label': 'Players'}, {'value':
-    stats.honor_roll, 'label': 'Honor Roll'}, {'value': stats.tournaments,
-    'label': 'Tournaments'}, {'value': stats.years, 'label': 'Years Strong'} ]
-    %}
-    <div class="rounded-xl bg-white/80 shadow p-5">
-      <span
-        class="font-black text-4xl block text-zinc-900"
-        aria-label="{{ stat.value }} {{ stat.label }}"
-        >{{ stat.value }}</span
-      >
-      <span class="text-lg font-semibold text-zinc-700 tracking-wide"
-        >{{ stat.label }}</span
-      >
-    </div>
-    {% endfor %}
-  </div>
-</section>
+  {# ─────────── QUICK STATS (banner) ─────────── #}
+  {% call macros.section(
+    'quick-stats',
+    'bg-gradient-to-r from-primary-yellow to-amber-300 py-10 text-black shadow-inner',
+    150) %}
+    {% include "partials/stats.html" %}
+  {% endcall %}
 
-<!-- DYNAMIC MAIN SECTIONS -->
-{% for section, delay in [ ('cta', 200), ('tiers', 300), ('challenge', 400),
-('mission', 500), ('about', 600), ('stats', 700), ('funding_goal_hud', 800),
-('sponsor_wall', 900), ('testimonials', 1000), ('faq', 1100) ] %}
-<section
-  id="{{ section.replace('_', '-') }}"
-  aria-labelledby="{{ section.replace('_', '-') }}-heading"
-  class="py-16 {{ 'bg-zinc-900' if section in ['cta', 'funding_goal_hud'] else 'bg-zinc-950' if section in ['testimonials', 'about'] else '' }}"
-  data-aos="fade-up"
-  data-aos-delay="{{ delay }}"
->
-  <div class="container mx-auto px-4 lg:px-8">
-    {% include "partials/" + section + ".html" %}
-  </div>
-</section>
-{% endfor %}
+  {# ────────────────────── CTA ────────────────────── #}
+  {% call macros.section('cta', 'bg-zinc-900', 200) %}
+    {% include "partials/cta.html" %}
+  {% endcall %}
 
-<!-- NEWSLETTER SIGNUP -->
-<section
-  id="newsletter"
-  class="py-16 bg-primary-yellow text-black"
-  data-aos="fade-up"
-  data-aos-delay="1200"
->
-  <div class="container mx-auto px-4 lg:px-8 text-center">
-    <h3
-      id="newsletter-heading"
-      class="text-2xl md:text-3xl font-extrabold mb-4 tracking-tight drop-shadow"
-    >
-      Stay in the Game
-    </h3>
-    <form
-      class="max-w-md mx-auto flex flex-col sm:flex-row gap-3"
-      onsubmit="handleNewsletterSignup(event)"
-      autocomplete="off"
-    >
-      <input
-        type="email"
-        required
-        placeholder="Your best email"
-        class="flex-1 p-3 rounded-full border-2 border-zinc-300 focus:ring-2 focus:ring-zinc-900"
-        aria-label="Your email address"
-      />
-      <button
-        type="submit"
-        class="bg-black text-primary-yellow font-bold px-8 py-2 rounded-full shadow hover:scale-105 transition"
-      >
-        Subscribe
-      </button>
-    </form>
-  </div>
-</section>
+  {# ─────────────── TIERS (Sponsorship) ───────────── #}
+  {% call macros.section('tiers', '', 300) %}
+    {% include "partials/tiers.html" %}
+  {% endcall %}
 
-<!-- CONTACT / SUPPORT -->
-<section
-  id="contact"
-  class="py-16 bg-zinc-900 text-white"
-  data-aos="fade-up"
-  data-aos-delay="1300"
->
-  <div class="container mx-auto px-4 lg:px-8 text-center">
-    <h3
-      class="text-2xl md:text-3xl font-extrabold mb-3 tracking-tight drop-shadow"
-    >
-      Questions?
-    </h3>
-    <p class="mb-6 text-lg">
-      Email us at
-      <a
-        href="mailto:arodgps@gmail.com"
-        class="text-primary-yellow underline font-bold hover:text-amber-400"
-      >
-        arodgps@gmail.com
-      </a>
-    </p>
-    <a
-      href="tel:+15128200475"
-      class="inline-block bg-primary-yellow text-black text-lg font-bold px-7 py-3 rounded-full shadow hover:scale-105 transition"
-    >
-      Call Now
-    </a>
-  </div>
-</section>
+  {# ──────────────── CHALLENGE ──────────────── #}
+  {% call macros.section('challenge', '', 400) %}
+    {% include "partials/challenge.html" %}
+  {% endcall %}
 
-<!-- BACK TO TOP BUTTON -->
-{% include "partials/back_to_top.html" %} {% endblock %}
+  {# ──────────────── MISSION ──────────────── #}
+  {% call macros.section('mission', '', 500) %}
+    {% include "partials/mission.html" %}
+  {% endcall %}
+
+  {# ────────────────── ABOUT ────────────────── #}
+  {% call macros.section('about', 'bg-zinc-950', 600) %}
+    {% include "partials/about.html" %}
+  {% endcall %}
+
+  {# ────── FUNDING GOAL HUD (Progress) ────── #}
+  {% call macros.section('funding-goal-hud', 'bg-zinc-900', 800) %}
+    {% include "partials/funding_goal_hud.html" %}
+  {% endcall %}
+
+  {# ─────────────── SPONSOR WALL ────────────── #}
+  {% call macros.section('sponsor-wall', '', 900) %}
+    {% include "partials/sponsor_wall.html" %}
+  {% endcall %}
+
+  {# ─────────────── TESTIMONIALS ────────────── #}
+  {% call macros.section('testimonials', 'bg-zinc-950', 1000) %}
+    {% include "partials/testimonials.html" %}
+  {% endcall %}
+
+  {# ─────────────────── FAQ ─────────────────── #}
+  {% call macros.section('faq', '', 1100) %}
+    {% include "partials/faq.html" %}
+  {% endcall %}
+
+  {# ─────────────── NEWSLETTER ─────────────── #}
+  {% call macros.section('newsletter', 'py-16 bg-primary-yellow text-black text-center', 1200) %}
+    {% include "partials/newsletter.html" ignore missing %}
+  {% endcall %}
+
+  {# ────────────────── CONTACT ────────────────── #}
+  {% call macros.section('contact', 'py-16 bg-zinc-900 text-white text-center', 1300) %}
+    {% include "partials/contact.html" ignore missing %}
+  {% endcall %}
+
+  {# ───────────── BACK TO TOP BTN ───────────── #}
+  {% include "partials/back_to_top.html" ignore missing %}
+
+{% endblock %}
+

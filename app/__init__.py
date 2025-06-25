@@ -7,16 +7,19 @@ from flask_migrate import Migrate
 from flask_socketio import SocketIO
 from flask_login import current_user
 
-# --- Always load env vars before anything else ---
+# Load environment variables from .env
 load_dotenv()
 
-# --- Extensions ---
+# ───── Extensions (no app bound yet for factory pattern) ─────
 db = SQLAlchemy()
 migrate = Migrate()
 socketio = SocketIO(cors_allowed_origins="*")
 
-def create_app(config_path: str | None = None) -> Flask:
-    # --- Create and configure the Flask app ---
+def create_app(config_object=None) -> Flask:
+    """
+    Application factory for Connect ATX Elite Flask app.
+    Supports env-based configuration, Flask CLI, blueprints, and extensions.
+    """
     app = Flask(
         __name__,
         static_folder=os.path.abspath("app/static"),
@@ -25,51 +28,53 @@ def create_app(config_path: str | None = None) -> Flask:
     )
     os.makedirs(app.instance_path, exist_ok=True)
 
-    # --- Load default config from environment ---
-    app.config.from_mapping(
-        SECRET_KEY=os.getenv("SECRET_KEY", "dev_secret"),
-        SQLALCHEMY_DATABASE_URI=os.getenv(
-            "DATABASE_URL",
-            f"sqlite:///{os.path.join(app.instance_path, 'app.db')}"
-        ),
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        DEFAULT_DONATION=int(os.getenv("DEFAULT_DONATION", 25)),
-        RAISED_AMOUNT=int(os.getenv("RAISED_AMOUNT", 0)),
-        GOAL_AMOUNT=int(os.getenv("GOAL_AMOUNT", 10_000)),
-        DEADLINE=os.getenv("DEADLINE", "2024-12-31T23:59:59Z"),
-        STRIPE_SECRET_KEY=os.getenv("STRIPE_SECRET_KEY"),
-        STRIPE_PUBLISHABLE_KEY=os.getenv("STRIPE_PUBLISHABLE_KEY"),
-        STRIPE_WEBHOOK_SECRET=os.getenv("STRIPE_WEBHOOK_SECRET"),
-        BASE_URL=os.getenv("BASE_URL", "http://localhost:8000"),
-        DONATION_LINK=os.getenv("DONATION_LINK"),
-        # Mail support (optional)
-        MAIL_SERVER=os.getenv("MAIL_SERVER", "smtp.example.com"),
-        MAIL_PORT=int(os.getenv("MAIL_PORT", 587)),
-        MAIL_USE_TLS=os.getenv("MAIL_USE_TLS", "true").lower() in ("true", "1", "yes"),
-        MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
-        MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
-        MAIL_DEFAULT_SENDER=os.getenv("MAIL_DEFAULT_SENDER", "no-reply@example.com"),
-    )
+    # ── Config loading: use config class if provided, else from env vars ── #
+    if config_object:
+        app.config.from_object(config_object)
+    else:
+        app.config.from_mapping(
+            SECRET_KEY=os.getenv("SECRET_KEY", "dev_secret"),
+            SQLALCHEMY_DATABASE_URI=os.getenv(
+                "DATABASE_URL",
+                f"sqlite:///{os.path.join(app.instance_path, 'app.db')}"
+            ),
+            SQLALCHEMY_TRACK_MODIFICATIONS=False,
+            DEFAULT_DONATION=int(os.getenv("DEFAULT_DONATION", 25)),
+            RAISED_AMOUNT=int(os.getenv("RAISED_AMOUNT", 0)),
+            GOAL_AMOUNT=int(os.getenv("GOAL_AMOUNT", 10_000)),
+            DEADLINE=os.getenv("DEADLINE", "2024-12-31T23:59:59Z"),
+            STRIPE_SECRET_KEY=os.getenv("STRIPE_SECRET_KEY"),
+            STRIPE_PUBLISHABLE_KEY=os.getenv("STRIPE_PUBLISHABLE_KEY"),
+            STRIPE_WEBHOOK_SECRET=os.getenv("STRIPE_WEBHOOK_SECRET"),
+            BASE_URL=os.getenv("BASE_URL", "http://localhost:8000"),
+            DONATION_LINK=os.getenv("DONATION_LINK"),
+            # Optional mail
+            MAIL_SERVER=os.getenv("MAIL_SERVER", "smtp.example.com"),
+            MAIL_PORT=int(os.getenv("MAIL_PORT", 587)),
+            MAIL_USE_TLS=os.getenv("MAIL_USE_TLS", "true").lower() in ("true", "1", "yes"),
+            MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
+            MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
+            MAIL_DEFAULT_SENDER=os.getenv("MAIL_DEFAULT_SENDER", "no-reply@example.com"),
+        )
+        # Optionally load further config from a .py file (eg. 'config.py')
+        extra_config = os.getenv("FLASK_EXTRA_CONFIG")
+        if extra_config:
+            app.config.from_pyfile(extra_config, silent=True)
 
-    # --- Load config from file if provided ---
-    if config_path:
-        app.config.from_pyfile(config_path, silent=True)
-
-    # --- Initialize extensions ---
+    # ─── Initialize extensions ───
     db.init_app(app)
     migrate.init_app(app, db)
     socketio.init_app(app)
 
-    # --- Register blueprints (always use absolute import here) ---
+    # ─── Register blueprints ───
     from app.routes.main import main_bp
     from app.routes.api import api_bp
     from app.routes.sms import sms_bp
-
     app.register_blueprint(main_bp)
     app.register_blueprint(api_bp, url_prefix="/api")
     app.register_blueprint(sms_bp, url_prefix="/sms")
 
-    # --- Error handlers ---
+    # ─── Error handlers ───
     @app.errorhandler(404)
     def not_found(e):
         return jsonify(error="Not found"), 404
@@ -78,17 +83,17 @@ def create_app(config_path: str | None = None) -> Flask:
     def server_error(e):
         return jsonify(error="Server error"), 500
 
-    # --- Offline fallback ---
+    # ─── Offline fallback (for PWA) ───
     @app.route("/offline.html")
     def offline():
         return render_template("offline.html"), 200
 
-    # --- Flask shell context ---
+    # ─── Shell context for `flask shell` ───
     @app.shell_context_processor
     def make_shell_context():
         return {"db": db, "socketio": socketio}
 
-    # --- Inject current_user into templates ---
+    # ─── Inject current_user into all templates (for Flask-Login) ───
     @app.context_processor
     def inject_user():
         return dict(current_user=current_user)

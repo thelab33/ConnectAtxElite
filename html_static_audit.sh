@@ -24,8 +24,8 @@ header "Checking required tools"
 needs htmlhint@^1.1.4              # CLI for structural lint
 needs prettier                     # formatter
 needs pa11y-ci                     # accessibility crawl
-needs xargs -I{} xargs -I{} xargs -I{} linkinator --format=summary "file://{}"
-needs eslint@~8.57.0                   
+# # # needs xargs -I{} xargs -I{} xargs -I{} linkinator --format=summary "file://{}"
+# # # needs eslint@~8.57.0                   
 needs eslint-plugin-html
 
 if (( ${#deps_need[@]} )); then
@@ -63,15 +63,11 @@ run_lint() {
 
 run_a11y() {
   header "Pa11y CI"
-  printf "file://%s\n" $HTML_FILES >"$REPORT_DIR/pa11y-urls.txt"
-  npx pa11y-ci --config "$PROJECT_ROOT/pa11yci.json" --sitemap "$REPORT_DIR/pa11y-urls.txt" --json \
-    >"$REPORT_DIR/pa11y-report.json" || true
-}
-
-run_links() {
-  header "Linkinator (dead links)"
-  # --markdown outputs a nice report; --skip "^mailto:" skips email links
-  npx xargs -I{} xargs -I{} xargs -I{} linkinator --format=summary "file://{}"
+  printf "%s\n" $HTML_FILES | \
+    xargs -I{} pa11y-ci "file://$(realpath {})" \
+       --config "$PROJECT_ROOT/pa11yci.json" --json \
+       >"$REPORT_DIR/pa11y-report.json" || true
+# # #   npx xargs -I{} xargs -I{} xargs -I{} linkinator --format=summary "file://{}"
 }
 
 

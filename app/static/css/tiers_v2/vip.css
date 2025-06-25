@@ -1,0 +1,8 @@
+/* Connect-ATX – VIP tier
+   -------------------------------------------------------------- */
+:root {
+  --tier-vip-bg: theme('colors.amber.50' / 45%);
+  --tier-vip-accent: theme('colors.amber.500');
+}
+
+/* add rules here later… */

@@ -22,7 +22,7 @@ def inbound_sms():
     if parts and parts[0].lower() == "elite":
         default = current_app.config.get("DEFAULT_DONATION", 25)
         amt = default
-        # Validate amount if given
+        # Validate amount if given (ignore non-digits safely)
         if len(parts) > 1 and parts[1].isdigit():
             try:
                 amt = _validate_amount(parts[1])
@@ -42,6 +42,7 @@ def inbound_sms():
             "Questions? Reply HELP."
         )
 
+    # Twilio expects XML (not JSON)
     return Response(str(resp), mimetype="application/xml")
 
 # Export for Blueprint auto-discovery

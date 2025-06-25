@@ -1,201 +1,31 @@
-<style>
-  :root {
-    --amber-400: #facc15;
-    --amber-500: #eab308;
-    --amber-300: #fde68a;
-    --zinc-900: #111827;
-    --zinc-800: #27272a;
-    --black: #000;
-    --text-light: #fff;
-    --text-dark: #000;
-    --border-color: rgba(250, 205, 21, 0.3);
-    --header-height: 4rem;
-    --scroll-offset: calc(var(--header-height) + 1rem);
-  }
-
-  /* prevent header overlap */
-  body {
-    padding-top: var(--header-height);
-  }
-  section[id] {
-    scroll-margin-top: var(--scroll-offset);
-  }
-
-  .connect-tiers {
-    padding: 6rem 1.5rem;
-    background-color: var(--zinc-900);
-    color: var(--text-light);
-    user-select: none;
-    text-align: center;
-    z-index: 1;
-  }
-  .connect-tiers h2 {
-    font-size: 2.25rem;
-    font-weight: 800;
-    color: var(--amber-400);
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  .progress {
-    max-width: 40rem;
-    margin: 2rem auto;
-    text-align: left;
-    position: relative;
-    z-index: 2;
-  }
-  .progress-bar-bg {
-    background: var(--zinc-800);
-    border: 1px solid var(--border-color);
-    border-radius: 9999px;
-    height: 1.25rem;
-    overflow: hidden;
-  }
-  .progress-bar {
-    background: var(--amber-400);
-    height: 100%;
-    color: var(--text-dark);
-    font-weight: 700;
-    padding-left: 0.5rem;
-    box-shadow: 0 0 15px rgba(250, 205, 21, 0.5);
-    transition: width 1s ease-out;
-  }
-  .progress-text {
-    font-size: 0.875rem;
-    color: var(--amber-300);
-    margin-top: 0.5rem;
-  }
-
-  .grid {
-    display: grid;
-    gap: 2rem;
-    position: relative;
-    z-index: 2;
-  }
-  @media (min-width: 640px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (min-width: 1024px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .perspective {
-    perspective: 1000px;
-  }
-  .preserve-3d {
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-    position: relative;
-    height: 14rem;
-  }
-  .perspective:hover .preserve-3d,
-  .perspective:focus-within .preserve-3d {
-    transform: rotateY(180deg);
-  }
-
-  .card-face {
-    backface-visibility: hidden;
-    position: absolute;
-    inset: 0;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  }
-  .card-front {
-    background: var(--zinc-800);
-    z-index: 2;
-  }
-  .card-back {
-    background: var(--zinc-800);
-    transform: rotateY(180deg);
-  }
-  .tier-cta {
-    background: var(--amber-400);
-    color: var(--text-dark);
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .tier-cta:hover,
-  .tier-cta:focus-visible {
-    background: var(--amber-300);
-    outline: 2px solid var(--amber-400);
-    outline-offset: 3px;
-  }
-
-  .faq-toggle {
-    display: inline-block;
-    color: var(--amber-400);
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 2rem;
-    transition: color 0.2s;
-  }
-  .faq-toggle:hover,
-  .faq-toggle:focus-visible {
-    color: var(--amber-300);
-    outline: 2px solid var(--amber-400);
-    outline-offset: 3px;
-  }
-  .faq-body {
-    margin-top: 1rem;
-    background: var(--zinc-800);
-    border: 1px solid var(--border-color);
-    border-radius: 1rem;
-    padding: 1rem;
-    display: none;
-    text-align: left;
-  }
-
-  @media (max-width: 640px) {
-    .connect-tiers {
-      padding: 4rem 1rem;
-    }
-    .connect-tiers h2 {
-      font-size: 2rem;
-    }
-    .perspective {
-      height: 12rem;
-    }
-  }
-</style>
-
 <section
   id="tiers"
-  class="connect-tiers"
+  class="connect-tiers py-24 bg-zinc-900 text-white"
   aria-labelledby="tiers-heading"
-  tabindex="-1"
 >
-  <h2 id="tiers-heading">Sponsorship Tiers</h2>
+  <h2 id="tiers-heading" class="mb-10 text-4xl font-extrabold text-amber-400">
+    Sponsorship&nbsp;Tiers
+  </h2>
 
-  <!-- Progress -->
-  {% set goal = goal or 10000 %} {% set raised = raised or 7850 %}
-  <div class="progress" aria-label="Progress toward goal">
-    <div class="progress-bar-bg">
+  {# ───────── Progress toward goal ───────── #} {% set goal = goal or 10000 %}
+  {% set raised = raised or 7850 %}
+  <div class="mx-auto mb-12 max-w-xl">
+    <div
+      class="h-5 w-full overflow-hidden rounded-full border border-amber-400/30 bg-zinc-800"
+    >
       <div
-        class="progress-bar"
-        style="width: {{ (raised/goal*100)|round(1, 'ceil') }}%;"
+        class="h-full bg-amber-400 font-bold text-black pl-2 shadow-gold-glow"
+        style="width: {{ (raised / goal * 100) | round(1, 'ceil') }}%;"
       >
         ${{ '{:,}'.format(raised) }}
       </div>
     </div>
-    <div class="progress-text">Goal: ${{ '{:,}'.format(goal) }}</div>
+    <p class="mt-2 text-amber-300 text-sm">Goal: ${{ '{:,}'.format(goal) }}</p>
   </div>
 
-  <!-- Tiers Grid -->
-  {% set tiers = [ {'title':'Platinum','amount':'5000+','benefits':['Logo on
-  jerseys','Shout-outs on social','VIP invites']},
+  {# ───────── Flip-card tiers grid ───────── #} {% set tiers = [
+  {'title':'Platinum','amount':'5000+','benefits':['Logo on jerseys','Shout-outs
+  on social','VIP invites']},
   {'title':'Gold','amount':'2500','benefits':['Warm-ups logo','Social
   features','Appreciation invites']},
   {'title':'Silver','amount':'1000','benefits':['Social shout-outs','Thank-you
@@ -203,22 +33,35 @@
   {'title':'Bronze','amount':'500','benefits':['Public thank-you','Board
   listing']}, {'title':'Custom','amount':'Custom','benefits':['Tailored
   benefits','Personalized impact']} ] %}
-  <div class="grid">
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
     {% for tier in tiers %}
-    <div class="perspective" tabindex="0">
-      <div class="preserve-3d">
-        <div class="card-face card-front">
+    <div
+      class="flip-card group relative cursor-pointer outline-none"
+      tabindex="0"
+    >
+      <div class="flip-preserve-3d h-56 rounded-xl shadow-lg">
+        {# Front #}
+        <div
+          class="flip-face absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-xl bg-zinc-800 p-6"
+        >
           <h3 class="text-xl font-bold">{{ tier.title }}</h3>
           <p class="font-semibold">${{ tier.amount }}</p>
-          <ul class="text-sm mt-2 space-y-1">
-            {% for benefit in tier.benefits %}
-            <li>• {{ benefit }}</li>
+          <ul class="mt-2 space-y-1 text-sm">
+            {% for ben in tier.benefits %}
+            <li>• {{ ben }}</li>
             {% endfor %}
           </ul>
         </div>
-        <div class="card-face card-back">
-          <button class="tier-cta" data-amount="{{ tier.amount }}">
-            Sponsor {{ tier.title }}
+        {# Back #}
+        <div
+          class="flip-face absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-xl bg-zinc-800 p-6 transform rotate-y-180"
+        >
+          <button
+            class="tier-cta inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 font-bold text-black transition hover:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400"
+            data-tier-cta
+            data-amount="{{ tier.amount | replace('+','') }}"
+          >
+            Sponsor&nbsp;{{ tier.title }}
           </button>
         </div>
       </div>
@@ -226,41 +69,24 @@
     {% endfor %}
   </div>
 
-  <!-- FAQ -->
-  <button class="faq-toggle" aria-expanded="false">
-    ▶ Frequently Asked Questions
+  {# ───────── FAQ toggle ───────── #}
+  <button
+    id="tiers-faq-toggle"
+    class="mt-10 inline-flex items-center gap-2 font-bold text-amber-400 focus-visible:outline-2 focus-visible:outline-amber-400"
+    aria-expanded="false"
+  >
+    <span>▶</span> Frequently&nbsp;Asked&nbsp;Questions
   </button>
-  <div class="faq-body" role="region" aria-label="Tier FAQs">
+  <div
+    id="tiers-faq-body"
+    class="mt-4 rounded-xl border border-amber-400/30 bg-zinc-800 p-6 text-left space-y-3"
+    hidden
+  >
     <p><strong>Can I sponsor anonymously?</strong> Yes—just let us know.</p>
     <p>
-      <strong>Where does my sponsorship go?</strong> 100% supports gym rental,
-      travel, academics & gear.
+      <strong>Where does my sponsorship go?</strong> 100 % supports gym rental,
+      travel, academics, and gear.
     </p>
-    <p>
-      <strong>How do I sponsor?</strong> Click a “Sponsor” button or email us.
-    </p>
+    <p><strong>How do I sponsor?</strong> Click a tier button or email us.</p>
   </div>
 </section>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Tier buttons
-    document.querySelectorAll('.tier-cta').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        alert(`Opening sponsorship form for $${btn.dataset.amount}`);
-      });
-    });
-    // FAQ toggle
-    const faqBtn = document.querySelector('.faq-toggle');
-    const faqBody = document.querySelector('.faq-body');
-    faqBtn.addEventListener('click', () => {
-      const expanded = faqBtn.getAttribute('aria-expanded') === 'true';
-      faqBtn.setAttribute('aria-expanded', String(!expanded));
-      faqBtn.textContent =
-        (expanded ? '▶' : '▼') + ' Frequently Asked Questions';
-      faqBody.style.display = expanded ? 'none' : 'block';
-    });
-    // Initialize AOS if used
-    if (window.AOS) AOS.init({ once: true, duration: 600 });
-  });
-</script>

@@ -1,4 +1,7 @@
-# app/routes/__init__.py
+"""
+Blueprint aggregator for app.routes
+Ensures all blueprints are importable via app.routes.
+"""
 
 from .api import api_bp
 from .main import main_bp
@@ -9,3 +12,4 @@ __all__ = [
     "main_bp",
     "sms_bp",
 ]
+

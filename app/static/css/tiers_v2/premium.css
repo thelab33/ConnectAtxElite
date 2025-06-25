@@ -1,0 +1,8 @@
+/* Connect-ATX – Premium tier
+   -------------------------------------------------------------- */
+:root {
+  --tier-premium-bg: theme('colors.emerald.50' / 45%);
+  --tier-premium-accent: theme('colors.emerald.500');
+}
+
+/* add rules here later… */
