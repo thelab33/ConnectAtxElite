@@ -1,0 +1,46 @@
+<button
+  class="live-chat-fab"
+  id="live-chat-fab"
+  aria-label="Open live chat"
+  title="Chat with us"
+>
+  <span aria-hidden="true">💬</span>
+</button>
+
+<div
+  class="live-chat-panel"
+  id="live-chat-panel"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="live-chat-header"
+  tabindex="-1"
+>
+  <div class="live-chat-header" id="live-chat-header">
+    <span>Live Chat</span>
+    <button
+      class="close-btn"
+      id="live-chat-close"
+      aria-label="Close chat"
+      title="Close"
+    >
+      &times;
+    </button>
+  </div>
+  <div class="live-chat-messages" id="live-chat-messages" aria-live="polite">
+    <div style="opacity: 0.5; font-size: 0.98rem">
+      👋 Hi there! How can we help?
+    </div>
+  </div>
+  <form class="live-chat-input-bar" id="live-chat-form" autocomplete="off">
+    <input
+      type="text"
+      id="live-chat-input"
+      placeholder="Type your message…"
+      autocomplete="off"
+      required
+    />
+    <button type="submit" id="live-chat-send" aria-label="Send message">
+      Send
+    </button>
+  </form>
+</div>

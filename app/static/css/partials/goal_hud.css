@@ -1,0 +1,31 @@
+/* Removed invalid '404' property from line 1 */
+
+/* Goal HUD styles */
+
+.goal-hud-container {
+  background: rgb(0 0 0 / 65%);
+  border-radius: 1rem;
+  padding: 1.2rem 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgb(250 204 21 / 30%);
+  color: #facc15;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.goal-hud-progress {
+  height: 16px;
+  background: rgb(250 204 21 / 30%);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.goal-hud-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #facc15, #fde68a 85%);
+  border-radius: 8px 0 0 8px;
+  transition: width 0.4s ease-in-out;
+}

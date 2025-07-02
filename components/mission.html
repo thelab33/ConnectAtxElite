@@ -1,0 +1,90 @@
+<section
+  id="mission"
+  class="connect-mission"
+  role="region"
+  aria-labelledby="mission-heading"
+  tabindex="-1"
+>
+  <video
+    id="mission-bg-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    poster="connect-atx-team-poster.jpg"
+    class="bg-video"
+  >
+    <source src="connect-atx-team.mp4" type="video/mp4" />
+  </video>
+
+  <div class="content">
+    <h2 id="mission-heading">Our Mission</h2>
+    <p>
+      Connect ATX Elite is a community-powered, non-profit
+      <b>12U AAU</b> basketball program based in Austin, TX. We develop not only
+      skilled athletes, but confident, disciplined, and academically driven
+      young leaders.
+    </p>
+    <button
+      id="storyBtn"
+      class="mission-share-btn"
+      aria-haspopup="dialog"
+      aria-controls="storyModal"
+      aria-expanded="false"
+    >
+      ▶ Watch Our Story
+    </button>
+  </div>
+
+  <div class="stats-grid" aria-label="Impact statistics">
+    <div class="stat" tabindex="0" aria-label="16 Players Enrolled">
+      <span class="count" data-target="16">0</span>
+      <p>Players Enrolled</p>
+    </div>
+    <div class="stat" tabindex="0" aria-label="11 Honor Roll Scholars">
+      <span class="count" data-target="11">0</span>
+      <p>Honor Roll Scholars</p>
+    </div>
+    <div class="stat" tabindex="0" aria-label="12 Tournaments Played">
+      <span class="count" data-target="12">0</span>
+      <p>Tournaments Played</p>
+    </div>
+    <div class="stat" tabindex="0" aria-label="3 Years Running">
+      <span class="count" data-target="3">0</span>
+      <p>Years Running</p>
+    </div>
+  </div>
+
+  <div class="story-carousel" role="region" aria-label="Impact stories">
+    <div class="story-quote" id="story-quote">
+      “Without gym access, my son missed critical development time.”
+    </div>
+    <div class="story-meta">Team Parent</div>
+    <div class="story-title">Class of 2030</div>
+    <div class="story-nav">
+      <button id="prevStory" aria-label="Previous story">←</button>
+      <button id="nextStory" aria-label="Next story">→</button>
+    </div>
+  </div>
+
+  <button
+    class="mission-share-btn"
+    onclick="shareMission()"
+    style="margin-top: 1.5rem"
+  >
+    Share Mission
+  </button>
+
+  <dialog id="storyModal" role="dialog" aria-modal="true">
+    <button
+      type="button"
+      aria-label="Close story modal"
+      onclick="storyModal.close()"
+    >
+      ×
+    </button>
+    <video controls autoplay class="w-full rounded-lg">
+      <source src="connect-atx-story.mp4" type="video/mp4" />
+    </video>
+  </dialog>
+</section>

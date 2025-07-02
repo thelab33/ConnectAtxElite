@@ -1,44 +1,45 @@
-/* ──────────────── Sticky Glass Header ──────────────── */
+/* Sticky luxury “glass” header */
 header.sticky,
 .sticky-header {
-  background: rgba(28, 25, 23, 0.97);
-  border-bottom: 1.5px solid #facc1555;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
+  background: rgb(28 25 23 / 97%);
+  border-bottom: 1.5px solid #facc1550;
   box-shadow:
     0 6px 24px #18181b33,
-    0 0.5px 0 0 #facc1530;
+    0 1.5px 0 0 #facc1555;
   transition:
     background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* For consistent look if using with Tailwind .bg-secondary/95 etc. */
 }
 
-/* ──────────────── Logo / Button Glow ──────────────── */
+/* Gold ring + glowing aura for logo/buttons */
 .shadow-gold-glow {
   box-shadow:
     0 0 0 3px #facc1577,
-    0 2px 12px #0008,
-    0 0 24px 4px #facc1522;
+    /* outer soft glow */ 0 2px 12px #0008,
+    0 0 24px 4px #facc1522; /* subtle gold haze */
 }
 
-/* ──────────────── Mobile Slide-Over ──────────────── */
+/* Slide-over for mobile menu */
 #mobile-menu {
   transform: translateX(-100%);
   transition: transform 0.33s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
+
 #mobile-menu.open {
   transform: translateX(0);
 }
 
-/* ──────────────── Hamburger Glow on Open ──────────────── */
-#hamburger[aria-expanded='true'] svg {
-  filter: drop-shadow(0 0 6px #facc15aa);
-  transition: filter 0.2s;
+/* Custom hamburger + mobile nav accessibility improvement */
+#hamburger[aria-expanded='true'] {
+  outline: 2px solid #facc15;
 }
 
-/* ──────────────── Focus-visible Fix ──────────────── */
-.focus\:not-sr-only:focus:not(:focus-visible) {
+/* Fix class selector kebab-case: renamed .focus\:not-sr-only to .focus-not-sr-only */
+.focus-not-sr-only:focus:not(:focus-visible) {
   position: static !important;
   width: auto !important;
   height: auto !important;
@@ -47,24 +48,24 @@ header.sticky,
   clip: auto !important;
 }
 
-/* ──────────────── Glassmorphism Panels ──────────────── */
+/* Glassmorphism helper for overlay containers, works with Tailwind .hero-glass too */
 .glass,
 .hero-glass {
-  background: rgba(24, 24, 27, 0.64);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1.25rem;
+  background: rgb(24 24 27 / 60%);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.25rem;
   box-shadow:
     0 4px 32px 0 #18181b90,
     0 0 16px #facc1510;
+  border: 1px solid rgb(255 255 255 / 10%);
 }
 
-/* ──────────────── Animated Nav Underline ──────────────── */
+/* Extra: nav underline effect for nav links */
 .nav-underline {
   position: relative;
-  transition: color 0.18s ease;
+  transition: color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .nav-underline::after {
   content: '';
   position: absolute;
@@ -77,14 +78,55 @@ header.sticky,
   opacity: 0.75;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .nav-underline:hover::after,
 .nav-underline:focus-visible::after {
   transform: scaleX(1);
 }
 
-/* ──────────────── Screen Reader Only ──────────────── */
+/* (Optional) Animate hamburger on open */
+#hamburger[aria-expanded='true'] svg {
+  filter: drop-shadow(0 0 6px #facc15aa);
+  transition: filter 0.2s;
+}
+
+/* Custom shimmer for gold CTA buttons, if using .btn-shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.btn-shimmer {
+  background: linear-gradient(90deg, #facc15 40%, #fffbe8 55%, #facc15 60%);
+  background-size: 300% 100%;
+  animation: shimmer 2.5s infinite linear;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 60%,
+    #fffbe8 90%,
+    transparent 100%
+  );
+  opacity: 0.13;
+}
+
+/* Visually hide but keep for screen readers */
 .sr-only {
   position: absolute !important;
   width: 1px !important;
@@ -95,4 +137,3 @@ header.sticky,
   clip: rect(0, 0, 0, 0) !important;
   border: 0 !important;
 }
-

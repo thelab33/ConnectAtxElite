@@ -1,0 +1,139 @@
+:root {
+  --primary-yellow: #facc15;
+  --bg-overlay: rgba(0, 0, 0, 0.75);
+}
+
+#donation-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-overlay);
+  padding: 2rem 1rem;
+  transition: background 0.25s;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+#donation-modal.open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  animation: fadeIn 0.18s ease forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-container {
+  width: 100%;
+  max-width: 28rem;
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  position: relative;
+  padding-bottom: 1.25rem;
+  animation: slideUp 0.23s cubic-bezier(0.57, 1.42, 0.51, 1.07) forwards;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(32px) scale(0.98); }
+  to { transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+  background: var(--primary-yellow);
+  padding: 1rem 2rem 0.5rem 2rem;
+  border-radius: 1.25rem 1.25rem 0 0;
+  text-align: center;
+}
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #18181b;
+  letter-spacing: -0.01em;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.13s;
+}
+.close-btn:hover,
+.close-btn:focus {
+  color: #18181b;
+  outline: none;
+}
+
+.modal-form {
+  display: grid;
+  gap: 1.1rem;
+  padding: 1.2rem 2rem 0.7rem 2rem;
+}
+.modal-form label span {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.modal-form input {
+  width: 100%;
+  padding: 0.48rem;
+  border: 1.4px solid #e5e7eb;
+  border-radius: 0.6rem;
+  font-size: 1.06rem;
+  background: #fafaf9;
+  color: #222;
+  transition:
+    box-shadow 0.19s,
+    border-color 0.18s;
+}
+.modal-form input:focus {
+  border-color: var(--primary-yellow);
+  box-shadow: 0 0 0 2.5px #fde68a88;
+  outline: none;
+}
+.submit-btn {
+  margin-top: 0.5rem;
+  background: var(--primary-yellow);
+  color: #18181b;
+  font-weight: 700;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 0.7rem;
+  box-shadow: 0 4px 12px #fde68a22;
+  cursor: pointer;
+  transition:
+    background 0.17s,
+    box-shadow 0.19s,
+    transform 0.14s;
+}
+.submit-btn:hover,
+.submit-btn:focus {
+  background: #eab308;
+  box-shadow: 0 6px 20px #fde68a44;
+  transform: translateY(-1.5px) scale(1.03);
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .modal-container {
+    max-width: 100%;
+    padding: 0 0 1rem 0;
+  }
+  .modal-header,
+  .modal-form {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

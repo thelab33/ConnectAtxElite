@@ -1,0 +1,93 @@
+:root {
+  --primary-yellow: #facc15;
+  --bg-dark: #000;
+  --text-light: #fff;
+  --stat-bg: rgba(36, 36, 36, 0.8);
+  --stat-border: rgba(250, 205, 21, 0.22);
+  --header-height: 4rem;
+  --scroll-offset: calc(var(--header-height) + 1rem);
+}
+section[id] {
+  scroll-margin-top: var(--scroll-offset);
+}
+.connect-stats {
+  padding: 4rem 1.5rem 3.5rem;
+  background: linear-gradient(99deg, var(--bg-dark) 72%, #18181b 100%);
+  color: var(--text-light);
+  text-align: center;
+  user-select: none;
+  position: relative;
+  z-index: 1;
+}
+.connect-stats .stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.2rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.connect-stats .stat-card {
+  background: var(--stat-bg);
+  border: 1.5px solid var(--stat-border);
+  border-radius: 1.2rem;
+  padding: 2rem 1.3rem;
+  width: 10rem;
+  min-width: 8.3rem;
+  transition:
+    transform 0.22s,
+    box-shadow 0.22s;
+  box-shadow: 0 4px 18px #18181b25;
+  cursor: default;
+  outline: none;
+  position: relative;
+}
+.connect-stats .stat-card:focus-within,
+.connect-stats .stat-card:hover {
+  transform: scale(1.055);
+  box-shadow:
+    0 0 0 3px var(--primary-yellow),
+    0 8px 25px #facc1522;
+  z-index: 10;
+}
+.connect-stats .counter {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--primary-yellow);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1.5px 7px #facc1530;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.connect-stats .label {
+  font-size: 1.02rem;
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+@media (max-width: 900px) {
+  .connect-stats .stats-grid {
+    gap: 1.2rem;
+  }
+  .connect-stats .stat-card {
+    width: 8rem;
+    padding: 1.3rem 0.8rem;
+  }
+  .connect-stats .counter {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 600px) {
+  .connect-stats {
+    padding: 2.4rem 0.4rem 2rem;
+  }
+  .connect-stats .stats-grid {
+    gap: 0.8rem;
+  }
+  .connect-stats .stat-card {
+    min-width: 6rem;
+  }
+}

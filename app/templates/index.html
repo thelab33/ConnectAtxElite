@@ -2,79 +2,78 @@
 {% extends "base.html" %}
 {% import "partials/macros.html" as macros %}
 
-{% block title %}Home · Connect ATX Elite{% endblock %}
+{% block title %}
+  Home · Connect ATX Elite
+{% endblock %}
 
 {% block content %}
 
-  {# ────────────────────── HERO ────────────────────── #}
+  {# ───────────── Hero Section ───────────── #}
   {% call macros.section('hero', 'relative overflow-hidden', 0) %}
     {% include "partials/hero.html" %}
   {% endcall %}
 
-  {# ─────────── QUICK STATS (banner) ─────────── #}
-  {% call macros.section(
-    'quick-stats',
-    'bg-gradient-to-r from-primary-yellow to-amber-300 py-10 text-black shadow-inner',
-    150) %}
+  {# ───────────── Quick Stats Banner ───────────── #}
+  {% call macros.section('quick-stats', 'bg-gradient-to-r from-primary-yellow to-amber-300 py-10 text-black shadow-inner', 150) %}
     {% include "partials/stats.html" %}
   {% endcall %}
 
-  {# ────────────────────── CTA ────────────────────── #}
+  {# ───────────── Call To Action ───────────── #}
   {% call macros.section('cta', 'bg-zinc-900', 200) %}
     {% include "partials/cta.html" %}
   {% endcall %}
 
-  {# ─────────────── TIERS (Sponsorship) ───────────── #}
+  {# ───────────── Sponsorship Tiers ───────────── #}
   {% call macros.section('tiers', '', 300) %}
     {% include "partials/tiers.html" %}
   {% endcall %}
 
-  {# ──────────────── CHALLENGE ──────────────── #}
+  {# ───────────── Challenge Section ───────────── #}
   {% call macros.section('challenge', '', 400) %}
     {% include "partials/challenge.html" %}
   {% endcall %}
 
-  {# ──────────────── MISSION ──────────────── #}
+  {# ───────────── Mission Statement ───────────── #}
   {% call macros.section('mission', '', 500) %}
     {% include "partials/mission.html" %}
   {% endcall %}
 
-  {# ────────────────── ABOUT ────────────────── #}
+  {# ───────────── About Section ───────────── #}
   {% call macros.section('about', 'bg-zinc-950', 600) %}
     {% include "partials/about.html" %}
   {% endcall %}
 
-  {# ────── FUNDING GOAL HUD (Progress) ────── #}
+  {# ───────────── Funding Goal HUD ───────────── #}
   {% call macros.section('funding-goal-hud', 'bg-zinc-900', 800) %}
-    {% include "partials/funding_goal_hud.html" %}
+    {% include "partials/goal_hud.html" %}
   {% endcall %}
 
-  {# ─────────────── SPONSOR WALL ────────────── #}
+  {# ───────────── Sponsor Wall ───────────── #}
   {% call macros.section('sponsor-wall', '', 900) %}
     {% include "partials/sponsor_wall.html" %}
   {% endcall %}
 
-  {# ─────────────── TESTIMONIALS ────────────── #}
+  {# ───────────── Testimonials ───────────── #}
   {% call macros.section('testimonials', 'bg-zinc-950', 1000) %}
     {% include "partials/testimonials.html" %}
   {% endcall %}
 
-  {# ─────────────────── FAQ ─────────────────── #}
+  {# ───────────── FAQ Section ───────────── #}
   {% call macros.section('faq', '', 1100) %}
     {% include "partials/faq.html" %}
   {% endcall %}
 
-  {# ─────────────── NEWSLETTER ─────────────── #}
+  {# ───────────── Newsletter Signup ───────────── #}
   {% call macros.section('newsletter', 'py-16 bg-primary-yellow text-black text-center', 1200) %}
     {% include "partials/newsletter.html" ignore missing %}
   {% endcall %}
 
-  {# ────────────────── CONTACT ────────────────── #}
+  {# ───────────── Contact Section ───────────── #}
   {% call macros.section('contact', 'py-16 bg-zinc-900 text-white text-center', 1300) %}
     {% include "partials/contact.html" ignore missing %}
   {% endcall %}
 
-  {# ───────────── BACK TO TOP BTN ───────────── #}
+  {# ───────────── Back to Top Button ───────────── #}
   {% include "partials/back_to_top.html" ignore missing %}
 
 {% endblock %}

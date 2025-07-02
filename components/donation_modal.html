@@ -1,0 +1,59 @@
+<div
+  id="donation-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="donation-modal-title"
+  tabindex="-1"
+  class="hidden"
+>
+  <div class="modal-container" role="document">
+    <button
+      type="button"
+      class="close-btn"
+      aria-label="Close donation form"
+      id="donation-modal-close"
+    >
+      &times;
+    </button>
+    <div class="modal-header">
+      <h2 id="donation-modal-title">Support Our Team</h2>
+    </div>
+    <form
+      class="modal-form"
+      id="donation-form"
+    >
+      <label for="donor-name">
+        <span>Your Name</span>
+        <input
+          type="text"
+          id="donor-name"
+          name="name"
+          required
+          autocomplete="name"
+        />
+      </label>
+      <label for="donor-email">
+        <span>Email Address</span>
+        <input
+          type="email"
+          id="donor-email"
+          name="email"
+          required
+          autocomplete="email"
+        />
+      </label>
+      <label for="donation-amount">
+        <span>Donation Amount (USD)</span>
+        <input
+          type="number"
+          id="donation-amount"
+          name="amount"
+          min="1"
+          value="25"
+          required
+        />
+      </label>
+      <button type="submit" class="submit-btn">Donate Now</button>
+    </form>
+  </div>
+</div>

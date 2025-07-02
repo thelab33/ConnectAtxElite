@@ -1,0 +1,119 @@
+.live-chat-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1050;
+  background: linear-gradient(92deg, #facc15 70%, #fef08a 100%);
+  color: #222;
+  font-weight: bold;
+  font-size: 1.35rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px #0a0a0a44;
+  width: 3.8rem;
+  height: 3.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition:
+    box-shadow 0.22s,
+    transform 0.19s;
+}
+.live-chat-fab:hover,
+.live-chat-fab:focus-visible {
+  box-shadow: 0 8px 32px #facc1555;
+  transform: scale(1.07);
+}
+.live-chat-panel {
+  position: fixed;
+  bottom: 5.4rem;
+  right: 2rem;
+  z-index: 1060;
+  width: 360px;
+  max-width: 96vw;
+  background: rgba(28, 32, 42, 0.99);
+  color: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 6px 36px #000c2a50;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  animation: chatIn 0.33s cubic-bezier(0.77, 0, 0.18, 1) both;
+}
+@keyframes chatIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.live-chat-panel.open {
+  display: flex;
+}
+.live-chat-header {
+  background: linear-gradient(92deg, #facc15 70%, #fef08a 100%);
+  color: #1a1a1a;
+  padding: 1rem 1.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.live-chat-header .close-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: #222;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0;
+  margin-left: 1.2rem;
+}
+.live-chat-messages {
+  padding: 1.3rem 1rem 0.75rem;
+  flex: 1;
+  overflow-y: auto;
+  background: transparent;
+  min-height: 140px;
+  font-size: 1rem;
+}
+.live-chat-input-bar {
+  display: flex;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  background: #25272d;
+  border-top: 1px solid #2c2e36;
+}
+.live-chat-input-bar input {
+  flex: 1;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background: #2c2e36;
+  color: #facc15;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  margin-right: 0.7rem;
+  transition: box-shadow 0.17s;
+}
+.live-chat-input-bar button {
+  background: linear-gradient(92deg, #facc15 70%, #fef08a 100%);
+  color: #18181b;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.3rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.live-chat-input-bar button:hover,
+.live-chat-input-bar button:focus {
+  background: #fde68a;
+}

@@ -1,0 +1,107 @@
+:root {
+  --primary-color: #facc15;
+  --text-light: #fffbe7;
+  --bg-overlay: rgba(16, 20, 34, 0.65);
+  --header-height: 4rem;
+  --scroll-offset: calc(var(--header-height) + 1rem);
+}
+
+body {
+  padding-top: var(--header-height);
+}
+section[id] {
+  scroll-margin-top: var(--scroll-offset);
+}
+
+.connect-mission {
+  background: linear-gradient(to bottom, #18181b, #000, #18181b);
+  color: var(--text-light);
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 1.5rem;
+  text-align: center;
+}
+.connect-mission .bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+  z-index: 0;
+  pointer-events: none;
+}
+.connect-mission .content {
+  position: relative;
+  z-index: 2;
+  max-width: 48rem;
+  margin: 0 auto 2.5rem;
+}
+.connect-mission h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+.connect-mission p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.mission-share-btn {
+  background: var(--primary-color);
+  color: #18181b;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.14s;
+}
+.mission-share-btn:hover {
+  background: #f5c518;
+}
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.stat {
+  background: var(--bg-overlay);
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  color: var(--text-light);
+}
+.stat .count {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.story-carousel {
+  max-width: 34rem;
+  margin: 2.5rem auto;
+  background: var(--bg-overlay);
+  border-radius: 1.25rem;
+  padding: 1.2rem;
+}
+.story-quote {
+  font:
+    italic 1.16rem/1.4 Georgia,
+    serif;
+}
+.story-meta,
+.story-title {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+.story-nav button {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.5rem;
+  cursor: pointer;
+}

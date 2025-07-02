@@ -1,0 +1,139 @@
+:root {
+  --red-400: #f87171;
+  --bg-gradient-start: #18181b;
+  --bg-gradient-mid: #000000;
+  --bg-gradient-end: #111827;
+  --bg-overlay-opacity: 0.7;
+  --metric-bg: rgba(36, 36, 36, var(--bg-overlay-opacity));
+  --metric-shadow: rgba(0, 0, 0, 0.4);
+  --progress-bg: #27272a;
+  --progress-bar: var(--red-400);
+  --text-light: #fff;
+}
+
+.connect-challenge {
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 1.5rem;
+  background: linear-gradient(
+    to bottom right,
+    var(--bg-gradient-start),
+    var(--bg-gradient-mid),
+    var(--bg-gradient-end)
+  );
+  border-left: 0.25rem solid rgba(248, 113, 113, 0.8);
+  color: var(--text-light);
+  text-align: center;
+}
+.connect-challenge h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--red-400);
+  margin-bottom: 1.5rem;
+}
+.connect-challenge p {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2rem;
+}
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.metric {
+  background-color: var(--metric-bg);
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  box-shadow: 0 0 12px var(--metric-shadow);
+  cursor: default;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.metric:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 16px var(--red-400);
+}
+.metric span:first-child {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: var(--red-400);
+  display: block;
+}
+.metric span:last-child {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+}
+.progress-wrapper {
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+  text-align: left;
+}
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.25rem;
+}
+.progress-bg {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--progress-bg);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background-color: var(--progress-bar);
+  width: 0;
+  transition: width 1s ease-out;
+}
+.cta a {
+  display: inline-block;
+  background-color: var(--red-400);
+  color: #000;
+  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s, background 0.2s;
+}
+.cta a:hover {
+  transform: scale(1.05);
+  background-color: #fca5a5;
+}
+.testimonial {
+  max-width: 32rem;
+  margin: 0 auto;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+.testimonial button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.popover {
+  position: absolute;
+  top: 1.5rem;
+  right: 0;
+  background: rgba(36, 36, 36, 0.9);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  display: none;
+}

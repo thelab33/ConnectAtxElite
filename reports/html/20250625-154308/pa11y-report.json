@@ -1,0 +1,4 @@
+{"total":1,"passes":0,"errors":0,"results":{"file:///home/cyberboyz/ConnectAtxElite//home/cyberboyz/ConnectAtxElite/app/templates/partials/donation_modal.html":[{"message":"Pa11y timed out (30000ms)"}]}}
+{"total":1,"passes":0,"errors":0,"results":{"file:///home/cyberboyz/ConnectAtxElite//home/cyberboyz/ConnectAtxElite/app/templates/partials/tiers.html":[{"message":"Pa11y timed out (30000ms)"}]}}
+{"total":1,"passes":0,"errors":0,"results":{"file:///home/cyberboyz/ConnectAtxElite//home/cyberboyz/ConnectAtxElite/app/templates/partials/about.html":[{"message":"Pa11y timed out (30000ms)"}]}}
+{"total":1,"passes":0,"errors":0,"results":{"file:///home/cyberboyz/ConnectAtxElite//home/cyberboyz/ConnectAtxElite/app/templates/partials/mission.html":[{"message":"Pa11y timed out (30000ms)"}]}}

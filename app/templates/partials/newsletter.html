@@ -1,0 +1,166 @@
+<!-- Newsletter Modal Popup -->
+<style>
+  #newsletter-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(24, 24, 27, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1050;
+  }
+  #newsletter-popup.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #newsletter-content {
+    background: #18181b;
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 30px rgb(250 205 21 / 0.5);
+    max-width: 400px;
+    width: 90%;
+    color: #facc15;
+    outline: none;
+  }
+  #newsletter-content h2 {
+    margin-bottom: 1rem;
+    font-weight: 900;
+    font-size: 1.75rem;
+  }
+  #newsletter-content p {
+    margin-bottom: 1.5rem;
+    color: #eee;
+  }
+  #newsletter-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: #facc15;
+    cursor: pointer;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  input[type='email'] {
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid #facc15;
+    font-size: 1rem;
+    outline-offset: 2px;
+    color: #18181b;
+  }
+  input[type='email']:focus {
+    border-color: #fde68a;
+    box-shadow: 0 0 6px #fde68a;
+  }
+  button[type='submit'] {
+    background: #facc15;
+    color: #18181b;
+    font-weight: 700;
+    padding: 0.65rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button[type='submit']:hover,
+  button[type='submit']:focus {
+    background: #fde68a;
+    outline: none;
+  }
+  #email-error {
+    color: #f87171;
+    font-size: 0.9rem;
+    height: 1.2rem;
+  }
+</style>
+
+<div
+  id="newsletter-popup"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="newsletter-title"
+  tabindex="-1"
+>
+  <div id="newsletter-content" tabindex="0">
+    <button
+      id="newsletter-close"
+      aria-label="Close newsletter subscription popup"
+    >
+      ×
+    </button>
+    <h2 id="newsletter-title">Subscribe to Our Newsletter</h2>
+    <p>Get updates on events, news, and ways to support Connect ATX Elite.</p>
+    <form id="newsletter-form" novalidate>
+      <input
+        id="newsletter-email"
+        name="email"
+        type="email"
+        placeholder="Your email address"
+        required
+        aria-describedby="email-error"
+      />
+      <div id="email-error" class="hidden" aria-live="assertive"></div>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('newsletter-popup');
+    const closeBtn = document.getElementById('newsletter-close');
+    const form = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('newsletter-email');
+    const errorMsg = document.getElementById('email-error');
+
+    // Show popup after 3 seconds
+    setTimeout(() => {
+      popup.classList.add('visible');
+      popup.focus();
+    }, 3000);
+
+    // Close popup function
+    function closePopup() {
+      popup.classList.remove('visible');
+      errorMsg.classList.add('hidden');
+      errorMsg.textContent = '';
+      emailInput.value = '';
+    }
+
+    // Close on close button click
+    closeBtn.addEventListener('click', closePopup);
+
+    // Close on click outside modal content
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) closePopup();
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errorMsg.classList.add('hidden');
+      errorMsg.textContent = '';
+
+      if (!emailInput.validity.valid) {
+        errorMsg.textContent = 'Please enter a valid email address.';
+        errorMsg.classList.remove('hidden');
+        emailInput.focus();
+        return;
+      }
+
+      // TODO: Replace with actual subscription logic (API call, etc.)
+      alert(`Thanks for subscribing, ${emailInput.value}!`);
+      closePopup();
+    });
+  });
+</script>

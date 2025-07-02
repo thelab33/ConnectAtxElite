@@ -1,0 +1,92 @@
+<section
+  id="tiers"
+  class="connect-tiers py-24 bg-zinc-900 text-white"
+  aria-labelledby="tiers-heading"
+>
+  <h2 id="tiers-heading" class="mb-10 text-4xl font-extrabold text-amber-400">
+    Sponsorship&nbsp;Tiers
+  </h2>
+
+  {# ───────── Progress toward goal ───────── #} {% set goal = goal or 10000 %}
+  {% set raised = raised or 7850 %}
+  <div class="mx-auto mb-12 max-w-xl">
+    <div
+      class="h-5 w-full overflow-hidden rounded-full border border-amber-400/30 bg-zinc-800"
+    >
+      <div
+        class="h-full bg-amber-400 font-bold text-black pl-2 shadow-gold-glow"
+        style="width: {{ (raised / goal * 100) | round(1, 'ceil') }}%;"
+      >
+        ${{ '{:,}'.format(raised) }}
+      </div>
+    </div>
+    <p class="mt-2 text-amber-300 text-sm">Goal: ${{ '{:,}'.format(goal) }}</p>
+  </div>
+
+  {# ───────── Flip-card tiers grid ───────── #} {% set tiers = [
+  {'title':'Platinum','amount':'5000+','benefits':['Logo on jerseys','Shout-outs
+  on social','VIP invites']},
+  {'title':'Gold','amount':'2500','benefits':['Warm-ups logo','Social
+  features','Appreciation invites']},
+  {'title':'Silver','amount':'1000','benefits':['Social shout-outs','Thank-you
+  certificate','Board listing']},
+  {'title':'Bronze','amount':'500','benefits':['Public thank-you','Board
+  listing']}, {'title':'Custom','amount':'Custom','benefits':['Tailored
+  benefits','Personalized impact']} ] %}
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    {% for tier in tiers %}
+    <div
+      class="flip-card group relative cursor-pointer outline-none"
+      tabindex="0"
+    >
+      <div class="flip-preserve-3d h-56 rounded-xl shadow-lg">
+        {# Front #}
+        <div
+          class="flip-face absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-xl bg-zinc-800 p-6"
+        >
+          <h3 class="text-xl font-bold">{{ tier.title }}</h3>
+          <p class="font-semibold">${{ tier.amount }}</p>
+          <ul class="mt-2 space-y-1 text-sm">
+            {% for ben in tier.benefits %}
+            <li>• {{ ben }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {# Back #}
+        <div
+          class="flip-face absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-xl bg-zinc-800 p-6 transform rotate-y-180"
+        >
+          <button
+            class="tier-cta inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 font-bold text-black transition hover:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-400"
+            data-tier-cta
+            data-amount="{{ tier.amount | replace('+','') }}"
+          >
+            Sponsor&nbsp;{{ tier.title }}
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {# ───────── FAQ toggle ───────── #}
+  <button
+    id="tiers-faq-toggle"
+    class="mt-10 inline-flex items-center gap-2 font-bold text-amber-400 focus-visible:outline-2 focus-visible:outline-amber-400"
+    aria-expanded="false"
+  >
+    <span>▶</span> Frequently&nbsp;Asked&nbsp;Questions
+  </button>
+  <div
+    id="tiers-faq-body"
+    class="mt-4 rounded-xl border border-amber-400/30 bg-zinc-800 p-6 text-left space-y-3"
+    hidden
+  >
+    <p><strong>Can I sponsor anonymously?</strong> Yes—just let us know.</p>
+    <p>
+      <strong>Where does my sponsorship go?</strong> 100 % supports gym rental,
+      travel, academics, and gear.
+    </p>
+    <p><strong>How do I sponsor?</strong> Click a tier button or email us.</p>
+  </div>
+</section>

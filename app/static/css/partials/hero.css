@@ -1,28 +1,30 @@
-/* ──────────────── CSS Variables (Theme + Overlay) ──────────────── */
-:root {
-  --primary-color: #facc15;
-  --primary-gradient: linear-gradient(90deg, #facc15, #fde68a 85%);
-  --bg-dark: #0a1f44;
-  --text-light: #ffffff;
-  --text-muted: #b4b9d6;
-  --overlay-glass: rgba(18, 20, 34, 0.75);
+.connect-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
 }
 
-[data-theme='dark'] {
-  --bg-dark: #061633;
-  --text-light: #e0e0e0;
-  --text-muted: #cccccc;
-  --overlay-glass: rgba(8, 10, 18, 0.9);
-}
-
-/* ──────────────── Keyframe Animations ──────────────── */
 @keyframes kenburns {
   from {
-    transform: scale(1);
+    transform: scale(1) translate(0, 0);
   }
+
   to {
     transform: scale(1.12) translate(-7%, -7%);
   }
+}
+
+.badge-in {
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-name: badge-in;
+  animation-duration: 1s;
+  opacity: 0;
 }
 
 @keyframes badge-in {
@@ -32,62 +34,47 @@
   }
 }
 
-@keyframes shine {
-  0% {
-    filter: brightness(1);
-  }
-  100% {
-    filter: brightness(1.1) drop-shadow(0 0 8px #fde68a);
-  }
+.btn-primary {
+  background-color: var(--primary-color, #facc15);
+  color: black;
+  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  box-shadow: 0 6px 20px rgb(250 204 21 / 60%);
+  transition: background-color 0.3s ease-in-out;
 }
 
-@keyframes sparkle {
-  0% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #fde68a;
+  outline: none;
+}
+
+#scroll-hint svg {
+  animation: bounce 2.5s infinite;
 }
 
 @keyframes bounce {
   0%,
   100% {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
+
   50% {
-    transform: translate(-50%, -0.75rem);
+    transform: translateY(-15%);
   }
 }
 
-/* ──────────────── Utility Classes ──────────────── */
-.bg-glass,
-.hero-glass {
-  background: var(--overlay-glass) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 1.25rem;
-  box-shadow: 0 4px 32px 0 #18181b90, 0 0 16px #facc1510;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* Floating CTA hidden by default */
+#floating-cta {
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    pointer-events 0.3s ease;
 }
 
-.animate-kenburns {
-  animation: kenburns 22s ease-in-out infinite alternate;
+#floating-cta.opacity-100 {
+  opacity: 1;
+  pointer-events: auto;
 }
-
-.animate-badge-in {
-  animation: badge-in 1s forwards;
-}
-
-.animate-shine {
-  animation: shine 1.8s infinite alternate;
-}
-
-.animate-sparkle {
-  animation: sparkle 1.1s infinite alternate;
-}
-
-.animate-bounce {
-  animation: bounce 1.7s infinite;
-}
-

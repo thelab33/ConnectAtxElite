@@ -1,0 +1,79 @@
+<section
+  id="sponsor-wall"
+  class="connect-sponsor-wall"
+  role="region"
+  aria-labelledby="sponsor-heading"
+  data-aos="fade-up"
+  data-aos-delay="300"
+>
+  <div class="space-y-6 relative z-10">
+    <h2 id="sponsor-heading">Our Generous Sponsors</h2>
+    <p>
+      Every logo below represents a family or company that keeps our kids on the
+      court—thank you!
+    </p>
+    <p id="sponsor-count" aria-live="polite">
+      {{ sponsors|length }} Sponsor{{ sponsors|length!=1 and 's' or '' }} and
+      counting!
+    </p>
+
+    {% if sponsors %}
+    <div class="vendor-marquee" aria-label="Sponsor logos marquee" tabindex="0">
+      <ul>
+        {% for sponsor in sponsors %}
+        <li>
+          <a
+            href="{{ sponsor.website or '#' }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit {{ sponsor.name }}"
+          >
+            <img
+              src="{{ sponsor.logo_url }}"
+              alt="{{ sponsor.name }} logo"
+              loading="lazy"
+              width="160"
+              height="80"
+            />
+          </a>
+        </li>
+        {% endfor %} {% for sponsor in sponsors %} {# duplicate for seamless
+        loop #}
+        <li aria-hidden="true">
+          <img
+            src="{{ sponsor.logo_url }}"
+            alt=""
+            loading="lazy"
+            width="160"
+            height="80"
+          />
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% else %}
+    <div class="grid grid-cols-3 sm:grid-cols-5 gap-6">
+      {% for _ in range(5) %}
+      <div class="h-20 bg-zinc-800 animate-pulse rounded-lg"></div>
+      {% endfor %}
+    </div>
+    <p class="text-sm text-gray-400 mt-2">
+      Your logo here—become a founding sponsor today!
+    </p>
+    {% endif %}
+
+    <button class="cta-btn" aria-label="Become a Sponsor" id="sponsor-cta">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4"
+        fill="currentColor"
+        viewBox="0 0 16 16"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4 7.5h8v1H4v-1z" />
+      </svg>
+      Become a Sponsor
+    </button>
+  </div>
+</section>

@@ -1,0 +1,91 @@
+/* -- Variables and base styles -- */
+:root {
+  --primary-yellow: #facc15;
+  --zinc-dark: rgba(24, 24, 27, 0.95);
+  --text-light: #fff;
+  --header-height: 4rem;
+  --scroll-offset: calc(var(--header-height) + 1rem);
+}
+[data-theme='dark'] {
+  --zinc-dark: rgba(10, 10, 15, 0.98);
+  --text-light: #eee;
+}
+body {
+  padding-top: var(--header-height);
+}
+section[id] {
+  scroll-margin-top: var(--scroll-offset);
+}
+/* -- Tiers section -- */
+.connect-tiers {
+  padding: 6rem 1.5rem;
+  background-color: var(--zinc-dark);
+  color: var(--text-light);
+}
+.connect-tiers h2 {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: #facc15;
+}
+.grid {
+  display: grid;
+  gap: 2rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* Flip card */
+.flip-card {
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+.flip-preserve-3d {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.flip-card:focus-within .flip-preserve-3d,
+.flip-card:hover .flip-preserve-3d {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+}
+.flip-face:first-child {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+.flip-face:last-child {
+  transform: rotateY(180deg);
+}
+.tier-cta {
+  cursor: pointer;
+}
+.tier-cta:hover,
+.tier-cta:focus-visible {
+  background-color: #f5c518;
+  outline-offset: 3px;
+}
+#tiers-faq-toggle {
+  cursor: pointer;
+}
+#tiers-faq-toggle[aria-expanded='true'] {
+  color: #f5c518;
+}
+#tiers-faq-body {
+  transition: max-height 0.3s ease;
+}

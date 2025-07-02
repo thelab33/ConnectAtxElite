@@ -1,0 +1,84 @@
+<section
+  id="testimonials"
+  class="relative isolate bg-gradient-to-br from-zinc-800 to-black py-24 md:py-32 px-4 sm:px-8 text-white z-10"
+  role="region"
+  aria-labelledby="testimonials-heading"
+  tabindex="-1"
+  style="scroll-margin-top: 80px"
+>
+  <div class="max-w-4xl mx-auto text-center space-y-16">
+    <div
+      class="flex justify-center items-center gap-1 text-2xl md:text-3xl text-amber-400 animate-sparkle select-none mt-2"
+      aria-hidden="true"
+    >
+      <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      <span class="ml-2 text-base font-semibold text-amber-200">(5.0)</span>
+    </div>
+
+    <h2
+      id="testimonials-heading"
+      class="text-3xl md:text-4xl font-bold text-amber-400 mb-8"
+    >
+      What They’re Saying
+    </h2>
+
+    <div class="relative max-w-2xl mx-auto mb-14">
+      <figure
+        id="quoteBox"
+        class="relative italic text-lg md:text-xl text-white/90 rounded-2xl p-8 md:p-10 bg-zinc-900/80 shadow-2xl outline-none select-text transition-opacity duration-500 min-h-[132px] flex flex-col items-center"
+        aria-live="polite"
+        aria-atomic="true"
+        tabindex="0"
+      >
+        <span
+          id="confettiEmoji"
+          class="absolute -top-5 left-1/2 -translate-x-1/2 opacity-0 transition-opacity duration-700 pointer-events-none text-3xl"
+          aria-hidden="true"
+          >🎉🎊✨</span
+        >
+        <blockquote id="quoteText" class="mb-4">Loading…</blockquote>
+        <figcaption
+          id="quoteAuthor"
+          class="mt-1 text-base font-semibold text-amber-200"
+        ></figcaption>
+        <button
+          id="copyQuoteBtn"
+          class="mt-5 text-xs text-amber-400 underline hover:text-amber-100 focus:outline-offset-4"
+          aria-label="Copy testimonial to clipboard"
+        >
+          Copy Quote
+        </button>
+      </figure>
+
+      <div class="flex justify-center mt-7 gap-2">
+        <button
+          class="carousel-dot active"
+          data-idx="0"
+          aria-label="Show testimonial 1"
+        ></button>
+        <button
+          class="carousel-dot"
+          data-idx="1"
+          aria-label="Show testimonial 2"
+        ></button>
+        <button
+          class="carousel-dot"
+          data-idx="2"
+          aria-label="Show testimonial 3"
+        ></button>
+      </div>
+    </div>
+
+    <div class="flex justify-center">
+      <img
+        src="https://static.wixstatic.com/media/2f0953_5d94082989fb4c4eb31f7f440de183c2~mv2.jpg/v1/fill/w_1100,h_1034,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_2031.jpg"
+        alt="Team showing off championship rings"
+        width="480"
+        height="320"
+        loading="lazy"
+        class="rounded-2xl shadow-2xl ring-4 ring-amber-300/50 object-cover mx-auto"
+        style="max-width: 440px; width: 100%"
+      />
+    </div>
+  </div>
+</section>

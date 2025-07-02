@@ -151,14 +151,13 @@
     }
   }
 </style>
-
 <section
-  id="sponsor-wall"
-  class="connect-sponsor-wall"
-  role="region"
   aria-labelledby="sponsor-heading"
+  class="connect-sponsor-wall"
   data-aos="fade-up"
   data-aos-delay="300"
+  id="sponsor-wall"
+  role="region"
 >
   <div class="space-y-6 relative z-10">
     <h2 id="sponsor-heading">Our Generous Sponsors</h2>
@@ -166,28 +165,28 @@
       Every logo below represents a family or company that keeps our kids on the
       court—thank you!
     </p>
-    <p id="sponsor-count" aria-live="polite">
+    <p aria-live="polite" id="sponsor-count">
       {{ sponsors|length }} Sponsor{{ sponsors|length!=1 and 's' or '' }} and
       counting!
     </p>
 
     {% if sponsors %}
-    <div class="vendor-marquee" aria-label="Sponsor logos marquee" tabindex="0">
+    <div aria-label="Sponsor logos marquee" class="vendor-marquee" tabindex="0">
       <ul>
         {% for sponsor in sponsors %}
         <li>
           <a
-            href="{{ sponsor.website or '#' }}"
-            target="_blank"
-            rel="noopener noreferrer"
             aria-label="Visit {{ sponsor.name }}"
+            href="{{ sponsor.website or '#' }}"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <img
-              src="{{ sponsor.logo_url }}"
               alt="{{ sponsor.name }} logo"
-              loading="lazy"
-              width="160"
               height="80"
+              loading="lazy"
+              src="{{ sponsor.logo_url }}"
+              width="160"
             />
           </a>
         </li>
@@ -195,11 +194,11 @@
         loop #}
         <li aria-hidden="true">
           <img
-            src="{{ sponsor.logo_url }}"
-            alt=""
-            loading="lazy"
-            width="160"
+            alt="{{ sponsor.name }} logo"
             height="80"
+            loading="lazy"
+            src="{{ sponsor.logo_url }}"
+            width="160"
           />
         </li>
         {% endfor %}
@@ -216,22 +215,21 @@
     </p>
     {% endif %}
 
-    <button class="cta-btn" aria-label="Become a Sponsor" id="sponsor-cta">
+    <button aria-label="Become a Sponsor" class="cta-btn" id="sponsor-cta">
       <svg
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
         class="h-4 w-4"
         fill="currentColor"
-        viewBox="0 0 16 16"
-        aria-hidden="true"
         focusable="false"
+        viewbox="0 0 16 16"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4 7.5h8v1H4v-1z" />
+        <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM4 7.5h8v1H4v-1z"></path>
       </svg>
       Become a Sponsor
     </button>
   </div>
 </section>
-
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const marquees = document.querySelectorAll('.vendor-marquee ul');
